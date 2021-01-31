@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.target=Room
+comment1.params=pDescription
+comment1.target=Room(java.lang.String)
+comment1.text=\n\ Creates\ a\ new\ Room\ with\ a\ description\n\n\ @param\ pDescription\ the\ description\ of\ the\ Room\n
+comment2.params=
+comment2.target=java.lang.String\ getDescription()
+comment2.text=\n\ Gets\ the\ room\ description.\n\n\ @return\ the\ room\ description.\n
+comment3.params=pDirection\ pExit
+comment3.target=void\ setExits(java.lang.String,\ Room)
+comment3.text=\n\ Sets\ the\ exits\ of\ a\ Room.\n\ The\ parameters\ are\ in\ the\ order\ given\ by\ the\ wind\ rose\n\ (starting\ by\ the\ north)\ in\ a\ clockwise\ direction.\n\n\ @param\ pNorthExit\ the\ north\ exit\n\ @param\ pEastExit\ \ the\ east\ exit\n\ @param\ pSouthExit\ the\ south\ exit\n\ @param\ pWestExit\ \ the\ west\ exit\n
+comment4.params=pDirection
+comment4.target=Room\ getExit(java.lang.String)
+comment4.text=\n\ Retrieves\ the\ Room\ associated\ with\ the\ exit\ in\ the\ requested\ direction.\n\n\ @param\ pDirection\ the\ direction\ of\ the\ exit.\n\ @return\ the\ room\ associated\ with\ the\ exit.\n
+comment5.params=
+comment5.target=java.lang.String\ getExitString()
+comment5.text=\n\ Gets\ all\ existing\ exits.\n\n\ @return\ a\ string\ with\ the\ possibles\ exits.\n
+numComments=6
