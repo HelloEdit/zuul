@@ -14,7 +14,7 @@ public class Game {
         Room office = new Room("Bureau de Murphy Law");
         Room car = new Room("Voiture de Murphy Law");
 
-        office.setExits(null, car, null, null);
+        office.setExit("east", car);
 
         this.aCurrentRoom = office;
     }

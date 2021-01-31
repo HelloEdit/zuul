@@ -1,9 +1,8 @@
+import java.util.HashMap;
+
 public class Room {
     private final String aDescription;
-    private Room aNorthExit;
-    private Room aEastExit;
-    private Room aSouthExit;
-    private Room aWestExit;
+    private final HashMap<String, Room> aExits;
 
     /**
      * Creates a new Room with a description
@@ -12,23 +11,7 @@ public class Room {
      */
     public Room(final String pDescription) {
         this.aDescription = pDescription;
-    }
-
-    /**
-     * Sets the exits of a Room.
-     * The parameters are in the order given by the wind rose
-     * (starting by the north) in a clockwise direction.
-     *
-     * @param pNorthExit the north exit
-     * @param pEastExit  the east exit
-     * @param pSouthExit the south exit
-     * @param pWestExit  the west exit
-     */
-    public void setExits(final Room pNorthExit, final Room pEastExit, final Room pSouthExit, final Room pWestExit) {
-        this.aNorthExit = pNorthExit;
-        this.aEastExit = pEastExit;
-        this.aSouthExit = pSouthExit;
-        this.aWestExit = pWestExit;
+        this.aExits = new HashMap<>();
     }
 
     /**
@@ -41,28 +24,35 @@ public class Room {
     }
 
     /**
+     * Set an exit of the room
+     * @param pDirection the direction of the exit
+     * @param pExit the Room to which the exit leads
+     */
+    public void setExit(final String pDirection, final Room pExit) {
+        this.aExits.put(pDirection, pExit);
+    }
+
+    /**
      * Retrieves the Room associated with the exit in the requested direction.
      *
      * @param pDirection the direction of the exit.
      * @return the room associated with the exit.
      */
     public Room getExit(String pDirection) {
-        switch (pDirection) {
-            case "north":
-                return this.aNorthExit;
+        return this.aExits.get(pDirection);
+    }
 
-            case "east":
-                return this.aEastExit;
+    /**
+     * Gets all existing exits of the room.
+     *
+     * @return a string with the possibles exits.
+     */
+    public String getExitString() {
+        String vResult = "Exits : ";
+        for (String vExit : this.aExits.keySet())
+            vResult += vExit + " ";
 
-            case "south":
-                return this.aSouthExit;
-
-            case "west":
-                return this.aWestExit;
-
-            default:
-                return null;
-        }
+        return vResult;
     }
 
     /**
