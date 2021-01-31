@@ -126,16 +126,10 @@ public class Game {
      * Prints the location informations.
      */
     private void printLocationInfo() {
-        System.out.printf("You are %s%n", this.aCurrentRoom.getDescription());
-
         Room vCurrent = this.aCurrentRoom;
 
-        System.out.print("Exits: ");
-        if (vCurrent.aEastExit != null) System.out.print("east ");
-        if (vCurrent.aNorthExit != null) System.out.print("north ");
-        if (vCurrent.aSouthExit != null) System.out.print("south ");
-        if (vCurrent.aWestExit != null) System.out.print("west ");
-        System.out.println();
+        System.out.printf("You are %s%n", vCurrent.getDescription());
+        System.out.println(vCurrent.getExitString());
     }
 
 } // Game
