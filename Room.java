@@ -54,22 +54,4 @@ public class Room {
 
         return vResult;
     }
-
-    /**
-     * Gets all existing exits.
-     * @return a string with the possibles exits.
-     */
-    public String getExitString() {
-        String vResult = "Exits: ";
-
-        if (this.aEastExit != null) vResult += "east ";
-        if (this.aNorthExit != null) vResult += "north ";
-        if (this.aSouthExit != null) vResult += "south ";
-        if (this.aWestExit != null) vResult += "west";
-
-        if (vResult.length() == 7) vResult = "No exits !";
-
-        return vResult;
-    }
-
 } // Room
