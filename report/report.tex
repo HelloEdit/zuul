@@ -278,6 +278,34 @@ D'après la documentation Java, \mintinline{java}{.keySet()} retourne un \verb|S
 
 \end{exercise}
 
+\begin{exercise}[subtitle=getLongDescription]
+
+Toujours dans la logique de la conception dirigée par les responsabilités, on déplace la création de la description dans la classe \verb|Room|.
+
+\begin{minted}{java}
+/**
+ * Gets a long description of this room.
+ * @return the complete description.
+ */
+public String getLongDescription() {
+    return "You are " + this.aDescription + ".\n" + this.getExitString();
+}
+\end{minted}
+
+Et on change \verb|Game| en conséquence.
+
+\begin{minted}{java}
+/**
+ * Prints the location informations.
+ */
+private void printLocationInfo() {
+    Room vCurrent = this.aCurrentRoom;
+    System.out.println(vCurrent.getLongDescription());
+}
+\end{minted}
+
+\end{exercise}
+
 \chapter{Mode d'emploi}
 
 \chapter{Plagiat}

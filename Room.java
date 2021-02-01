@@ -24,6 +24,14 @@ public class Room {
     }
 
     /**
+     * Gets a long description of this room.
+     * @return the complete description.
+     */
+    public String getLongDescription() {
+        return "You are " + this.aDescription + ".\n" + this.getExitString();
+    }
+
+    /**
      * Set an exit of the room
      * @param pDirection the direction of the exit
      * @param pExit the Room to which the exit leads
