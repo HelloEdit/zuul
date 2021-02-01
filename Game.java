@@ -2,6 +2,9 @@ public class Game {
     private final Parser aParser;
     private Room aCurrentRoom;
 
+    /**
+     * The Zuul game.
+     */
     public Game() {
         this.aParser = new Parser();
         this.createRooms();
