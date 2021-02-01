@@ -1,16 +1,15 @@
 \documentclass[a4paper,12pt]{report}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{lmodern}
-\usepackage[french]{babel}
-\usepackage{graphicx}
-\usepackage{hyperref}
-\usepackage{minted}
-\usepackage{xsim}
-\usepackage{titlesec}
-\usepackage{xcolor}
-\usepackage{lipsum}
-\usepackage{enumitem}
+\usepackage[T1]{fontenc} % font encodings
+\usepackage[utf8]{inputenc} % use utf8 as encoding
+\usepackage{lmodern} % use Latin Moderna
+\usepackage[french]{babel} % set french as language
+\usepackage{graphicx} % manipulate image
+\usepackage{hyperref} % use hyper reference
+\usepackage{minted} % syntax highlighting
+\usepackage{xsim} % exercise helper
+\usepackage{titlesec} % manipulate title
+\usepackage{xcolor} % manipulate color
+\usepackage{enumitem} % better list
 
 \definecolor{bg}{rgb}{0.95,0.95,0.95}
 \setminted[java]{breaklines,linenos,autogobble,bgcolor=bg}
@@ -266,7 +265,7 @@ public String getExitString() {
 \end{minted}
 \end{exercise}
 
-\begin{exercise}
+\begin{exercise}[subtitle=Fonctionnement de keySet]
 
 Reprenons le code intéressant de l'exercice précédent et intéressons-nous à son fonctionnement.
 
@@ -275,14 +274,12 @@ for (String vExit : this.aExits.keySet())
     vResult += vExit + " ";
 \end{minted}
 
-D'après la documentation Java, \mintinline{java}{.keySet()} retourne un \verb|Set<K>| pour une \verb|HashMap<K, V>| (ici, notre \mintinline{java}{this.aExits}). Maintenant, si on s'intéresse a l'interface \verb|Set|, on voit qu'elle repose elle-même sur plusieurs interfaces, notamment \verb|Iterable<K>|, lui donnant la possibilité de s'utiliser dans une boucle for-each.
+D'après la documentation Java, \mintinline{java}{.keySet()} retourne un \verb|Set<K>| miroir contenant les clefs de \verb|HashMap<K, V>| (ici notre \verb|HashMap| étant  \mintinline{java}{this.aExits}). Maintenant, si on s'intéresse a l'interface \verb|Set|, on voit qu'elle repose elle-même sur plusieurs interfaces, notamment \verb|Iterable<K>|, lui donnant la possibilité de s'utiliser dans une boucle for-each.
 
 \end{exercise}
 
 \chapter{Mode d'emploi}
 
 \chapter{Plagiat}
-
-
 
 \end{document}
