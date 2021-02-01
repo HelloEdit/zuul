@@ -5,9 +5,9 @@ public class Room {
     private final HashMap<String, Room> aExits;
 
     /**
-     * Creates a new Room with a description
+     * Creates a new room with a description.
      *
-     * @param pDescription the description of the Room
+     * @param pDescription the description of the Room.
      */
     public Room(final String pDescription) {
         this.aDescription = pDescription;
@@ -25,6 +25,7 @@ public class Room {
 
     /**
      * Gets a long description of this room.
+     *
      * @return the complete description.
      */
     public String getLongDescription() {
@@ -32,9 +33,10 @@ public class Room {
     }
 
     /**
-     * Set an exit of the room
-     * @param pDirection the direction of the exit
-     * @param pExit the Room to which the exit leads
+     * Set an exit of the room.
+     *
+     * @param pDirection the direction of the exit.
+     * @param pExit the Room to which the exit leads.
      */
     public void setExit(final String pDirection, final Room pExit) {
         this.aExits.put(pDirection, pExit);

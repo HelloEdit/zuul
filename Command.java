@@ -32,7 +32,7 @@ public class Command {
     }
 
     /**
-     * Access the command word
+     * Access the command word.
      *
      * @return the command word.
      */

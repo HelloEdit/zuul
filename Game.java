@@ -107,7 +107,7 @@ public class Game {
     }
 
     /**
-     * Changes the current room
+     * Changes the current room.
      *
      * @param pCommand the go command to be processed.
      */
@@ -125,11 +125,11 @@ public class Game {
         this.printLocationInfo();
     }
 
-/**
- * Prints the location informations.
- */
-private void printLocationInfo() {
-    System.out.println(this.aCurrentRoom.getLongDescription());
-}
+    /**
+     * Prints the location informations.
+     */
+    private void printLocationInfo() {
+        System.out.println(this.aCurrentRoom.getLongDescription());
+    }
 
 } // Game
