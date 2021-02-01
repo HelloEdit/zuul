@@ -56,14 +56,12 @@ public class Game {
      * @see Command
      */
     private boolean processCommand(final Command pCommand) {
-        String vWord = pCommand.getCommandWord();
-
         if (pCommand.isUnknown()) {
             System.out.println("I don't know what you mean...");
             return false;
         }
 
-        switch (vWord) {
+        switch (pCommand.getCommandWord()) {
             case "help":
                 this.printHelp();
                 return false;
@@ -73,6 +71,10 @@ public class Game {
 
             case "go":
                 this.goRoom(pCommand);
+                return false;
+
+            case "look":
+                this.look();
                 return false;
 
             default:
@@ -104,6 +106,13 @@ public class Game {
         System.out.println("You wander around at the university.");
         System.out.println("Your command words are:");
         System.out.println("\tgo quit help");
+    }
+
+    /**
+     * Handles the look command.
+     */
+    private void look() {
+        System.out.println(this.aCurrentRoom.getLongDescription());
     }
 
     /**

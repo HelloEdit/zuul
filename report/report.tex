@@ -303,7 +303,59 @@ private void printLocationInfo() {
     System.out.println(vCurrent.getLongDescription());
 }
 \end{minted}
+\end{exercise}
 
+\setcounter{exercise}{13}
+
+\begin{exercise}[subtitle=look]
+
+L'ajout de la commande \verb|Look| se traduit pas plusieurs changements, déjà en mettant le mot de la commande dans \verb|CommandWords|.
+
+\begin{minted}{java}
+// a static constant array that will hold the valid commands words
+private final static String[] aValidCommands = { "go", "quit", "help", "look" };
+\end{minted}
+
+Il faut aussi renseigner le nouveau mot de la commande dans \mintinline{java}{processCommand(final Command pCommand)}.
+
+\begin{minted}{java}
+/**
+ * Process a Command object.
+ *
+ * @param pCommand the command to be processed.
+ * @return if the program should quit.
+ * @see Command
+ */
+private boolean processCommand(final Command pCommand) {
+    if (pCommand.isUnknown()) {
+        System.out.println("I don't know what you mean...");
+        return false;
+    }
+
+    switch (pCommand.getCommandWord()) {
+        case "help":
+            this.printHelp();
+            return false;
+
+        case "quit":
+            return this.quit(pCommand);
+
+        case "go":
+            this.goRoom(pCommand);
+            return false;
+
+        case "look":
+            this.look();
+            return false;
+
+        default:
+            System.out.println("I don't know what you mean...");
+            return false;
+    }
+}
+\end{minted}
+
+On remarque aussi que la méthode \verb|look()| fait, pour l'instant, la même chose que \verb|printLocationInfo()|. 
 \end{exercise}
 
 \chapter{Mode d'emploi}
