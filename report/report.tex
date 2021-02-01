@@ -14,6 +14,7 @@
 
 \definecolor{bg}{rgb}{0.95,0.95,0.95}
 \setminted[java]{breaklines,linenos,autogobble,bgcolor=bg}
+\setmintedinline[java]{bgcolor={}}
 
 % remove useless formating of chapter
 \titleformat{\chapter}
@@ -162,7 +163,7 @@ Dans cet exercice, on se rend compte que le système "un attribut = une sortie" 
  * @param pDirection the direction of the exit.
  * @return the room associated with the exit.
  */
-public Room getExit(String pDirection) {
+public Room getExit(final String pDirection) {
     switch (pDirection) {
         case "north":
             return this.aNorthExit;
@@ -239,7 +240,7 @@ public void setExit(final String pDirection, final Room pExit) {
  * @param pDirection the direction of the exit.
  * @return the room associated with the exit.
  */
-public Room getExit(String pDirection) {
+public Room getExit(final String pDirection) {
     return this.aExits.get(pDirection);
 }
 \end{minted}
@@ -247,7 +248,7 @@ public Room getExit(String pDirection) {
 
 \begin{exercise}[subtitle=keySet]
 
-\verb|getExitString| doit elle aussi être modifié. Plutôt que tester la présence de certaines valeurs dans la \verb|HashMap| (du type "north", "east", "down", "up"...), on peut énumérer les différentes clés qui composent la \verb|HashMap| des sorties.
+\verb|getExitString| doit elle aussi être modifiée. Plutôt que de tester la présence de certaines valeurs dans la \verb|HashMap| (du type "north", "east", "down", "up"...), on peut énumérer les différentes clés qui composent la \verb|HashMap| des sorties.
 
 \begin{minted}{java}
 /**
@@ -263,6 +264,19 @@ public String getExitString() {
     return vResult;
 }
 \end{minted}
+\end{exercise}
+
+\begin{exercise}
+
+Reprenons le code intéressant de l'exercice précédent et intéressons-nous à son fonctionnement.
+
+\begin{minted}{java}
+for (String vExit : this.aExits.keySet())
+    vResult += vExit + " ";
+\end{minted}
+
+D'après la documentation Java, \mintinline{java}{.keySet()} retourne un \verb|Set<K>| pour une \verb|HashMap<K, V>| (ici, notre \mintinline{java}{this.aExits}). Maintenant, si on s'intéresse a l'interface \verb|Set|, on voit qu'elle repose elle-même sur plusieurs interfaces, notamment \verb|Iterable<K>|, lui donnant la possibilité de s'utiliser dans une boucle for-each.
+
 \end{exercise}
 
 \chapter{Mode d'emploi}
