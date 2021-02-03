@@ -6,7 +6,7 @@
 \usepackage{graphicx} % manipulate image
 \usepackage{hyperref} % use hyper reference
 \usepackage{minted} % syntax highlighting
-\usepackage{xsim} % exercise helper
+\usepackage[use-files]{xsim} % exercise helper
 \usepackage{titlesec} % manipulate title
 \usepackage{xcolor} % manipulate color
 \usepackage{enumitem} % better list
@@ -14,6 +14,23 @@
 \definecolor{bg}{rgb}{0.95,0.95,0.95}
 \setminted[java]{breaklines,linenos,autogobble,bgcolor=bg}
 \setmintedinline[java]{bgcolor={}}
+
+
+\newcommand\addsubsec[1]{%
+  \section*{#1}%
+  \addcontentsline{toc}{section}{\GetExerciseProperty{counter}}%
+}
+
+% remove the following lines when the bug has been fixed:
+\ExplSyntaxOn
+\RenewExpandableDocumentCommand \IfExercisePropertySetTF {m+m+m}
+  { \xsim_if_property_set:eenTF {\ExerciseType} {\ExerciseID} {#1} {#2} {#3} }
+\RenewExpandableDocumentCommand \IfExercisePropertySetT {m+m}
+  { \IfExercisePropertySetTF {#1} {#2} {} }
+\RenewExpandableDocumentCommand \IfExerciseParameterSetTF {+m+m+m}
+  { \xsim_if_parameter_set:enTF {\ExerciseType} {#1} {#2} {#3} }
+\prg_generate_conditional_variant:Nnn \xsim_if_parameter_set:nn {e} {TF}
+\ExplSyntaxOff
 
 % remove useless formating of chapter
 \titleformat{\chapter}
@@ -24,7 +41,7 @@
 
 \xsimsetup{
   exercise/the-counter = \arabic{section}.\arabic{exercise}, % for "Exercice <section>.<number>
-  exercise/within = section
+  exercise/heading=\addsubsec
 }
 
 \begin{document}
@@ -69,15 +86,21 @@ Vous vous attendiez à tomber sur un super jeu de science-fiction proposé par u
 
 Le Joueur (notons la majuscule) est un personnage à part entière de l'histoire, bien que l'utilisateur joue au travers de Murphy Law. Le Joueur apparaît au début de la narration complètement perdu et à la recherche du jeu de science-fiction promis par le talentueux étudiant dans son rapport. Murphy Law, détective, se demande par quel moyen Le Joueur a pu arriver dans son agence alors que, manifestement, il ne fait même pas partie du schéma narratif du jeu. Quelque chose cloche, quelque chose ne tourne pas rond.\\
 
-Murphy Law décide de partir mener l'enquête en allant voir une source pouvant l'aider dans cette enquête. Avec Le Joueur, il monte dans sa voiture (voir \hyperlink{section.1.5}{Plan}), cependant, la structure du jeu commence à se corrompre, à changer dangereusement sans raison, provoquant la stupéfaction chez les deux protagonistes. Murphy accélère pour semer les incohérences de narration. Alors qu'ils roulent vers leur contact à toute allure, Murphy commence à perdre le contrôle de la situation jusqu'à qu'un arbre apparaisse devant la voiture provoquant un accident.\\
+Murphy Law décide de partir mener l'enquête en allant voir une source pouvant l'aider dans cette enquête. Avec Le Joueur, il monte dans sa voiture (voir \hyperlink{section.1.6}{Plan}), cependant, la structure du jeu commence à se corrompre, à changer dangereusement sans raison, provoquant la stupéfaction chez les deux protagonistes. Murphy accélère pour semer les incohérences de narration. Alors qu'ils roulent vers leur contact à toute allure, Murphy commence à perdre le contrôle de la situation jusqu'à qu'un arbre apparaisse devant la voiture provoquant un accident.\\
 
-Murphy Law et Le Joueur se réveille dans la pénombre d'un hangar inconnue, peu après, une explosion se fait ressentir et une alerte rouge se déclenche. En sortant du hangar, les protagonistes se rendent compte qu'ils sont sur l'USS Enterprise de l'Univers Star Trek, en pleine bataille.\\
-
-Alors que Le Joueur et Murphy Law referme le SAS en vitesse derrière eux, ils se retrouvent dans le salon de réception de Buckingham Palace. 
-
-Puis La pyramide ou Le Joueur et Murphy sont séparés.\\
+Murphy Law et Le Joueur se réveille dans un grand escalier avec des dorures et un dôme magnifique surmontant la pièce. Après l'irruption d'un majordome disant qu'on les cherche partout, Murphy et Le Joueur réalisent qu'ils passé dans l'univers d'un autre jeu de la promotion, se passant à Buckingham Palace. 
 
 Après avoir perdu le joueur et flairant que quelque chose se trame dans son dos, Murphy Law décide alors de se rendre là où tout a commencé : dans la salle de l'ESIEE où Le Joueur avait lancé le jeu. S'en suit une confrontation avec Le Compilateur, qui essayait de manipuler le jeu à sa guise. Murphy en ressort gagnant.\\
+
+\section{Commandes}
+
+\begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries inspect \textit{objet}}]
+  \item [go \textit{direction}] Déplace le personnage vers une certaines pièce.
+  \item [look] Affiche la position actuelle ainsi que la description de la pièce.
+  \item [inspect \textit{objet}] Permet d'inspecter un objet présent dans la pièce.
+  \item [help] Affiche un bref résumé ainsi que la position actuelle.
+  \item [quit] Quitte le jeu.
+\end{description}
 
 \section{Plan}
 
@@ -87,15 +110,22 @@ Après avoir perdu le joueur et flairant que quelque chose se trame dans son dos
 
 \subsection{Lieux}
 
+Seuls les lieux importants à l'avancement et à l'histoire du jeu sont listés ci-dessous.
+
 \begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries Bureau de Murphy}]
   \item [Bureau de Murphy] C'est le lieu où vous commencez votre aventure.
+  \item [Voiture] La voiture vous permet de rejoindre certains lieux.
+  \item [Grand escalier] C'est l'endroit où vous arrivez à Buckingham Palace.
+  \item [Salle de réception] Là où la crise du corgi royal sera expliquée.
   \item [Salle de l'ESIEE] C'est dans cette salle de l'ESIEE que vous avez lancé ce jeu.
 \end{description}
 
 \subsection{Personnages}
 
+De la même façon, cette liste ne comprend que les personnages essentiels au scénario. Certains personnages non-joueurs ne sont pas listés ici.
+
 \begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries Le Compilateur}]
-  \item [Murphy Law] Le détective et le personnage que vous incarnez. Son rôle est de mener l'enquête pour comprendre par quelles circonstances Le Joueur s'est retrouvé ici.
+  \item [Murphy Law] Le détective et aussi le personnage que vous incarnez. Son rôle est de mener l'enquête pour comprendre par quelles circonstances Le Joueur s'est retrouvé ici.
   \item [Le Narrateur] La voix que vous entendez quand vous jouez. Le Narrateur permet de décrire les scènes \& situations sans sortir de la narration. 
   \item [Le Joueur] C'est vous ! Cependant, Le Joueur est paradoxalement un personnage non jouable qui vous représente tout au long de  l'histoire dans le cadre de la méta-narration.
   \item [Le Compilateur] Le compilateur Java est le grand méchant de l'histoire. Son rôle, manipuler la structure du jeu pour que l'étudiant n'ait pas une note à la hauteur de son travail.
@@ -103,13 +133,14 @@ Après avoir perdu le joueur et flairant que quelque chose se trame dans son dos
 
 \section{Situations gagnantes et perdantes}
 
-Le Joueur et Murphy Law seront confrontés à des situations de crises où des choix et décisions devront être prises, certains pourront entraîner la mort des protagonistes et donc faire gagner Le Compilateur.\\
+Le Joueur et Murphy Law seront confrontés à des situations de crises où des choix et décisions devront être prises, certains pourront entraîner la mort ou l'immobilisation des protagonistes et donc faire gagner Le Compilateur.\\
 La liste des situations perdantes est la suivante :
 
 \begin{description}[align=left,leftmargin=!,labelwidth=\widthof{\bfseries A Buckingham Palace}]
-  \item [Sur l'USS Enterprise]
-  \item [Dans la pyramide]
-  \item [A Buckingham Palace] 
+  \item [A Buckingham Palace] \begin{itemize}
+    \item Vous ne retrouvez pas le corgi royal.
+    \item Vous essayez d'inspecter la Reine d'Angleterre.
+  \end{itemize}
 \end{description}
 
 \section{Commentaires}
@@ -142,18 +173,13 @@ private void printLocationInfo() {
     System.out.println();
 }
 \end{minted}
-
 \end{exercise}
-
-\vfill
 
 \begin{exercise}[subtitle=getExit]
 
 Dans cet exercice, on se rend compte que le système "un attribut = une sortie" n'est pas le plus optimal (imaginons un hub ayant une dizaines de sorties par exemple, ce qui deviendrait problématique pour la lisibilité et la maintenance du code). L'idée étant de limiter le couplage entre la classe \verb|Room| et les autres classes. Pour cela, on cherchera à limiter la dépendance aux attributs de Room et plutôt passer par une fonction pour récupérer les sorties, ce qui permet de ne pas avoir à se soucier de l'implémentation du côté de \verb|Room|.\\ 
 
 \textbf{Notes:} Notons qu'il reste un problème dans \verb|printLocationInfo| à cause de ce changement.
-
-\vfill
 
 \begin{minted}{java}
 /**
@@ -181,10 +207,7 @@ public Room getExit(final String pDirection) {
     }
 }
 \end{minted}
-
 \end{exercise}
-
-\vfill
 
 \begin{exercise}[subtitle=getExitString]
 Le dernier changement a impacté la façon dont \verb|printLocationInfo| fonctionne. Pour le résoudre, on écrit une nouvelle méthode \verb|getExitString| et, fort de ce changement, on ré-usine \verb|printLocationInfo|.
@@ -220,8 +243,6 @@ private void printLocationInfo() {
 \begin{exercise}[subtitle=HashMap et setExit]
 
 Maintenant que le couplage entre \verb|Room| et \verb|Game| est faible, on peut remplacer les détails de l'implémentation sans risquer de casser quelque chose. On utilise une structure de données \verb|HashMap| et on doit changer les méthodes de \verb|Room| en conséquence. On en profite aussi pour remplacer \verb|setExits|, devenue inutile, par \verb|setExit|.
-
-\vfill
 
 \begin{minted}{java}
 /**
@@ -274,7 +295,7 @@ for (String vExit : this.aExits.keySet())
     vResult += vExit + " ";
 \end{minted}
 
-D'après la documentation Java, \mintinline{java}{.keySet()} retourne un \verb|Set<K>| miroir contenant les clefs de \verb|HashMap<K, V>| (ici notre \verb|HashMap| étant  \mintinline{java}{this.aExits}). Maintenant, si on s'intéresse a l'interface \verb|Set|, on voit qu'elle repose elle-même sur plusieurs interfaces, notamment \verb|Iterable<K>|, lui donnant la possibilité de s'utiliser dans une boucle for-each.
+D'après la documentation Java, \mintinline{java}{.keySet()} retourne un \verb|Set<K>| miroir contenant les clefs d'une certaine \verb|HashMap<K, V>| (ici notre \verb|HashMap<String, Room>| étant  \mintinline{java}{this.aExits}). Maintenant, si on s'intéresse a l'interface \verb|Set|, on voit qu'elle repose elle-même sur plusieurs interfaces, notamment \verb|Iterable<K>|, lui donnant la possibilité de s'utiliser dans une boucle for-each.
 
 \end{exercise}
 
@@ -356,6 +377,51 @@ private boolean processCommand(final Command pCommand) {
 \end{minted}
 
 On remarque aussi que la méthode \verb|look()| fait, pour l'instant, la même chose que \verb|printLocationInfo()|. 
+\end{exercise}
+
+\begin{exercise}
+ 
+ J'ai choisi d'implémenter une commande nommée \verb|inspect <something>| qui permettra d'inspecter des objet présent dans la pièce où se trouve le joueur. Pour ajouter cette commande, on modifie \verb|CommandWords|.
+ 
+\begin{minted}{java}
+private final static String[] aValidCommands = { "go", "quit", "help", "look", "inspect" };
+\end{minted}
+
+Et on doit modifier le \verb|processCommand| de \verb|Game| ainsi que créer la méthode pour gérer cette commande.
+
+\begin{minted}{java}
+/**
+ * Process a Command object.
+ *
+ * @param pCommand the command to be processed.
+ * @return if the program should quit.
+ * @see Command
+ */
+private boolean processCommand(final Command pCommand) {
+    ...
+
+    switch (pCommand.getCommandWord()) {
+        case "inspect":
+            this.inspect(pCommand);
+            return false;
+
+        ...
+    }
+}
+\end{minted}
+
+\begin{minted}{java}
+/**
+ * Handles the inspect command.
+ *
+ * @param pCommand the inspect command to be processed.
+ */
+private void inspect(Command pCommand) {
+    System.out.printf("Nothing to inspect here.");
+}
+\end{minted}
+
+\textbf{Note:} J'ai utilisé \verb|...| pour signaler les parties du code inutile à montrer car n'ayant pas changées. 
 \end{exercise}
 
 \chapter{Mode d'emploi}

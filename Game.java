@@ -77,10 +77,23 @@ public class Game {
                 this.look();
                 return false;
 
+            case "inspect":
+                this.inspect(pCommand);
+                return false;
+
             default:
                 System.out.println("I don't know what you mean...");
                 return false;
         }
+    }
+
+    /**
+     * Handles the inspect command.
+     *
+     * @param pCommand the inspect command to be processed.
+     */
+    private void inspect(Command pCommand) {
+        System.out.print("Nothing to inspect here.");
     }
 
     /**
