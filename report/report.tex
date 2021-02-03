@@ -413,7 +413,63 @@ private void inspect(Command pCommand) {
 }
 \end{minted}
 
-\textbf{Note:} J'ai utilisé \verb|...| pour signaler les parties du code inutile à montrer car n'ayant pas changées. 
+\textbf{Note:} On utilise ici \verb|[...]| pour signaler les parties du code inutile à montrer car n'ayant pas changées entre les exercices.
+
+\end{exercise}
+
+
+\begin{exercise}[subtitle=showAll et showCommands]
+
+Dans cet exercice, on rend l'affichage des commandes dans la méthode \verb|printHelp()| dynamique en créant un méthode d'énumération des commandes dans \verb|CommandWords|.
+
+
+\begin{minted}{java}
+/**
+ * Shows all possible command word on System.out.
+ */
+public void showAll() {
+    System.out.print("\t");
+    for (String command: CommandWords.aValidCommands) {
+        System.out.print(command + " ");
+    }
+    System.out.println();
+}
+\end{minted}
+
+\textbf{Note:} On observe que la méthode \verb|showAll| pourrait être déclarée comme \verb|static| car ne dépendant que de \verb|CommandWords.aValidCommands| qui est un attribut statique de la classe \verb|CommandWords|.\\
+
+On crée aussi un moyen de l'appeler depuis \verb|Game| en passant par \verb|Parser|.
+
+\begin{minted}{java}
+// Dans Parser.java
+
+/**
+ * Shows all the valid command words.
+ */
+public void showCommands() {
+    this.aValidCommands.showAll();
+}
+\end{minted}
+
+\begin{minted}{java}
+// Dans Game.java
+
+/**
+ * Prints a little help text.
+ */
+private void printHelp() {
+    System.out.println("You are lost. You are alone.");
+    System.out.println("You wander around at the university.");
+    System.out.println("Your command words are:");
+    this.aParser.showCommands();
+}
+\end{minted}
+\end{exercise}
+
+\begin{exercise}[subtitle=Changer Game ?]
+
+Malgré toutes nos modifications, si l'on ajoute une nouvelle commande au jeu, il faudra quand même modifier la classe \verb|Game|. En effet, la méthode \verb|processCommand| contient un \verb|switch| dont on doit ajouter une nouvelle branche pour chaque nouvelle commande ajoutée.
+
 \end{exercise}
 
 \chapter{Mode d'emploi}
