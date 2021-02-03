@@ -93,7 +93,7 @@ public class Game {
      * @param pCommand the inspect command to be processed.
      */
     private void inspect(Command pCommand) {
-        System.out.print("Nothing to inspect here.");
+        System.out.println("Nothing to inspect here.");
     }
 
     /**
