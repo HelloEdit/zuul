@@ -59,4 +59,11 @@ public class Parser {
             return new Command(null, null); // C'est surtout le premier null qui est important ici.
         }
     } // getCommand()
+
+    /**
+     * Shows all the valid command words.
+     */
+    public void showCommands() {
+        this.aValidCommands.showAll();
+    }
 } // Parser

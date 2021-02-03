@@ -295,8 +295,7 @@ for (String vExit : this.aExits.keySet())
     vResult += vExit + " ";
 \end{minted}
 
-D'après la documentation Java, \mintinline{java}{.keySet()} retourne un \verb|Set<K>| miroir contenant les clefs d'une certaine \verb|HashMap<K, V>| (ici notre \verb|HashMap<String, Room>| étant  \mintinline{java}{this.aExits}). Maintenant, si on s'intéresse a l'interface \verb|Set|, on voit qu'elle repose elle-même sur plusieurs interfaces, notamment \verb|Iterable<K>|, lui donnant la possibilité de s'utiliser dans une boucle for-each.
-
+La différence entre un \verb|Set| et liste normale est que le \verb|Set| ne peut pas contenir deux mêmes éléments.
 \end{exercise}
 
 \begin{exercise}[subtitle=getLongDescription]
@@ -379,7 +378,7 @@ private boolean processCommand(final Command pCommand) {
 On remarque aussi que la méthode \verb|look()| fait, pour l'instant, la même chose que \verb|printLocationInfo()|. 
 \end{exercise}
 
-\begin{exercise}
+\begin{exercise}[subtitle=Commande inspect]
  
  J'ai choisi d'implémenter une commande nommée \verb|inspect <something>| qui permettra d'inspecter des objet présent dans la pièce où se trouve le joueur. Pour ajouter cette commande, on modifie \verb|CommandWords|.
  
@@ -387,25 +386,18 @@ On remarque aussi que la méthode \verb|look()| fait, pour l'instant, la même c
 private final static String[] aValidCommands = { "go", "quit", "help", "look", "inspect" };
 \end{minted}
 
-Et on doit modifier le \verb|processCommand| de \verb|Game| ainsi que créer la méthode pour gérer cette commande.
+Et on doit modifier la méthode \verb|processCommand| de \verb|Game| ainsi que créer la méthode pour gérer cette commande.
 
 \begin{minted}{java}
-/**
- * Process a Command object.
- *
- * @param pCommand the command to be processed.
- * @return if the program should quit.
- * @see Command
- */
 private boolean processCommand(final Command pCommand) {
-    ...
+    [...]
 
     switch (pCommand.getCommandWord()) {
         case "inspect":
             this.inspect(pCommand);
             return false;
 
-        ...
+        [...]
     }
 }
 \end{minted}

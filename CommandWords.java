@@ -14,6 +14,17 @@ public class CommandWords {
             { "go", "quit", "help", "look", "inspect" };
 
     /**
+     * Shows all possible command word on System.out.
+     */
+    public void showAll() {
+        System.out.print("\t");
+        for (String command: CommandWords.aValidCommands) {
+            System.out.print(command + " ");
+        }
+        System.out.println();
+    }
+
+    /**
      * Check whether a given String is a valid command word.
      *
      * @return true if a given string is a valid command,
