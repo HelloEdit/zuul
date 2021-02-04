@@ -3,7 +3,7 @@ public class Game {
     private Room aCurrentRoom;
 
     /**
-     * The Zuul game.
+     * Creates the game and initialise its internal map.
      */
     public Game() {
         this.aParser = new Parser();
