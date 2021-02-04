@@ -17,12 +17,12 @@ public class CommandWords {
      * Get all possible command words.
      */
     public String getCommandList() {
-        String vResult = "";
+        StringBuilder vResult = new StringBuilder();
         for (String command: CommandWords.aValidCommands) {
-            vResult += command + " ";
+            vResult.append(command).append(" ");
         }
 
-        return vResult;
+        return vResult.toString();
     }
 
     /**

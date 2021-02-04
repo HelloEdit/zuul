@@ -58,10 +58,10 @@ public class Room {
      * @return a string with the possibles exits.
      */
     public String getExitString() {
-        String vResult = "Exits : ";
+        StringBuilder vResult = new StringBuilder("Exits : ");
         for (String vExit : this.aExits.keySet())
-            vResult += vExit + " ";
+            vResult.append(vExit).append(" ");
 
-        return vResult;
+        return vResult.toString();
     }
 } // Room
