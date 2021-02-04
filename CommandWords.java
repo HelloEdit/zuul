@@ -14,14 +14,15 @@ public class CommandWords {
             { "go", "quit", "help", "look", "inspect" };
 
     /**
-     * Shows all possible command word on System.out.
+     * Get all possible command words.
      */
-    public void showAll() {
-        System.out.print("\t");
+    public String getCommandList() {
+        String vResult = "";
         for (String command: CommandWords.aValidCommands) {
-            System.out.print(command + " ");
+            vResult += command + " ";
         }
-        System.out.println();
+
+        return vResult;
     }
 
     /**

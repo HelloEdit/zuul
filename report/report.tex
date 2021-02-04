@@ -21,17 +21,6 @@
   \addcontentsline{toc}{section}{\GetExerciseProperty{counter}}%
 }
 
-% remove the following lines when the bug has been fixed:
-\ExplSyntaxOn
-\RenewExpandableDocumentCommand \IfExercisePropertySetTF {m+m+m}
-  { \xsim_if_property_set:eenTF {\ExerciseType} {\ExerciseID} {#1} {#2} {#3} }
-\RenewExpandableDocumentCommand \IfExercisePropertySetT {m+m}
-  { \IfExercisePropertySetTF {#1} {#2} {} }
-\RenewExpandableDocumentCommand \IfExerciseParameterSetTF {+m+m+m}
-  { \xsim_if_parameter_set:enTF {\ExerciseType} {#1} {#2} {#3} }
-\prg_generate_conditional_variant:Nnn \xsim_if_parameter_set:nn {e} {TF}
-\ExplSyntaxOff
-
 % remove useless formating of chapter
 \titleformat{\chapter}
   {\normalfont\LARGE\bfseries}{\thechapter}{1em}{}
@@ -420,7 +409,7 @@ private void inspect(Command pCommand) {
 
 \begin{exercise}[subtitle=showAll et showCommands]
 
-Dans cet exercice, on rend l'affichage des commandes dans la méthode \verb|printHelp()| dynamique en créant un méthode d'énumération des commandes dans \verb|CommandWords|.
+Dans cet exercice, on rend l'affichage des commandes dans la méthode \verb|printHelp| dynamique en créant un méthode d'énumération des commandes dans \verb|CommandWords|.
 
 
 \begin{minted}{java}
@@ -429,7 +418,7 @@ Dans cet exercice, on rend l'affichage des commandes dans la méthode \verb|prin
  */
 public void showAll() {
     System.out.print("\t");
-    for (String command: CommandWords.aValidCommands) {
+    for (String command : CommandWords.aValidCommands) {
         System.out.print(command + " ");
     }
     System.out.println();
@@ -468,8 +457,54 @@ private void printHelp() {
 
 \begin{exercise}[subtitle=Changer Game ?]
 
-Malgré toutes nos modifications, si l'on ajoute une nouvelle commande au jeu, il faudra quand même modifier la classe \verb|Game|. En effet, la méthode \verb|processCommand| contient un \verb|switch| dont on doit ajouter une nouvelle branche pour chaque nouvelle commande ajoutée.
+Malgré toutes nos modifications, si l'on ajoute une nouvelle commande au jeu, il faudra quand même modifier la classe \verb|Game|. En effet, la méthode \verb|processCommand| contient un \verb|switch| dont on doit ajouter une nouvelle branche pour chaque nouvelle commande.
 
+\end{exercise}
+
+\begin{exercise}[subtitle=getCommandList]
+
+Dans cet exercice, on poursuit notre travail sur le modèle de la conception axée sur la responsabilité. Pour le cas de \verb|showAll|, plutôt qu'afficher la liste des commandes disponibles, on préférera générer un \verb|String| pour ne pas imposer un affichage spécifique (notamment via \verb|System.out|).
+
+\begin{minted}{java}
+/**
+ * Get all possible command words.
+ */
+public String getCommandList() {
+    String vResult = "";
+    for (String command : CommandWords.aValidCommands) {
+        vResult += command + " ";
+    }
+
+    return vResult;
+}
+\end{minted}
+
+On modifie la cascade crée aux exercices d'avant pour refléter ce changement.
+
+\begin{minted}{java}
+// Dans Parser.java
+
+/**
+ * Gets all the valid command words.
+ */
+public String getCommands() {
+    return this.aValidCommands.getCommandList();
+}
+\end{minted}
+
+\begin{minted}{java}
+// Dans Game.java
+
+/**
+ * Prints a little help text.
+ */
+private void printHelp() {
+    System.out.println("You are lost. You are alone.");
+    System.out.println("You wander around at the university.");
+    System.out.println("Your command words are:");
+    System.out.println("\t" + this.aParser.getCommands()); // "\t" représente une tabulation
+}
+\end{minted}
 \end{exercise}
 
 \chapter{Mode d'emploi}
