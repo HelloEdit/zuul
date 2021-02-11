@@ -28,12 +28,20 @@ public class Game {
         car.setExit("esiee", esiee)
                 .setExit("buckingham", greatStair);
 
-        greatStair.setExit("reception", reception);
+        greatStair.setExit("west", reception);
 
         reception.setExit("up", apartments)
-                .setExit("west", kitchen);
+                .setExit("west", kitchen)
+                .setExit("east", greatStair);
 
-        kitchen.setExit("down", cave);
+        kitchen.setExit("down", cave)
+                .setExit("east", reception);
+
+        cave.setExit("up", kitchen);
+
+        kitchen.setExit("east", reception);
+
+        apartments.setExit("down", reception);
 
         this.aCurrentRoom = office;
     }
