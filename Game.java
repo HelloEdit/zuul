@@ -20,7 +20,7 @@ public class Game {
      */
     private void createRooms() {
         Room office = this.initRoom("bureau", "c'est le bureau de Murphy Law");
-        Room car = this.initRoom("voiture", "c'est la voiture de Murphy Law. Pratique pour aller là où vous voulez !");
+        Room car = this.initRoom("voiture", "c'est la voiture de Murphy Law. Pratique pour aller là où vous voulez");
         Room esiee = this.initRoom("ESIEE", "c'est la salle où vous avez lancé ce jeu");
         Room greatStair = this.initRoom("grand escalier", "l'escalier principal de Buckingham Palace");
         Room reception = this.initRoom("salle de réception", "la salle de réception de Buckingham Palace");
@@ -77,16 +77,21 @@ public class Game {
             vFinished = this.processCommand(vCommand);
         }
 
-        System.out.println("Thank you for playing. Good bye.");
+        System.out.println("Merci d'avoir joué. Au revoir.");
     }
 
     /**
      * Prints a small welcome text.
      */
     private void printWelcome() {
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
-        System.out.println("Type 'help' if you need help.\n");
+        System.out.println("\n██████  ██       █████  ███    ██ ███████ ████████     ██     ██  █████  ██████  ███████ \n" +
+                "██   ██ ██      ██   ██ ████   ██ ██         ██        ██     ██ ██   ██ ██   ██ ██      \n" +
+                "██████  ██      ███████ ██ ██  ██ █████      ██        ██  █  ██ ███████ ██████  ███████ \n" +
+                "██      ██      ██   ██ ██  ██ ██ ██         ██        ██ ███ ██ ██   ██ ██   ██      ██ \n" +
+                "██      ███████ ██   ██ ██   ████ ███████    ██         ███ ███  ██   ██ ██   ██ ███████ \n\n");
+
+        System.out.println("Planet Wars est un jeu d'aventure de science fiction incroyable");
+        System.out.println("Pour accéder à l'aide, taper \"help\"\n\n");
 
         this.printLocationInfo();
     }
@@ -100,7 +105,7 @@ public class Game {
      */
     private boolean processCommand(final Command pCommand) {
         if (pCommand.isUnknown()) {
-            System.out.println("I don't know what you mean...");
+            System.out.println("Je ne sais pas ce qu'est cette commande...");
             return false;
         }
 
@@ -137,7 +142,7 @@ public class Game {
      * @param pCommand the inspect command to be processed.
      */
     private void inspect(Command pCommand) {
-        System.out.println("Nothing to inspect here.");
+        System.out.println("Rien à inspecter ici.");
     }
 
     /**
@@ -148,7 +153,7 @@ public class Game {
      */
     private boolean quit(final Command pCommand) {
         if (pCommand.hasSecondWord()) {
-            System.out.println("Quit what ??");
+            System.out.println("Quitter quoi ??");
             return false;
         }
 
@@ -159,9 +164,9 @@ public class Game {
      * Prints a little help text.
      */
     private void printHelp() {
-        System.out.println("You are lost. You are alone.");
-        System.out.println("You wander around at the university.");
-        System.out.println("Your command words are:");
+        System.out.println("Vous êtes l'élu qui va rétablir l'équilibre de la galaxie.");
+        System.out.println("Vous devez trouver le crystal sacré pour cela.");
+        System.out.println("Les commandes disponibles sont les suivantes :");
         System.out.println("\t" + this.aParser.getCommands());
     }
 
@@ -179,13 +184,13 @@ public class Game {
      */
     private void goRoom(final Command pCommand) {
         if (!pCommand.hasSecondWord()) {
-            System.out.println("Go where ?");
+            System.out.println("Aller où ?");
 
             return;
         }
 
         Room vNextRoom = this.aCurrentRoom.getExit(pCommand.getSecondWord());
-        if (vNextRoom == null) System.out.println("Unknown direction");
+        if (vNextRoom == null) System.out.println("Cette direction est inconnue...\n");
         else this.aCurrentRoom = vNextRoom;
 
         this.printLocationInfo();
@@ -197,5 +202,4 @@ public class Game {
     private void printLocationInfo() {
         System.out.println(this.aCurrentRoom.getLongDescription());
     }
-
-} // Game
+}

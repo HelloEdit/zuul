@@ -30,7 +30,10 @@ public class Parser {
     } // Parser()
 
     /**
+     * Get a command from stdin.
+     *
      * @return The next command from the user.
+     * @see Scanner
      */
     public Command getCommand() {
         String vInputLine;    // contiendra toute la ligne tapee

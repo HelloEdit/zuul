@@ -23,7 +23,7 @@ zuul-v4
 -package
 -Xdoclint:none
 -link
-http://download.oracle.com/javase/8/docs/api/
+http://download.oracle.com/javase/11/docs/api/
 /home/helloedit/Desktop/Ecole/IPO/zuul-v4/Game.java
 /home/helloedit/Desktop/Ecole/IPO/zuul-v4/Command.java
 /home/helloedit/Desktop/Ecole/IPO/zuul-v4/CommandWords.java

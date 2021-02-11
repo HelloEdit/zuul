@@ -35,7 +35,7 @@ public class Room {
      */
     public String getLongDescription() {
         return "Vous êtes actuellement dans la salle \"" +
-                this.aName + "\".\n" +
+                this.aName + "\"\n" +
                 this.aDescription + ".\n" +
                 this.getExitString();
     }
@@ -69,6 +69,8 @@ public class Room {
      * @return a string with the possibles exits.
      */
     public String getExitString() {
+        if (this.aExits.size() == 0) return "Aucune sortie n'est disponible.";
+
         StringBuilder vResult = new StringBuilder("Vous pouvez sortir par : ");
         for (String vExit : this.aExits.keySet())
             vResult.append(vExit).append(" ");
