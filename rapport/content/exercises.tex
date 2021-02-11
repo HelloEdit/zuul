@@ -1,0 +1,354 @@
+\chapter{Exercices}
+
+% The first really interesting exercise to write is 7.5. 
+% We initialize our counters to match this situation.
+\setcounter{section}{7}
+\setcounter{exercise}{4}
+
+
+\begin{exercise}[subtitle=printLocationInfo]
+
+En ré-usinant le code de l'affichage de la localisation et des sorties en une fonction, on s'assure de ne pas répéter cette partie à plusieurs endroits.
+
+\begin{minted}{java}
+private void printLocationInfo() {
+    Room vCurrent = this.aCurrentRoom;
+    System.out.printf("You are %s%n", vCurrent.getDescription());
+   
+    System.out.print("Exits: ");
+    if (vCurrent.aEastExit != null) System.out.print("east ");
+    if (vCurrent.aNorthExit != null) System.out.print("north ");
+    if (vCurrent.aSouthExit != null) System.out.print("south ");
+    if (vCurrent.aWestExit != null) System.out.print("west ");
+    System.out.println();
+}
+\end{minted}
+\end{exercise}
+
+\begin{exercise}[subtitle=getExit]
+
+Dans cet exercice, on se rend compte que le système "un attribut = une sortie" n'est pas le plus optimal (imaginons un hub ayant une dizaines de sorties par exemple, ce qui deviendrait problématique pour la lisibilité et la maintenance du code). L'idée étant de limiter le couplage entre la classe \verb|Room| et les autres classes. Pour cela, on cherchera à limiter la dépendance aux attributs de Room et plutôt passer par une fonction pour récupérer les sorties, ce qui permet de ne pas avoir à se soucier de l'implémentation du côté de \verb|Room|.\\ 
+
+\textbf{Notes:} Notons qu'il reste un problème dans \verb|printLocationInfo| à cause de ce changement, problème abordé dans les exercices qui suivent. On peut aussi émettre une critique quant à la façon de fonctionner de \verb|getExit|: si jamais on passe \verb|"North"| à la place de \verb|"north"| par inadvertance, on aura comme valeur de retour \verb|null|. Une solution serait d'utiliser des \verb|enum|.
+
+\begin{minted}{java}
+public Room getExit(final String pDirection) {
+    switch (pDirection) {
+        case "north":
+            return this.aNorthExit;
+
+        case "east":
+            return this.aEastExit;
+
+        case "south":
+            return this.aSouthExit;
+
+        case "west":
+            return this.aWestExit;
+
+        default:
+            return null;
+    }
+}
+\end{minted}
+\end{exercise}
+
+\begin{exercise}[subtitle=getExitString]
+Le dernier changement a impacté la façon dont \verb|printLocationInfo| fonctionne. Pour le résoudre, on écrit une nouvelle méthode \verb|getExitString| et, fort de ce changement, on ré-usine \verb|printLocationInfo|.
+
+\begin{minted}{java}
+public String getExitString() {
+    String vResult = "Exits: ";
+
+    if (this.aEastExit != null) vResult += "east ";
+    if (this.aNorthExit != null) vResult += "north ";
+    if (this.aSouthExit != null) vResult += "south ";
+    if (this.aWestExit != null) vResult += "west";
+
+    return vResult;
+}
+
+private void printLocationInfo() {
+    Room vCurrent = this.aCurrentRoom;
+
+    System.out.printf("You are %s%n", vCurrent.getDescription());
+    System.out.println(vCurrent.getExitString());
+}
+\end{minted}
+\end{exercise}
+
+\begin{exercise}[subtitle=HashMap et setExit]
+
+Maintenant que le couplage entre \verb|Room| et \verb|Game| est faible, on peut remplacer les détails de l'implémentation sans risquer de casser quelque chose. On utilise une structure de données \verb|HashMap| et on doit changer les méthodes de \verb|Room| en conséquence. On en profite aussi pour remplacer \verb|setExits|, devenue inutile, par \verb|setExit|.
+
+\begin{minted}{java}
+public Room setExit(final String pDirection, final Room pExit) {
+    this.aExits.put(pDirection, pExit);
+
+    return this;
+}
+
+public Room getExit(final String pDirection) {
+    return this.aExits.get(pDirection);
+}
+\end{minted}
+\end{exercise}
+
+\textbf{Note :} J'ai ajouté en plus de ce que l'exercice demandait la dernière ligne \mintinline{java}{return this;} pour pouvoir chaîner les appels de \verb|setExit| comme ci-dessous:
+
+\begin{minted}{java}
+office.setExit("east", car)
+      .setExit("north", kitchen)
+      .setExit("west", library);
+\end{minted}
+
+\begin{exercise}[subtitle=keySet]
+
+\verb|getExitString| doit elle aussi être modifiée. Plutôt que de tester la présence de certaines valeurs dans la \verb|HashMap| (du type "north", "east", "down", "up"...), on peut énumérer les différentes clés qui composent la \verb|HashMap| des sorties.
+
+\begin{minted}{java}
+public String getExitString() {
+    String vResult = "Exits : ";
+    for (String vExit : this.aExits.keySet())
+        vResult += vExit + " ";
+
+    return vResult;
+}
+\end{minted}
+\end{exercise}
+
+\begin{exercise}[subtitle=Fonctionnement de keySet]
+
+Reprenons le code intéressant de l'exercice précédent et intéressons-nous à son fonctionnement.
+
+\begin{minted}{java}
+for (String vExit : this.aExits.keySet())
+    vResult += vExit + " ";
+\end{minted}
+
+La différence entre un \verb|Set| et liste normale est que le \verb|Set| ne peut pas contenir deux mêmes éléments.
+
+\end{exercise}
+
+\begin{exercise}[subtitle=getLongDescription]
+
+Toujours dans la logique de la conception dirigée par responsabilités, on déplace la création de la description dans la classe \verb|Room|.
+
+\begin{minted}{java}
+public String getLongDescription() {
+    return "You are " + this.aDescription + ".\n" + this.getExitString();
+}
+\end{minted}
+
+Et on change \verb|Game| en conséquence.
+
+\begin{minted}{java}
+private void printLocationInfo() {
+    Room vCurrent = this.aCurrentRoom;
+    System.out.println(vCurrent.getLongDescription());
+}
+\end{minted}
+\end{exercise}
+
+\begin{exercise}[subtitle=Diagramme au lancement]
+
+\tikzset{
+    start/.style={draw, rectangle, rounded corners, minimum height=1cm, minimum width=4cm, fill=gray!50},
+    class/.style={draw, rectangle, rounded corners, minimum height=1cm, minimum width=4cm},
+    arrow/.style={very thick,->,>=stealth}
+}
+
+\begin{figure}[h]
+\centering
+
+\begin{tikzpicture}[node distance=2cm and 1cm]
+
+\node [start]                 (game) {Game};
+\coordinate[below=of game] (c);
+\node [class, left=of c]      (room)     {Room};
+\node [class, right=of c]     (parser)    {Parser};
+\node [class, below=of c]     (cmdword)   {CommandWords};
+\node [class, below=of c, right=of cmdword] (cmd)     {Command};
+
+\draw [arrow] (game)    -- (parser);
+\draw [arrow] (game)    -- (room);
+\draw [arrow] (parser)  -- (cmd);
+\draw [arrow] (parser)  -- (cmdword);
+
+\end{tikzpicture}
+
+\caption{Diagramme de relation entre les classes}
+\end{figure}
+
+
+\end{exercise}
+
+\begin{exercise}[subtitle=look]
+
+L'ajout de la commande \verb|look| se traduit par plusieurs changements: le premier en mettant le mot de la commande dans \verb|CommandWords|.
+
+\begin{minted}{java}
+// a static constant array that will hold the valid commands words
+private final static String[] aValidCommands = { "go", "quit", "help", "look" };
+\end{minted}
+
+Il faut aussi modifier \verb|processCommand| en renseignant le nouveau mot de la commande ainsi que la fonction associée.
+
+\begin{minted}{java}
+private boolean processCommand(final Command pCommand) {
+    if (pCommand.isUnknown()) {
+        System.out.println("I don't know what you mean...");
+        return false;
+    }
+
+    switch (pCommand.getCommandWord()) {
+        case "help":
+            this.printHelp();
+            return false;
+
+        case "quit":
+            return this.quit(pCommand);
+
+        case "go":
+            this.goRoom(pCommand);
+            return false;
+
+        case "look":
+            this.look();
+            return false;
+
+        default:
+            System.out.println("I don't know what you mean...");
+            return false;
+    }
+}
+\end{minted}
+
+On remarque aussi que la méthode \verb|look()| fait, pour l'instant, la même chose que \verb|printLocationInfo()|. 
+\end{exercise}
+
+\begin{exercise}[subtitle=Commande search]
+ 
+ J'ai choisi d'implémenter une commande nommée \verb|search <something>| qui permettra de fouiller des objet présent dans la pièce où se trouve le joueur. Pour ajouter cette commande, on modifie \verb|CommandWords|.
+ 
+\begin{minted}{java}
+private final static String[] aValidCommands = { "go", "quit", "help", "look", "search" };
+\end{minted}
+
+Et on doit modifier la méthode \verb|processCommand| de \verb|Game| ainsi que créer la méthode pour gérer cette commande.
+
+\begin{minted}{java}
+private boolean processCommand(final Command pCommand) {
+    ...
+
+    switch (pCommand.getCommandWord()) {
+        case "inspect":
+            this.inspect(pCommand);
+            return false;
+
+        ...
+    }
+}
+\end{minted}
+
+\begin{minted}{java}
+private void inspect(final Command pCommand) {
+    System.out.printf("Nothing to inspect here.");
+}
+\end{minted}
+
+\textbf{Note:} On utilise ici \verb|...| pour signaler les parties du code inutile à montrer car n'ayant pas changées entre les exercices.
+
+\end{exercise}
+
+
+\begin{exercise}[subtitle=showAll et showCommands]
+
+Dans cet exercice, on rend l'affichage des commandes dans la méthode \verb|printHelp| dynamique en créant un méthode d'énumération des commandes dans \verb|CommandWords|.
+
+
+\begin{minted}{java}
+public void showAll() {
+    System.out.print("\t");
+    for (String command : CommandWords.aValidCommands) {
+        System.out.print(command + " ");
+    }
+    System.out.println();
+}
+\end{minted}
+
+\textbf{Note:} On observe que la méthode \verb|showAll| pourrait être déclarée comme \verb|static| car ne dépendant que de \verb|CommandWords.aValidCommands| qui est un attribut statique de la classe \verb|CommandWords|.\\
+
+On crée aussi un moyen de l'appeler depuis \verb|Game| en passant par \verb|Parser|.
+
+\begin{minted}{java}
+// Dans Parser.java
+public void showCommands() {
+    this.aValidCommands.showAll();
+}
+\end{minted}
+
+\begin{minted}{java}
+// Dans Game.java
+private void printHelp() {
+    System.out.println("You are lost. You are alone.");
+    System.out.println("You wander around at the university.");
+    System.out.println("Your command words are:");
+    this.aParser.showCommands();
+}
+\end{minted}
+\end{exercise}
+
+\begin{exercise}[subtitle=Changer Game ?]
+
+Malgré toutes nos modifications, si l'on ajoute une nouvelle commande au jeu, il faudra quand même modifier la classe \verb|Game|. En effet, la méthode \verb|processCommand| contient un \verb|switch| dont on doit ajouter une nouvelle branche pour chaque nouvelle commande.
+
+\end{exercise}
+
+\begin{exercise}[subtitle=getCommandList]
+
+Dans cet exercice, on poursuit notre travail sur le modèle de la conception axée sur la responsabilité. Pour le cas de \verb|showAll|, plutôt qu'afficher la liste des commandes disponibles, on préférera générer un \verb|String| pour ne pas imposer un affichage spécifique (notamment via \verb|System.out|).
+
+\begin{minted}{java}
+public String getCommandList() {
+    String vResult = "";
+    for (String command : CommandWords.aValidCommands) {
+        vResult += command + " ";
+    }
+
+    return vResult;
+}
+\end{minted}
+
+On modifie la cascade crée aux exercices d'avant pour refléter ce changement.
+
+\begin{minted}{java}
+// Dans Parser.java
+public String getCommands() {
+    return this.aValidCommands.getCommandList();
+}
+\end{minted}
+
+\begin{minted}{java}
+// Dans Game.java
+private void printHelp() {
+    System.out.println("You are lost. You are alone.");
+    System.out.println("You wander around at the university.");
+    System.out.println("Your command words are:");
+    // "\t" représente une tabulation
+    System.out.println("\t" + this.aParser.getCommands());
+}
+\end{minted}
+
+On en profite aussi pour changer la concaténation des \verb|String| dans les boucles en utilisant \verb|StringBuilder|. Par exemple, sur la boucle dans le fichier \verb|Room.java|.
+
+\begin{minted}{java}
+public String getExitString() {
+    StringBuilder vResult = new StringBuilder("Exits : ");
+    for (String vExit : this.aExits.keySet())
+        vResult.append(vExit).append(" ");
+
+    return vResult.toString();
+}
+\end{minted}
+\end{exercise} 

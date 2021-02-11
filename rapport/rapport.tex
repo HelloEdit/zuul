@@ -1,0 +1,54 @@
+\documentclass[a4paper,12pt]{report}
+
+\usepackage[T1]{fontenc} % font encodings
+\usepackage[utf8]{inputenc} % use utf8 as encoding
+\usepackage{lmodern} % use Latin Moderna
+\usepackage[french]{babel} % set french as language
+\usepackage{graphicx} % manipulate image
+\usepackage{hyperref} % use hyper reference
+\usepackage{minted} % syntax highlighting
+\usepackage[use-files]{xsim} % exercise helper
+\usepackage{titlesec} % manipulate title
+\usepackage{xcolor} % manipulate color
+\usepackage{enumitem} % better list
+\usepackage{tikz} % for graphics
+
+% load some tikz library
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric, arrows}
+
+% define code block background color
+\definecolor{bg}{rgb}{0.95,0.95,0.95}
+\setminted[java]{breaklines,linenos,autogobble,bgcolor=bg}
+\setmintedinline[java]{bgcolor={}}
+
+% remove useless formating of chapter
+\titleformat{\chapter}
+  {\normalfont\LARGE\bfseries}{\thechapter}{1em}{}
+\titlespacing*{\chapter}{0pt}{3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
+
+% add all the exercices to the TOC
+\newcommand\addsubsec[1]{%
+  \section*{#1}%
+  \addcontentsline{toc}{section}{\protect\numberline{\GetExerciseProperty{counter}} \GetExerciseProperty{subtitle}}%
+}
+
+\xsimsetup{
+  exercise/the-counter = \arabic{section}.\arabic{exercise}, % for "Exercice <section>.<number>
+  exercise/heading=\addsubsec
+}
+
+\begin{document}
+\begin{titlepage}
+
+\include{./content/titlepage}
+
+\end{titlepage}
+
+\tableofcontents
+
+\include{./content/presentation}
+
+\include{./content/exercises}
+
+\end{document}
