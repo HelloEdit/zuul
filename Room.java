@@ -1,26 +1,19 @@
 import java.util.HashMap;
 
 public class Room {
+    private final String aName;
     private final String aDescription;
     private final HashMap<String, Room> aExits;
 
     /**
-     * Creates a new room with a description.
-     *
-     * @param pDescription the description of the Room.
+     * Creates a new room.
+     * @param pName name of the room.
+     * @param pDescription description of the room.
      */
-    public Room(final String pDescription) {
+    public Room(final String pName, final String pDescription) {
+        this.aName = pName;
         this.aDescription = pDescription;
         this.aExits = new HashMap<>();
-    }
-
-    /**
-     * Gets the room description.
-     *
-     * @return the room description.
-     */
-    public String getDescription() {
-        return this.aDescription;
     }
 
     /**
@@ -29,7 +22,10 @@ public class Room {
      * @return the complete description.
      */
     public String getLongDescription() {
-        return "You are " + this.aDescription + ".\n" + this.getExitString();
+        return "Vous êtes " +
+                this.aName + ".\n" +
+                Room.capitalize(this.aDescription) + ".\n" +
+                Room.capitalize(this.getExitString());
     }
 
     /**
@@ -37,9 +33,12 @@ public class Room {
      *
      * @param pDirection the direction of the exit.
      * @param pExit the Room to which the exit leads.
+     * @return the current room.
      */
-    public void setExit(final String pDirection, final Room pExit) {
+    public Room setExit(final String pDirection, final Room pExit) {
         this.aExits.put(pDirection, pExit);
+
+        return this;
     }
 
     /**
@@ -63,5 +62,15 @@ public class Room {
             vResult.append(vExit).append(" ");
 
         return vResult.toString();
+    }
+
+    /**
+     * Utility function to capitalize the first letter of a String.
+     * @param pStr the string to be capitalized.
+     * @return the new formatted String.
+     */
+    public static String capitalize(String pStr) {
+        if (pStr == null) return "";
+        return pStr.substring(0, 1).toUpperCase() + pStr.substring(1);
     }
 } // Room

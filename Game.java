@@ -14,10 +14,26 @@ public class Game {
      * Creates the necessary rooms for the game.
      */
     private void createRooms() {
-        Room office = new Room("Bureau de Murphy Law");
-        Room car = new Room("Voiture de Murphy Law");
+        Room office = new Room("au bureau", "c'est le bureau de Murphy Law");
+        Room car = new Room("à la voiture", "c'est la voiture de Murphy Law. Pratique pour aller là où vous voulez !");
+        Room esiee = new Room("à l'ESIEE", "c'est la salle où vous avez lancé ce jeu");
+        Room greatStair = new Room("au grand escalier", "l'escalier principal de Buckingham Palace");
+        Room reception = new Room("à la salle de réception", "la salle de réception de Buckingham Palace");
+        Room apartments = new Room("aux appartements", "ce sont les appartements de la Reine");
+        Room kitchen = new Room("à la cuisine", "la cuisine de Buckingham Palace");
+        Room cave = new Room("à la cave", "une cave de stockage pour Buckingham Palace");
 
         office.setExit("east", car);
+
+        car.setExit("esiee", esiee)
+                .setExit("buckingham", greatStair);
+
+        greatStair.setExit("reception", reception);
+
+        reception.setExit("up", apartments)
+                .setExit("west", kitchen);
+
+        kitchen.setExit("down", cave);
 
         this.aCurrentRoom = office;
     }
@@ -141,7 +157,7 @@ public class Game {
         }
 
         Room vNextRoom = this.aCurrentRoom.getExit(pCommand.getSecondWord());
-        if (vNextRoom == null) System.out.println("There is no door !");
+        if (vNextRoom == null) System.out.println("Unknown direction");
         else this.aCurrentRoom = vNextRoom;
 
         this.printLocationInfo();
