@@ -15,6 +15,8 @@ public class CommandWords {
 
     /**
      * Get all possible command words.
+     *
+     * @return the commands list
      */
     public String getCommandList() {
         StringBuilder vResult = new StringBuilder();
