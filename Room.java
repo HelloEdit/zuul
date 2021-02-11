@@ -7,13 +7,25 @@ public class Room {
 
     /**
      * Creates a new room.
-     * @param pName name of the room.
+     *
+     * @param pName        name of the room.
      * @param pDescription description of the room.
      */
     public Room(final String pName, final String pDescription) {
-        this.aName = pName;
-        this.aDescription = pDescription;
+        this.aName = Room.capitalize(pName);
+        this.aDescription = Room.capitalize(pDescription);
         this.aExits = new HashMap<>();
+    }
+
+    /**
+     * Utility function to capitalize the first letter of a String.
+     *
+     * @param pInput the string to be capitalized.
+     * @return the new formatted String.
+     */
+    public static String capitalize(String pInput) {
+        if (pInput == null) return "";
+        return pInput.substring(0, 1).toUpperCase() + pInput.substring(1);
     }
 
     /**
@@ -22,17 +34,17 @@ public class Room {
      * @return the complete description.
      */
     public String getLongDescription() {
-        return "Vous êtes " +
-                this.aName + ".\n" +
-                Room.capitalize(this.aDescription) + ".\n" +
-                Room.capitalize(this.getExitString());
+        return "Vous êtes actuellement dans la salle \"" +
+                this.aName + "\".\n" +
+                this.aDescription + ".\n" +
+                this.getExitString();
     }
 
     /**
      * Set an exit of the room.
      *
      * @param pDirection the direction of the exit.
-     * @param pExit the Room to which the exit leads.
+     * @param pExit      the Room to which the exit leads.
      * @return the current room.
      */
     public Room setExit(final String pDirection, final Room pExit) {
@@ -57,20 +69,10 @@ public class Room {
      * @return a string with the possibles exits.
      */
     public String getExitString() {
-        StringBuilder vResult = new StringBuilder("Exits : ");
+        StringBuilder vResult = new StringBuilder("Vous pouvez sortir par : ");
         for (String vExit : this.aExits.keySet())
             vResult.append(vExit).append(" ");
 
         return vResult.toString();
     }
-
-    /**
-     * Utility function to capitalize the first letter of a String.
-     * @param pStr the string to be capitalized.
-     * @return the new formatted String.
-     */
-    public static String capitalize(String pStr) {
-        if (pStr == null) return "";
-        return pStr.substring(0, 1).toUpperCase() + pStr.substring(1);
-    }
-} // Room
+}

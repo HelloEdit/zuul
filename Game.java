@@ -1,5 +1,8 @@
+import java.util.HashMap;
+
 public class Game {
     private final Parser aParser;
+    private final HashMap<String, Room> aAllRooms;
     private Room aCurrentRoom;
 
     /**
@@ -7,6 +10,8 @@ public class Game {
      */
     public Game() {
         this.aParser = new Parser();
+        this.aAllRooms = new HashMap<>();
+
         this.createRooms();
     }
 
@@ -14,14 +19,14 @@ public class Game {
      * Creates the necessary rooms for the game.
      */
     private void createRooms() {
-        Room office = new Room("au bureau", "c'est le bureau de Murphy Law");
-        Room car = new Room("à la voiture", "c'est la voiture de Murphy Law. Pratique pour aller là où vous voulez !");
-        Room esiee = new Room("à l'ESIEE", "c'est la salle où vous avez lancé ce jeu");
-        Room greatStair = new Room("au grand escalier", "l'escalier principal de Buckingham Palace");
-        Room reception = new Room("à la salle de réception", "la salle de réception de Buckingham Palace");
-        Room apartments = new Room("aux appartements", "ce sont les appartements de la Reine");
-        Room kitchen = new Room("à la cuisine", "la cuisine de Buckingham Palace");
-        Room cave = new Room("à la cave", "une cave de stockage pour Buckingham Palace");
+        Room office = this.initRoom("bureau", "c'est le bureau de Murphy Law");
+        Room car = this.initRoom("voiture", "c'est la voiture de Murphy Law. Pratique pour aller là où vous voulez !");
+        Room esiee = this.initRoom("ESIEE", "c'est la salle où vous avez lancé ce jeu");
+        Room greatStair = this.initRoom("grand escalier", "l'escalier principal de Buckingham Palace");
+        Room reception = this.initRoom("salle de réception", "la salle de réception de Buckingham Palace");
+        Room apartments = this.initRoom("appartements", "ce sont les appartements de la Reine");
+        Room kitchen = this.initRoom("cuisine", "la cuisine de Buckingham Palace");
+        Room cave = this.initRoom("cave", "une cave de stockage d'objets sous Buckingham Palace");
 
         office.setExit("east", car);
 
@@ -44,6 +49,20 @@ public class Game {
         apartments.setExit("down", reception);
 
         this.aCurrentRoom = office;
+    }
+
+    /**
+     * Initializes a new room and store it.
+     *
+     * @param pName        the name of the room.
+     * @param pDescription the description of the room.
+     * @return the created room.
+     */
+    private Room initRoom(final String pName, final String pDescription) {
+        Room vCurrentRoom = new Room(pName, pDescription);
+        this.aAllRooms.put(pName, vCurrentRoom);
+
+        return vCurrentRoom;
     }
 
     /**
@@ -105,10 +124,11 @@ public class Game {
                 this.inspect(pCommand);
                 return false;
 
-            default:
-                System.out.println("I don't know what you mean...");
-                return false;
+            // On néglige la branche "default" ici car ons ait que si on arrive à l'instruction du
+            // switch, le "commandWord" est valide, c'est donc forcément un des 5 cas ci dessus.
         }
+
+        return false;
     }
 
     /**

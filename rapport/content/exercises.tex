@@ -27,7 +27,7 @@ private void printLocationInfo() {
 
 \begin{exercise}[subtitle=getExit]
 
-Dans cet exercice, on se rend compte que le système "un attribut = une sortie" n'est pas le plus optimal (imaginons un hub ayant une dizaines de sorties par exemple, ce qui deviendrait problématique pour la lisibilité et la maintenance du code). L'idée étant de limiter le couplage entre la classe \verb|Room| et les autres classes. Pour cela, on cherchera à limiter la dépendance aux attributs de Room et plutôt passer par une fonction pour récupérer les sorties, ce qui permet de ne pas avoir à se soucier de l'implémentation du côté de \verb|Room|.\\ 
+Dans cet exercice, on se rend compte que le système "un attribut = une sortie" n'est pas le plus optimal (imaginons un hub ayant une dizaines de sorties par exemple, ce qui deviendrait problématique pour la lisibilité et la maintenance du code). L'idée étant de limiter le couplage entre la classe \verb|Room| et les autres classes. Pour cela, on cherchera à limiter la dépendance aux attributs de Room et plutôt passer par une fonction pour récupérer les sorties, ce qui permet de ne gérer la logique des sorties que du côté de \verb|Room|.\\ 
 
 \textbf{Notes:} Notons qu'il reste un problème dans \verb|printLocationInfo| à cause de ce changement, problème abordé dans les exercices qui suivent. On peut aussi émettre une critique quant à la façon de fonctionner de \verb|getExit|: si jamais on passe \verb|"North"| à la place de \verb|"north"| par inadvertance, on aura comme valeur de retour \verb|null|. Une solution serait d'utiliser des \verb|enum|.
 
@@ -117,7 +117,7 @@ public String getExitString() {
 \end{minted}
 \end{exercise}
 
-\begin{exercise}[subtitle=Fonctionnement de keySet]
+\begin{exercise}[subtitle=Fonctionnement de keySet & Javadoc]
 
 Reprenons le code intéressant de l'exercice précédent et intéressons-nous à son fonctionnement.
 
@@ -126,7 +126,11 @@ for (String vExit : this.aExits.keySet())
     vResult += vExit + " ";
 \end{minted}
 
-La différence entre un \verb|Set| et liste normale est que le \verb|Set| ne peut pas contenir deux mêmes éléments.
+Ce code marche car \verb|keySet| renvoit un \verb|Set| qui est énumérable et utilisable par la boucle for-each.
+
+La différence entre un \verb|Set| et une liste normale (un tableau) est que le \verb|Set| ne peut pas contenir deux mêmes éléments.
+
+Pour la Javadoc, la documentation de \verb|Game| contient beaucoup moins de méthode que \verb|Room| car l'encapsulation fait que seul \verb|play| est publique pour \verb|Game|, tandis que \verb|Room| doit exposer beaucoup plus de méthodes pour être utilisée par \verb|Game|.
 
 \end{exercise}
 
@@ -136,7 +140,10 @@ Toujours dans la logique de la conception dirigée par responsabilités, on dép
 
 \begin{minted}{java}
 public String getLongDescription() {
-    return "You are " + this.aDescription + ".\n" + this.getExitString();
+    return "Vous êtes actuellement dans la salle \"" +
+            this.aName + "\".\n" +
+            this.aDescription + ".\n" +
+            this.getExitString();
 }
 \end{minted}
 
@@ -179,8 +186,6 @@ private void printLocationInfo() {
 
 \caption{Diagramme de relation entre les classes}
 \end{figure}
-
-
 \end{exercise}
 
 \begin{exercise}[subtitle=look]
@@ -351,4 +356,12 @@ public String getExitString() {
     return vResult.toString();
 }
 \end{minted}
-\end{exercise} 
+\end{exercise}
+
+Dans l'optique de stocker les instances de \verb|Room| crée, on ajoute un attribut \verb|aAllRooms| qui contiendra tous les objets crées dans \verb|createRooms|. On crée une fonction utilitaire pour nous faciliter la tâche.
+
+\begin{exercise}
+
+
+
+\end{execise}
