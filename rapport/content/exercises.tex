@@ -5,7 +5,6 @@
 \setcounter{section}{7}
 \setcounter{exercise}{4}
 
-
 \begin{exercise}[subtitle=printLocationInfo]
 
 En ré-usinant le code de l'affichage de la localisation et des sorties en une fonction, on s'assure de ne pas répéter cette partie à plusieurs endroits.
@@ -158,33 +157,51 @@ private void printLocationInfo() {
 \end{exercise}
 
 \begin{exercise}[subtitle=Diagramme au lancement]
-
-\tikzset{
-    start/.style={draw, rectangle, rounded corners, minimum height=1cm, minimum width=4cm, fill=gray!50},
-    class/.style={draw, rectangle, rounded corners, minimum height=1cm, minimum width=4cm},
-    arrow/.style={very thick,->,>=stealth}
-}
-
 \begin{figure}[h]
 \centering
 
 \begin{tikzpicture}[node distance=2cm and 1cm]
 
-\node [start]                 (game) {Game};
-\coordinate[below=of game] (c);
-\node [class, left=of c]      (room)     {Room};
-\node [class, right=of c]     (parser)    {Parser};
-\node [class, below=of c]     (cmdword)   {CommandWords};
-\node [class, below=of c, right=of cmdword] (cmd)     {Command};
+\node [start]                               (game)                  {Game};
+\coordinate[below=of game]                  (c);
+\node [class, left=of c]                    (room)                  {Room (bureau)};
+\node [class, right=of c]                   (parser)                {Parser};
+\node [class, below=of c]                   (cmdword)               {CommandWords};
+\node [class, below=of c, right=of cmdword] (cmd)                   {Command};
 
-\draw [arrow] (game)    -- (parser);
-\draw [arrow] (game)    -- (room);
-\draw [arrow] (parser)  -- (cmd);
-\draw [arrow] (parser)  -- (cmdword);
+\draw [arrow] (game) to (parser);
+\draw [arrow] (game) to (room);
+\draw [arrow,dashed] (parser) to node [auto] {va créer sur demande} (cmd);
+\draw [arrow] (parser) to (cmdword);
 
 \end{tikzpicture}
+\caption{Diagramme de relation entre les objets}
+\end{figure}
+\end{exercise}
 
-\caption{Diagramme de relation entre les classes}
+\clearpage
+
+\begin{exercise}[subtitle=Diagramme après go]
+\begin{figure}[h]
+\centering
+
+\begin{tikzpicture}[node distance=2cm and 1cm]
+
+\node [start]                               (game)                  {Game};
+\coordinate[below=of game]                  (c);
+\node [class, left=of c]                    (room)                  {Room (vNextRoom)};
+\node [class, right=of c]                   (parser)                {Parser};
+\node [class, below=of c]                   (cmdword)               {CommandWords};
+\node [class, below=of c, right=of cmdword] (cmd)                   {Command (go)};
+
+\draw [arrow] (game) to (parser);
+\draw [arrow] (game) to (room);
+\draw [arrow, dashed] (parser) to (cmd);
+\draw [arrow] (parser) to (cmdword);
+\draw [arrow,dashed, bend right=70] (cmd) to node [auto, swap] {est donnée à} (game.east);
+
+\end{tikzpicture}
+\caption{Diagramme de relation entre les objets après un go}
 \end{figure}
 \end{exercise}
 
@@ -357,20 +374,15 @@ public String getExitString() {
     return vResult.toString();
 }
 \end{minted}
-\end{exercise}
 
-\begin{exercise}[subtitle=Les objets Room]
+\subsection*{Les objets Room}
 
-Dans l'optique de stocker les instances de \verb|Room| crée, on ajoute un attribut \verb|aAllRooms| qui contiendra tous les objets crées dans \verb|createRooms|. On crée une fonction utilitaire pour nous faciliter la tâche.
+Dans l'optique de stocker les instances de \verb|Room| crées, on ajoute un attribut \verb|aAllRooms| qui contiendra tous les objets crées dans \verb|createRooms|. On crée une fonction utilitaire \verb|initRoom| pour nous faciliter la tâche.
 
 \begin{minted}{java}
 public class Game {
     private final HashMap<String, Room> aAllRooms;
 
-    ... 
-
-    // notre fonction utilitaire qui crée l'objet 
-    // Room, l'ajoute à la HashMap et la retourne.
     private Room initRoom(final String pName, final String pDescription) {
         Room vCurrentRoom = new Room(pName, pDescription);
         this.aAllRooms.put(pName, vCurrentRoom);

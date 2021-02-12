@@ -1,8 +1,23 @@
 import java.util.HashMap;
 
+/**
+ * This class represents a room from the Zuul project.
+ * It contains exits and a description.
+ */
 public class Room {
+    /**
+     * The name of the room.
+     */
     private final String aName;
+
+    /**
+     * The description of the room.
+     */
     private final String aDescription;
+
+    /**
+     * The exits of the room.
+     */
     private final HashMap<String, Room> aExits;
 
     /**
@@ -23,7 +38,7 @@ public class Room {
      * @param pInput the string to be capitalized.
      * @return the new formatted String.
      */
-    public static String capitalize(String pInput) {
+    private static String capitalize(String pInput) {
         if (pInput == null) return "";
         return pInput.substring(0, 1).toUpperCase() + pInput.substring(1);
     }

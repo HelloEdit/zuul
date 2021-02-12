@@ -1,3 +1,7 @@
+/**
+ * A command represents a particular instruction asked by the user.
+ * This takes the form of two separate words, one for the command and a second one for the argument.
+ */
 public class Command {
     private final String aCommandWord;
     private final String aSecondWord;

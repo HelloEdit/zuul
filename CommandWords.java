@@ -9,7 +9,9 @@
  * @version 2008.03.30 + 2019.09.25
  */
 public class CommandWords {
-    // a static constant array that will hold the valid commands words
+    /**
+     * A static constant array that will hold the valid commands words
+     */
     private final static String[] aValidCommands =
             {"go", "quit", "help", "look", "inspect"};
 

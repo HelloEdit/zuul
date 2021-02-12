@@ -1,8 +1,22 @@
 import java.util.HashMap;
 
+/**
+ * The main class of the Zuul project.
+ */
 public class Game {
+    /**
+     * The parser instance to get commands.
+     */
     private final Parser aParser;
+
+    /**
+     * All rooms created for the game.
+     */
     private final HashMap<String, Room> aAllRooms;
+
+    /**
+     * The current room where the player is.
+     */
     private Room aCurrentRoom;
 
     /**
