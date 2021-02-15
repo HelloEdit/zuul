@@ -1,5 +1,6 @@
 #BlueJ class context
 comment0.target=Room
+comment0.text=\n\ This\ class\ represents\ a\ room\ from\ the\ Zuul\ project.\n\ It\ contains\ exits\ and\ a\ description.\n
 comment1.params=pName\ pDescription
 comment1.target=Room(java.lang.String,\ java.lang.String)
 comment1.text=\n\ Creates\ a\ new\ room.\n\n\ @param\ pName\ \ \ \ \ \ \ \ name\ of\ the\ room.\n\ @param\ pDescription\ description\ of\ the\ room.\n

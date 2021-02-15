@@ -1,5 +1,6 @@
 #BlueJ class context
 comment0.target=Game
+comment0.text=\n\ The\ main\ class\ of\ the\ Zuul\ project.\n
 comment1.params=
 comment1.target=Game()
 comment1.text=\n\ Creates\ the\ game\ and\ initialise\ its\ internal\ map.\n

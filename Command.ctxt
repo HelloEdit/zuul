@@ -1,5 +1,6 @@
 #BlueJ class context
 comment0.target=Command
+comment0.text=\n\ A\ command\ represents\ a\ particular\ instruction\ asked\ by\ the\ user.\n\ This\ takes\ the\ form\ of\ two\ separate\ words,\ one\ for\ the\ command\ and\ a\ second\ one\ for\ the\ argument.\n
 comment1.params=pFirst\ pSecond
 comment1.target=Command(java.lang.String,\ java.lang.String)
 comment1.text=\n\ Creates\ a\ new\ Command.\n\n\ @param\ pFirst\ \ Command\ word.\n\ @param\ pSecond\ a\ second\ word.\n

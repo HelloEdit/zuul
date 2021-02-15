@@ -367,7 +367,9 @@ On en profite aussi pour changer la concaténation des \verb|String| dans les bo
 
 \begin{minted}{java}
 public String getExitString() {
-    StringBuilder vResult = new StringBuilder("Exits : ");
+    StringBuilder vResult = new String\usepackage{amsmath}
+    \usepackage{amsfonts}
+    \usepackage{amssymb}Builder("Exits : ");
     for (String vExit : this.aExits.keySet())
         vResult.append(vExit).append(" ");
 
