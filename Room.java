@@ -19,16 +19,23 @@ public class Room {
      * The exits of the room.
      */
     private final HashMap<String, Room> aExits;
+    
+    /**
+     * The image for the room.
+     */
+    private final String aImageName;
 
     /**
      * Creates a new room.
      *
-     * @param pName        name of the room.
+     * @param pName name of the room.
      * @param pDescription description of the room.
+     * @param pImageName image name of the room.
      */
-    public Room(final String pName, final String pDescription) {
+    public Room(final String pName, final String pDescription, final String pImageName) {
         this.aName = Room.capitalize(pName);
         this.aDescription = Room.capitalize(pDescription);
+        this.aImageName = pImageName;
         this.aExits = new HashMap<>();
     }
 
@@ -91,5 +98,14 @@ public class Room {
             vResult.append(vExit).append(" ");
 
         return vResult.toString();
+    }
+    
+    /**
+     * Gets the room's image name.
+     *
+     * @return a string describing the room's image name.
+     */
+    public String getImageName() {
+        return aImageName;
     }
 }
