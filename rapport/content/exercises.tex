@@ -262,14 +262,14 @@ Et on doit modifier la méthode \verb|processCommand| de \verb|Game| ainsi que c
 
 \begin{minted}{java}
 private boolean processCommand(final Command pCommand) {
-    ...
+    // code omitted for brevity
 
     switch (pCommand.getCommandWord()) {
         case "inspect":
             this.inspect(pCommand);
             return false;
 
-        ...
+        // code omitted for brevity
     }
 }
 \end{minted}
@@ -279,9 +279,6 @@ private void inspect(final Command pCommand) {
     System.out.printf("Nothing to inspect here.");
 }
 \end{minted}
-
-\textbf{Note:} On utilise ici \verb|...| pour signaler les parties du code inutile à montrer car n'ayant pas changées entre les exercices.
-
 \end{exercise}
 
 
@@ -367,9 +364,7 @@ On en profite aussi pour changer la concaténation des \verb|String| dans les bo
 
 \begin{minted}{java}
 public String getExitString() {
-    StringBuilder vResult = new String\usepackage{amsmath}
-    \usepackage{amsfonts}
-    \usepackage{amssymb}Builder("Exits : ");
+    StringBuilder vResult = new StringBuilder("Exits : ");
     for (String vExit : this.aExits.keySet())
         vResult.append(vExit).append(" ");
 
@@ -391,6 +386,47 @@ public class Game {
 
         return vCurrentRoom;
     }
+}
+\end{minted}
+
+\subsection*{\textit{zuul-with-images}}
+
+Après avoir fait les changements pour intégrer l'interface graphique voulue, on peut s'intéresser à son fonctionnement, notamment à sa gestion des évenements. En effet, dans le code de \verb|UserInterface|, on retrouve cette ligne
+
+\begin{minted}{java}
+private void createGUI() {
+    // code omitted for brevity
+    
+    // add some event listeners to some components
+    this.aEntryField.addActionListener(this);
+}
+\end{minted}
+
+Le fait de passer \verb|this| en paramètre indique que c'est la classe courante (soit \verb|UserInterface|) qui va interpréter au moyen d'une méthode \verb|actionPerformed| les évenements venant du \verb|JTextField|. Cela est rendu possible car \verb|UserInterface| implémente l'interface \verb|ActionListener|.\\
+
+Imaginons que nous voulions implémenter un boutton "Indice" sur le côté droit de l'interface, pour cela, on va devoir modifier \verb|createGUI|.
+
+\begin{minted}{java}
+private void createGUI() {
+    // code omitted for brevity
+    
+    // we create a new Button instance...
+    JButton vButton = new JButton();
+    // ...and we set a special text for it
+    vButton.setText("Indice");
+    
+    // then, we add an action listener for the click event
+    vButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            this.giveIndice();
+            vButton.setVisible(false); // we allow only one press for this button
+        }
+    });
+
+    vPanel.setLayout(new BorderLayout());
+    // finally, we set this button to the east of the main panel
+    vPanel.add(vButton, BorderLayout.EAST);
 }
 \end{minted}
 \end{exercise}

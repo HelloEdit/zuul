@@ -99,9 +99,19 @@ public class UserInterface implements ActionListener {
         JPanel vPanel = new JPanel();
         this.aImage = new JLabel();
 
+        JButton vButton = new JButton();
+        vButton.setText("Indice");
+        vButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.out.println(actionEvent.paramString());
+            }
+        });
+
         vPanel.setLayout(new BorderLayout()); // ==> only five places
         vPanel.add(this.aImage, BorderLayout.NORTH);
         vPanel.add(vListScroller, BorderLayout.CENTER);
+        vPanel.add(vButton, BorderLayout.EAST);
         vPanel.add(this.aEntryField, BorderLayout.SOUTH);
 
         this.aMyFrame.getContentPane().add(vPanel, BorderLayout.CENTER);
