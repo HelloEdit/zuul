@@ -1,12 +1,5 @@
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -17,12 +10,11 @@ import java.net.URL;
 /**
  * This class implements a simple graphical user interface with a text entry
  * area, a text output area and an optional image.
- * 
+ *
  * @author Michael Kolling
  * @version 1.0 (Jan 2003) DB edited (2019)
  */
-public class UserInterface implements ActionListener
-{
+public class UserInterface implements ActionListener {
     private final GameEngine aEngine;
     private JFrame aMyFrame;
     private JTextField aEntryField;
@@ -33,11 +25,10 @@ public class UserInterface implements ActionListener
      * Construct a UserInterface. As a parameter, a Game Engine
      * (an object processing and executing the game commands) is
      * needed.
-     * 
+     *
      * @param pGameEngine The GameEngine object implementing the game logic.
      */
-    public UserInterface(final GameEngine pGameEngine)
-    {
+    public UserInterface(final GameEngine pGameEngine) {
         this.aEngine = pGameEngine;
 
         this.createGUI();
@@ -48,10 +39,9 @@ public class UserInterface implements ActionListener
      *
      * @param pText text to be printed.
      */
-    public void print(final String pText)
-    {
+    public void print(final String pText) {
         this.aLog.append(pText);
-        this.aLog.setCaretPosition( this.aLog.getDocument().getLength() );
+        this.aLog.setCaretPosition(this.aLog.getDocument().getLength());
     }
 
     /**
@@ -59,8 +49,7 @@ public class UserInterface implements ActionListener
      *
      * @param pText text to be printed.
      */
-    public void println(final String pText)
-    {
+    public void println(final String pText) {
         this.print(pText + "\n");
     }
 
@@ -69,8 +58,7 @@ public class UserInterface implements ActionListener
      *
      * @param pImageName image to be showed.
      */
-    public void showImage(final String pImageName)
-    {
+    public void showImage(final String pImageName) {
         String vImagePath = "" + pImageName; // to change the directory
         URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
         if (vImageURL == null) {
@@ -87,8 +75,7 @@ public class UserInterface implements ActionListener
      *
      * @param pOnOff the state of the input field.
      */
-    public void enable(final boolean pOnOff)
-    {
+    public void enable(final boolean pOnOff) {
         this.aEntryField.setEditable(pOnOff);
         if (!pOnOff) {
             this.aEntryField.getCaret().setBlinkRate(0); // cursor won't blink
@@ -99,23 +86,22 @@ public class UserInterface implements ActionListener
     /**
      * Set up graphical user interface.
      */
-    private void createGUI()
-    {
-        this.aMyFrame = new JFrame( "Zork" ); // change the title
+    private void createGUI() {
+        this.aMyFrame = new JFrame("Zork"); // change the title
         this.aEntryField = new JTextField(34);
 
         this.aLog = new JTextArea();
         this.aLog.setEditable(false);
         JScrollPane vListScroller = new JScrollPane(this.aLog);
         vListScroller.setPreferredSize(new Dimension(200, 200));
-        vListScroller.setMinimumSize( new Dimension(100,100));
+        vListScroller.setMinimumSize(new Dimension(100, 100));
 
         JPanel vPanel = new JPanel();
         this.aImage = new JLabel();
 
         vPanel.setLayout(new BorderLayout()); // ==> only five places
-        vPanel.add(this.aImage, BorderLayout.NORTH );
-        vPanel.add(vListScroller, BorderLayout.CENTER );
+        vPanel.add(this.aImage, BorderLayout.NORTH);
+        vPanel.add(vListScroller, BorderLayout.CENTER);
         vPanel.add(this.aEntryField, BorderLayout.SOUTH);
 
         this.aMyFrame.getContentPane().add(vPanel, BorderLayout.CENTER);
@@ -125,7 +111,9 @@ public class UserInterface implements ActionListener
 
         // to end program when window is closed
         this.aMyFrame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) { System.exit(0); }
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
         });
 
         this.aMyFrame.pack();
@@ -138,19 +126,17 @@ public class UserInterface implements ActionListener
      *
      * @param pE the event
      */
-    public void actionPerformed(final ActionEvent pE)
-    {
+    public void actionPerformed(final ActionEvent pE) {
         // no need to check the type of action at the moment
         // because there is only one possible action (text input) :
         this.processCommand(); // never suppress this line
     }
 
     /**
-     * A command has been entered. Read the command and do whatever is 
+     * A command has been entered. Read the command and do whatever is
      * necessary to process it.
      */
-    private void processCommand()
-    {
+    private void processCommand() {
         String vInput = this.aEntryField.getText();
         this.aEntryField.setText("");
 

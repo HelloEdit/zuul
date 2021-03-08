@@ -1,15 +1,14 @@
 import java.util.HashMap;
 
 /**
- *  This class is part of the "World of Zuul" application. 
- *  "World of Zuul" is a very simple, text based adventure game.
- * 
- *  This class creates all rooms, creates the parser and starts
- *  the game.  It also evaluates and executes the commands that 
- *  the parser returns.
+ * This class is part of the "World of Zuul" application.
+ * "World of Zuul" is a very simple, text based adventure game.
+ * <p>
+ * This class creates all rooms, creates the parser and starts
+ * the game.  It also evaluates and executes the commands that
+ * the parser returns.
  */
-public class GameEngine
-{
+public class GameEngine {
     /**
      * The parser instance to get commands.
      */
@@ -24,12 +23,12 @@ public class GameEngine
      * The current room where the player is.
      */
     private Room aCurrentRoom;
-    
+
     /**
      * The graphical user interface of the game.
      */
     private UserInterface aGui;
-    
+
     /**
      * Creates the game and initialise its internal map.
      */
@@ -39,16 +38,15 @@ public class GameEngine
 
         this.createRooms();
     }
-    
+
     /**
      * Set a new graphical user interface for the game
      */
-    public void setGUI(final UserInterface pUserInterface )
-    {
+    public void setGUI(final UserInterface pUserInterface) {
         this.aGui = pUserInterface;
         this.printWelcome();
     }
-    
+
     /**
      * Prints a small welcome text.
      */
@@ -64,7 +62,7 @@ public class GameEngine
 
         this.printLocationInfo();
     }
-    
+
     /**
      * Creates the necessary rooms for the game.
      */
@@ -100,7 +98,7 @@ public class GameEngine
 
         this.aCurrentRoom = office;
     }
-    
+
     /**
      * Initializes a new room and store it.
      *
@@ -114,14 +112,13 @@ public class GameEngine
 
         return vCurrentRoom;
     }
-    
+
     /**
      * Given a command, process (that is: execute) the command.
      * If this command ends the game, true is returned, otherwise false is
      * returned.
      */
-    public void interpretCommand(final String pCommandLine) 
-    {
+    public void interpretCommand(final String pCommandLine) {
         this.aGui.println("> " + pCommandLine);
         Command vCommand = this.aParser.getCommand(pCommandLine);
 
@@ -146,12 +143,12 @@ public class GameEngine
             case "inspect":
                 this.inspect(vCommand);
 
-            // On néglige la branche "default" ici car ons ait que si on arrive à l'instruction du
-            // switch, le "commandWord" est valide, c'est donc forcément un des 5 cas ci dessus.
+                // On néglige la branche "default" ici car ons ait que si on arrive à l'instruction du
+                // switch, le "commandWord" est valide, c'est donc forcément un des 5 cas ci dessus.
         }
 
     }
-    
+
     /**
      * Prints a little help text.
      */
@@ -161,7 +158,7 @@ public class GameEngine
         this.aGui.println("Les commandes disponibles sont les suivantes :");
         this.aGui.println("\t" + this.aParser.getCommands());
     }
-    
+
     /**
      * Handles the quit command.
      *
@@ -176,7 +173,7 @@ public class GameEngine
 
         return true;
     }
-    
+
     /**
      * Changes the current room.
      *
@@ -194,21 +191,21 @@ public class GameEngine
             this.aGui.println("Cette direction est inconnue...\n");
             return;
         }
-        
+
         this.aCurrentRoom = vNextRoom;
         if (vNextRoom.getImageName() != null)
-                this.aGui.showImage(vNextRoom.getImageName());
+            this.aGui.showImage(vNextRoom.getImageName());
 
         this.printLocationInfo();
     }
-    
+
     /**
      * Handles the look command.
      */
     private void look() {
         this.aGui.println(this.aCurrentRoom.getLongDescription());
     }
-    
+
     /**
      * Handles the inspect command.
      *
@@ -217,16 +214,15 @@ public class GameEngine
     private void inspect(Command pCommand) {
         this.aGui.println("Rien à inspecter ici.");
     }
-    
+
     /**
      * End the game by gratefully closing it.
      */
-    private void endGame()
-    {
+    private void endGame() {
         this.aGui.println("Merci d'avoir joué.  Au revoir.");
         this.aGui.enable(false);
     }
-    
+
     /**
      * Prints the location informations.
      */

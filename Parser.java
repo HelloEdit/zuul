@@ -35,8 +35,7 @@ public class Parser {
      * @param pInput the text of the command.
      * @return The next command from the user.
      */
-    public Command getCommand(final String pInput)
-    {
+    public Command getCommand(final String pInput) {
         String vWord1;
         String vWord2;
 
@@ -48,7 +47,7 @@ public class Parser {
             vWord1 = null;
         }
 
-        if ( tokenizer.hasMoreTokens() ) {
+        if (tokenizer.hasMoreTokens()) {
             vWord2 = tokenizer.nextToken();
         } else {
             vWord2 = null;
