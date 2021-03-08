@@ -17,7 +17,7 @@ public class Game {
 
     /**
      * Create the game and initialise its internal map.
-     * Create the inerface and link to it.
+     * Create the interface and link to it.
      */
     public Game() {
         this.aEngine = new GameEngine();

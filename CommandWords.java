@@ -37,10 +37,9 @@ public class CommandWords {
      */
     public boolean isCommand(final String pString) {
         for (int i = 0; i < CommandWords.aValidCommands.length; i++) {
-            if (CommandWords.aValidCommands[i].equals(pString))
-                return true;
-        } // for
-        // if we get here, the string was not found in the commands
+            if (CommandWords.aValidCommands[i].equals(pString)) return true;
+        }
+
         return false;
-    } // isCommand()
-} // CommandWords
+    }
+}

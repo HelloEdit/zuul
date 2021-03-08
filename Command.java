@@ -9,7 +9,7 @@ public class Command {
     /**
      * Creates a new Command.
      *
-     * @param pFirst  Command word.
+     * @param pFirst  command word.
      * @param pSecond a second word.
      */
     public Command(final String pFirst, final String pSecond) {
