@@ -185,7 +185,7 @@ public class GameEngine {
      */
     private void goRoom(final Command pCommand) {
         if (!pCommand.hasSecondWord()) {
-            System.out.println("Aller où ?");
+            this.aGui.println("Aller où ?");
 
             return;
         }
