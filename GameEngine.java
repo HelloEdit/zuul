@@ -130,23 +130,27 @@ public class GameEngine {
         switch (vCommand.getCommandWord()) {
             case "help":
                 this.printHelp();
+                break;
 
             case "quit":
                 if (this.quit(vCommand)) this.endGame();
-
+                break;
+                
             case "go":
                 this.goRoom(vCommand);
-
+                break;
+                
             case "look":
                 this.look();
-
+                break;
+                
             case "inspect":
                 this.inspect(vCommand);
-
-                // On néglige la branche "default" ici car ons ait que si on arrive à l'instruction du
-                // switch, le "commandWord" est valide, c'est donc forcément un des 5 cas ci dessus.
+                break;
+                
+            // On néglige la branche "default" ici car ons ait que si on arrive à l'instruction du
+            // switch, le "commandWord" est valide, c'est donc forcément un des 5 cas ci dessus.
         }
-
     }
 
     /**
