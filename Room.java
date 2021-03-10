@@ -28,15 +28,25 @@ public class Room {
     /**
      * Creates a new room.
      *
-     * @param pName        name of the room.
+     * @param pName name of the room.
      * @param pDescription description of the room.
-     * @param pImageName   image name of the room.
+     * @param pImageName image name of the room.
      */
     public Room(final String pName, final String pDescription, final String pImageName) {
         this.aName = Room.capitalize(pName);
         this.aDescription = Room.capitalize(pDescription);
         this.aImageName = pImageName;
         this.aExits = new HashMap<>();
+    }
+
+    /**
+     * Creates a new room.
+     *
+     * @param pName name of the room.
+     * @param pDescription description of the room.
+     */
+    public Room(final  String pName, final String pDescription) {
+        this(pName, pDescription, pName.toLowerCase() + ".png");
     }
 
     /**
@@ -66,7 +76,7 @@ public class Room {
      * Set an exit of the room.
      *
      * @param pDirection the direction of the exit.
-     * @param pExit      the Room to which the exit leads.
+     * @param pExit the Room to which the exit leads.
      * @return the current room.
      */
     public Room setExit(final String pDirection, final Room pExit) {

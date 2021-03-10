@@ -52,4 +52,4 @@ public class Command {
     public String getSecondWord() {
         return this.aSecondWord;
     }
-} // Command
+}

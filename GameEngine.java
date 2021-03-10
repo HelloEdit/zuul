@@ -44,6 +44,9 @@ public class GameEngine {
      */
     public void setGUI(final UserInterface pUserInterface) {
         this.aGui = pUserInterface;
+        if (this.aCurrentRoom.getImageName() != null)
+            this.aGui.showImage(this.aCurrentRoom.getImageName());
+        
         this.printWelcome();
     }
 
@@ -107,7 +110,7 @@ public class GameEngine {
      * @return the created room.
      */
     private Room initRoom(final String pName, final String pDescription) {
-        Room vCurrentRoom = new Room(pName, pDescription, pName.toLowerCase() + ".gif");
+        Room vCurrentRoom = new Room(pName, pDescription);
         this.aAllRooms.put(pName, vCurrentRoom);
 
         return vCurrentRoom;

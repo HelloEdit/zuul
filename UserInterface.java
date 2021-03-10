@@ -6,8 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -67,7 +66,7 @@ public class UserInterface implements ActionListener {
      * @param pImageName image to be showed.
      */
     public void showImage(final String pImageName) {
-        String vImagePath = "" + pImageName; // to change the directory
+        String vImagePath = "Images/" + pImageName; // to change the directory
         URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
         if (vImageURL == null) {
             System.out.println("Image not found : " + vImagePath);
