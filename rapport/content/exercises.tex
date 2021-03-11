@@ -26,7 +26,7 @@ private void printLocationInfo() {
 
 \begin{exercise}[subtitle=getExit]
 
-Dans cet exercice, on se rend compte que le système "un attribut = une sortie" n'est pas le plus optimal (imaginons un hub ayant une dizaines de sorties par exemple, ce qui deviendrait problématique pour la lisibilité et la maintenance du code). L'idée étant de limiter le couplage entre la classe \verb|Room| et les autres classes. Pour cela, on cherchera à limiter la dépendance aux attributs de Room et plutôt passer par une fonction pour récupérer les sorties, ce qui permet de ne gérer la logique des sorties que du côté de \verb|Room|.\\ 
+Dans cet exercice, on se rend compte que le système "un attribut = une sortie" n'est pas le plus optimal (imaginons un hub ayant une dizaines de sorties par exemple, ce qui deviendrait problématique pour la lisibilité et la maintenance du code). L'idée étant de limiter le couplage entre la classe \verb|Room| et les autres classes. Pour cela, on cherchera à limiter la dépendance aux attributs de Room et plutôt passer par une fonction pour récupérer les sorties, ce qui permet de ne gérer la logique des sorties que du côté de \verb|Room|.
 
 \textbf{Notes:} Notons qu'il reste un problème dans \verb|printLocationInfo| à cause de ce changement, problème abordé dans les exercices qui suivent. On peut aussi émettre une critique quant à la façon de fonctionner de \verb|getExit|: si jamais on passe \verb|"North"| à la place de \verb|"north"| par inadvertance, on aura comme valeur de retour \verb|null|. Une solution serait d'utiliser des \verb|enum|.
 
@@ -125,9 +125,9 @@ for (String vExit : this.aExits.keySet())
     vResult += vExit + " ";
 \end{minted}
 
-Ce code marche car \verb|keySet| renvoit un \verb|Set| qui est énumérable et utilisable par la boucle for-each.\\
+Ce code marche car \verb|keySet| renvoit un \verb|Set| qui est énumérable et utilisable par la boucle for-each.
 
-La différence entre un \verb|Set| et une liste normale (un tableau) est que le \verb|Set| ne peut pas contenir deux mêmes éléments.\\
+La différence entre un \verb|Set| et une liste normale (un tableau) est que le \verb|Set| ne peut pas contenir deux mêmes éléments.
 
 Pour la Javadoc, la documentation de \verb|Game| contient beaucoup moins de méthode que \verb|Room| car l'encapsulation fait que seul \verb|play| est publique pour \verb|Game|, tandis que \verb|Room| doit exposer beaucoup plus de méthodes \verb|public| pour être utilisée par \verb|Game|.
 
@@ -157,7 +157,8 @@ private void printLocationInfo() {
 \end{exercise}
 
 \begin{exercise}[subtitle=Diagramme au lancement]
-\begin{figure}[h]
+\begin{figure}[ht]
+
 \centering
 
 \begin{tikzpicture}[node distance=2cm and 1cm]
@@ -297,7 +298,7 @@ public void showAll() {
 }
 \end{minted}
 
-\textbf{Note:} On observe que la méthode \verb|showAll| pourrait être déclarée comme \verb|static| car ne dépendant que de \verb|CommandWords.aValidCommands| qui est un attribut statique de la classe \verb|CommandWords|.\\
+\textbf{Note:} On observe que la méthode \verb|showAll| pourrait être déclarée comme \verb|static| car ne dépendant que de \verb|CommandWords.aValidCommands| qui est un attribut statique de la classe \verb|CommandWords|.
 
 On crée aussi un moyen de l'appeler depuis \verb|Game| en passant par \verb|Parser|.
 
@@ -389,7 +390,7 @@ public class Game {
 }
 \end{minted}
 
-\subsection*{\textit{zuul-with-images}}
+\subsection*{zuul-with-images}
 
 Après avoir fait les changements pour intégrer l'interface graphique voulue, on peut s'intéresser à son fonctionnement, notamment à sa gestion des évenements. En effet, dans le code de \verb|UserInterface|, on retrouve cette ligne
 
@@ -402,7 +403,7 @@ private void createGUI() {
 }
 \end{minted}
 
-Le fait de passer \verb|this| en paramètre indique que c'est la classe courante (soit \verb|UserInterface|) qui va interpréter au moyen d'une méthode \verb|actionPerformed| les évenements venant du \verb|JTextField|. Cela est rendu possible car \verb|UserInterface| implémente l'interface \verb|ActionListener|.\\
+Le fait de passer \verb|this| en paramètre indique que c'est la classe courante (soit \verb|UserInterface|) qui va interpréter au moyen d'une méthode \verb|actionPerformed| les évenements venant du \verb|JTextField|. Cela est rendu possible car \verb|UserInterface| implémente l'interface \verb|ActionListener|.
 
 Imaginons que nous voulions implémenter un boutton "Indice" sur le côté droit de l'interface, pour cela, on va devoir modifier \verb|createGUI|.
 
@@ -429,4 +430,57 @@ private void createGUI() {
     vPanel.add(vButton, BorderLayout.EAST);
 }
 \end{minted}
+\end{exercise}
+
+\begin{exercise}[subtitle="MVC"]
+
+L'architecture MVC (signifiant \emph{Modèle-vue-contrôleur}) permet d'organiser son code autour de trois élements :
+
+\begin{description} 
+  \item[La vue] la partie responsable sur l'affichage.
+  \item[Le modèle] la partie responsable de gérer les données.
+  \item[Le contrôleur] la partie responsable de la logique ainsi que de faire l'intermédiaire entre les données du modèle et l'affichage fait par les vues.
+\end{description}
+
+On retrouve cette architecture dans le web (non-exhaustivement, Laravel en PHP, Spring en Java, Express pour node.js etc.), dans la création d'application mobile et bureau...
+
+Ce succès d'utilisation s'explique par le fait que séparer en trois grandes parties l'application permet de mieux se construire une représentation mentale de l'application: chaque élement appartient à un de ces trois groupes. L'un des autres avantages est de minimiser le nombres de modifications à effectuer lorsqu'un changement est nécessaire. On voit bien maintenant pourquoi cette modification pourrait être bénéfique au projet Zuul.
+
+\textbf{Note :} J'ai, pour l'instant, décider de ne pas implémenter le modèle MVC dans mon projet Zuul. En effet, je préfère m'intéresser à comment je vais restructurer l'interface graphique avec JavaFX (voir Appendix) avant de changer les détails d'implémentation.
+
+\subsection*{Image}
+
+On en profiter pour déplacer les images de la racine vers un nouveau dossier \verb|Images|.
+
+\begin{minted}{shell-session}
+$ mkdir Images
+$ mv *.png ./Images
+$ ls Images
+\end{minted}
+\end{exercise}
+
+\begin{exercise}[subtitle=Item]
+
+On crée une classe \verb|Item| avec les getters appropriés pour \verb|description| et \verb|weight|. Ensuite, on va attribuer un item à chaque objet \verb|Room|. Pour cela, on modifie la classe pour ajouter une nouvelle méthode comme ceci :
+
+\begin{minted}{java}
+public Room setItem(final String pDescription, final int pWeight) {
+    Item vItem = new Item(pDescription, pWeight);
+    this.aItem = vItem;
+    
+    return this;
+}
+\end{minted}
+
+\textbf{Note :} on rajoute aussi ici un \mintinline{java}{return this;} pour pouvoir chainer les instructions lors de la création d'un objet \verb|Room|. 
+\end{exercise}
+
+\begin{exercise}[subtitle=item description]
+
+En suivant la logique de cohésion, les informations d'un objet \verb|Item| doit-être généré par \verb|Item| lui-même. La classe en charge d'afficher la description de l'\verb|Item| doit-être \verb|GameEngine|.
+
+\begin{minted}{java}
+
+\end{minted}
+
 \end{exercise}

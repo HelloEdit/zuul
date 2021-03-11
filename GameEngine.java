@@ -46,7 +46,7 @@ public class GameEngine {
         this.aGui = pUserInterface;
         if (this.aCurrentRoom.getImageName() != null)
             this.aGui.showImage(this.aCurrentRoom.getImageName());
-        
+
         this.printWelcome();
     }
 
@@ -54,12 +54,6 @@ public class GameEngine {
      * Prints a small welcome text.
      */
     private void printWelcome() {
-        this.aGui.println("\n██████  ██       █████  ███    ██ ███████ ████████     ██     ██  █████  ██████  ███████ \n" +
-                "██   ██ ██      ██   ██ ████   ██ ██         ██        ██     ██ ██   ██ ██   ██ ██      \n" +
-                "██████  ██      ███████ ██ ██  ██ █████      ██        ██  █  ██ ███████ ██████  ███████ \n" +
-                "██      ██      ██   ██ ██  ██ ██ ██         ██        ██ ███ ██ ██   ██ ██   ██      ██ \n" +
-                "██      ███████ ██   ██ ██   ████ ███████    ██         ███ ███  ██   ██ ██   ██ ███████ \n\n");
-
         this.aGui.println("Planet Wars est un jeu d'aventure de science fiction incroyable");
         this.aGui.println("Pour accéder à l'aide, taper \"help\"\n\n");
 
@@ -70,15 +64,32 @@ public class GameEngine {
      * Creates the necessary rooms for the game.
      */
     private void createRooms() {
-        Room office = this.initRoom("bureau", "c'est le bureau de Murphy Law");
-        Room car = this.initRoom("voiture", "c'est la voiture de Murphy Law. Pratique pour aller là où vous voulez");
-        Room esiee = this.initRoom("ESIEE", "c'est la salle où vous avez lancé ce jeu");
-        Room greatStair = this.initRoom("grand escalier", "l'escalier principal de Buckingham Palace");
-        Room reception = this.initRoom("salle de réception", "la salle de réception de Buckingham Palace");
-        Room apartments = this.initRoom("appartements", "ce sont les appartements de la Reine");
-        Room kitchen = this.initRoom("cuisine", "la cuisine de Buckingham Palace");
-        Room cave = this.initRoom("cave", "une cave de stockage d'objets sous Buckingham Palace");
+        Room office = this.initRoom("bureau", "c'est le bureau de Murphy Law")
+                .setItem("loupe", 1);
 
+        Room car = this.initRoom("voiture", "c'est la voiture de Murphy Law. Pratique pour aller là où vous voulez")
+                .setItem("clés de voiture", 1);
+
+
+        Room esiee = this.initRoom("ESIEE", "c'est la salle où vous avez lancé ce jeu")
+                .setItem("livre \"Objects First with Java\"", 1);
+
+        Room greatStair = this.initRoom("grand escalier", "l'escalier principal de Buckingham Palace")
+                .setItem("statue de la reine", 100);
+
+        Room reception = this.initRoom("salle de réception", "la salle de réception de Buckingham Palace")
+                .setItem("cendrier", 1);
+
+        Room apartments = this.initRoom("appartements", "ce sont les appartements de la Reine")
+                .setItem("boucles d'oreilles", 1);
+
+        Room kitchen = this.initRoom("cuisine", "la cuisine de Buckingham Palace")
+                .setItem("oignons", 1);
+
+        Room cave = this.initRoom("cave", "une cave de stockage d'objets sous Buckingham Palace")
+                .setItem("épée", 2);
+
+        // Setting up the exits
         office.setExit("east", car);
 
         car.setExit("esiee", esiee)
@@ -138,19 +149,19 @@ public class GameEngine {
             case "quit":
                 if (this.quit(vCommand)) this.endGame();
                 break;
-                
+
             case "go":
                 this.goRoom(vCommand);
                 break;
-                
+
             case "look":
                 this.look();
                 break;
-                
+
             case "inspect":
                 this.inspect(vCommand);
                 break;
-                
+
             // On néglige la branche "default" ici car ons ait que si on arrive à l'instruction du
             // switch, le "commandWord" est valide, c'est donc forcément un des 5 cas ci dessus.
         }

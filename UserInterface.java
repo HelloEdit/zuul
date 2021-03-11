@@ -1,11 +1,4 @@
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -108,12 +101,7 @@ public class UserInterface implements ActionListener {
 
         JButton vButton = new JButton();
         vButton.setText("Indice");
-        vButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                System.out.println(actionEvent.paramString());
-            }
-        });
+        vButton.addActionListener(actionEvent -> System.out.println(actionEvent.paramString()));
 
         vPanel.setLayout(new BorderLayout()); // ==> only five places
         vPanel.add(this.aImage, BorderLayout.NORTH);

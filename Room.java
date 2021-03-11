@@ -19,18 +19,21 @@ public class Room {
      * The exits of the room.
      */
     private final HashMap<String, Room> aExits;
-
     /**
      * The image for the room.
      */
     private final String aImageName;
+    /**
+     * The item in the room.
+     */
+    private Item aItem;
 
     /**
      * Creates a new room.
      *
-     * @param pName name of the room.
+     * @param pName        name of the room.
      * @param pDescription description of the room.
-     * @param pImageName image name of the room.
+     * @param pImageName   image name of the room.
      */
     public Room(final String pName, final String pDescription, final String pImageName) {
         this.aName = Room.capitalize(pName);
@@ -42,10 +45,10 @@ public class Room {
     /**
      * Creates a new room.
      *
-     * @param pName name of the room.
+     * @param pName        name of the room.
      * @param pDescription description of the room.
      */
-    public Room(final  String pName, final String pDescription) {
+    public Room(final String pName, final String pDescription) {
         this(pName, pDescription, pName.toLowerCase() + ".png");
     }
 
@@ -66,17 +69,25 @@ public class Room {
      * @return the complete description.
      */
     public String getLongDescription() {
-        return "Vous êtes actuellement dans la salle \"" +
-                this.aName + "\"\n" +
-                this.aDescription + ".\n" +
-                this.getExitString();
+        String vText = String.format(
+                "Vous êtes actuellement dans la salle \"%s\"\n%s.\n",
+                this.aName,
+                this.aDescription
+        );
+
+        if (this.aItem == null) vText += "Il n'y a pas d'objet.\n";
+        else vText += "Il y a un objet : \"" + this.aItem.getDescription() + "\".\n";
+
+        vText += this.getExitString();
+
+        return vText;
     }
 
     /**
      * Set an exit of the room.
      *
      * @param pDirection the direction of the exit.
-     * @param pExit the Room to which the exit leads.
+     * @param pExit      the Room to which the exit leads.
      * @return the current room.
      */
     public Room setExit(final String pDirection, final Room pExit) {
@@ -108,6 +119,18 @@ public class Room {
             vResult.append(vExit).append(" ");
 
         return vResult.toString();
+    }
+
+    /**
+     * Set an item for the actual room.
+     *
+     * @param pDescription description of the item.
+     * @param pWeight      weight of the item. 0 if the item has not weight.
+     */
+    public Room setItem(final String pDescription, final int pWeight) {
+        this.aItem = new Item(pDescription, pWeight);
+
+        return this;
     }
 
     /**
