@@ -475,12 +475,25 @@ public Room setItem(final String pDescription, final int pWeight) {
 \textbf{Note :} on rajoute aussi ici un \mintinline{java}{return this;} pour pouvoir chainer les instructions lors de la création d'un objet \verb|Room|. 
 \end{exercise}
 
-\begin{exercise}[subtitle=item description]
+\begin{exercise}[subtitle=Item description]
 
 En suivant la logique de cohésion, les informations d'un objet \verb|Item| doit-être généré par \verb|Item| lui-même. La classe en charge d'afficher la description de l'\verb|Item| doit-être \verb|GameEngine|.
 
 \begin{minted}{java}
+public String getLongDescription() {
+    String vText = String.format(
+        "Vous êtes actuellement dans la salle \"%s\"\n%s.\n",
+        this.aName,
+        this.aDescription
+    );
 
+    if (this.aItem == null) vText += "Il n'y a pas d'objet.\n";
+    else vText += "Il y a un objet : \"" + this.aItem.getDescription() + "\".\n";
+
+    vText += this.getExitString();
+
+    return vText;
+}
 \end{minted}
 
 \end{exercise}

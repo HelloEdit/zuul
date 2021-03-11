@@ -155,7 +155,7 @@ public class GameEngine {
                 break;
 
             case "look":
-                this.look();
+                this.look(vCommand);
                 break;
 
             case "inspect":
@@ -220,8 +220,20 @@ public class GameEngine {
     /**
      * Handles the look command.
      */
-    private void look() {
-        this.aGui.println(this.aCurrentRoom.getLongDescription());
+    private void look(final Command pCommand) {
+        String vToDisplay;
+
+        if (pCommand.hasSecondWord()) {
+            Item vItem = this.aCurrentRoom.getItem();
+            vToDisplay = (vItem.getDescription().equals(pCommand.getSecondWord()))
+                    ? vItem.getLongDescription()
+                    : "Objet inconnu. Rien a afficher\n";
+        }
+        else {
+            vToDisplay = this.aCurrentRoom.getLongDescription();
+        }
+
+        this.aGui.println(vToDisplay);
     }
 
     /**

@@ -76,7 +76,7 @@ public class Room {
         );
 
         if (this.aItem == null) vText += "Il n'y a pas d'objet.\n";
-        else vText += "Il y a un objet : \"" + this.aItem.getDescription() + "\".\n";
+        else vText += "Il y a un objet : \"" + this.aItem.getLongDescription() + "\".\n";
 
         vText += this.getExitString();
 
@@ -131,6 +131,15 @@ public class Room {
         this.aItem = new Item(pDescription, pWeight);
 
         return this;
+    }
+
+    /**
+     * Gets the current item of the room.
+     *
+     * @return the item.
+     */
+    public Item getItem() {
+        return this.aItem;
     }
 
     /**

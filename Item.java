@@ -39,6 +39,15 @@ public class Item {
     }
 
     /**
+     * Gets the long description of the item.
+     *
+     * @return the long item's description.
+     */
+    public String getLongDescription() {
+        return String.format("%s (poids: %d)", this.aDescription, this.aWeight);
+    }
+
+    /**
      * Gets the item's weight
      *
      * @return the item's weight.
