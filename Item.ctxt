@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=Item
+comment1.params=pDescription\ pWeight
+comment1.target=Item(java.lang.String,\ int)
+comment1.text=\n\ Creates\ a\ new\ item\ with\ a\ description\ and\ a\ weight.\n\ \n\ @param\ pDescription\ description\ of\ the\ item.\n\ @param\ pWeight\ weight\ of\ the\ item.\n
+comment2.params=pDescription
+comment2.target=Item(java.lang.String)
+comment2.text=\n\ Creates\ a\ new\ item\ with\ a\ description\ and\ no\ weight.\n\ \n\ @param\ pDescription\ description\ of\ the\ item.\n
+comment3.params=
+comment3.target=java.lang.String\ getDescription()
+comment3.text=\n\ Gets\ the\ item's\ description.\n\ \n\ @return\ the\ item's\ description.\n
+comment4.params=
+comment4.target=int\ getWeight()
+comment4.text=\n\ Gets\ the\ item's\ weight\n\ \n\ @return\ the\ item's\ weight.\n
+numComments=5
