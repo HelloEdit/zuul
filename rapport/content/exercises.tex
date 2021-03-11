@@ -496,4 +496,26 @@ public String getLongDescription() {
 }
 \end{minted}
 
+\subsection*{Améliorer la commande look}
+
+Pour améliorer la commande look, on remplace dans \verb|GameEngine| la méthode éponyme.
+
+\begin{minted}{java}
+private void look(final Command pCommand) {
+    String vToDisplay;
+
+    if (pCommand.hasSecondWord()) {
+        Item vItem = this.aCurrentRoom.getItem();
+        vToDisplay = (vItem.getDescription().equals(pCommand.getSecondWord()))
+                ? vItem.getLongDescription()
+                : "Objet inconnu. Rien a afficher\n";
+    }
+    else {
+        vToDisplay = this.aCurrentRoom.getLongDescription();
+    }
+
+    this.aGui.println(vToDisplay);
+}
+\end{minted}
+
 \end{exercise}
