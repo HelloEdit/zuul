@@ -432,9 +432,9 @@ private void createGUI() {
 \end{minted}
 \end{exercise}
 
-\begin{exercise}[subtitle="MVC"]
+\begin{exercise}[subtitle=Modèle Vue Contrôleur]
 
-L'architecture MVC (signifiant \emph{Modèle-vue-contrôleur}) permet d'organiser son code autour de trois éléments :
+L'architecture MVC (signifiant \emph{Modèle-Vue-Contrôleur}) permet d'organiser son code autour de trois éléments :
 
 \begin{description} 
   \item[La vue] la partie responsable sur l'affichage.
@@ -535,7 +535,7 @@ Puis ensuite on s'intéresse aux erreurs de compilation lié au changement de ty
 On utilise ici une collection \verb|HashMap| car on veut établir une relation entre le nom de l'item et l'objet représentant cet item. On n'a pas à parcourir la \verb|HashMap| pour retrouver un item spécifique.
 \end{exercise}
 
-\begin{exercise}[subtitle=back]
+\begin{exercise}[subtitle=Commande back]
 
 On va implémenter la commande \verb|back| de façon très naïve : on rajoute un attribut \verb|aPreviousRoom| dans \verb|GameEngine| qui contiendra la salle qui précédait, dans le parcours du joueur, la salle actuelle.
 
@@ -573,7 +573,7 @@ private void back(final Command vCommand) {
 \end{minted}
 \end{exercise}
 
-\begin{exercise}[subtitle=back test]
+\begin{exercise}[subtitle=Test de la commande back]
 
 En voyant l'implémentation de la commande \verb|back|, le cas singulier de la salle initiale saute aux yeux : en effet, si l'on a pas encore bougé, \verb|aPreviousRoom| est évalué à \verb|null|, pouvant ammener à un \verb|NullPointerException|. On modifie donc \verb|back|.
 
