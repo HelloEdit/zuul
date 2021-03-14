@@ -25,6 +25,11 @@ public class GameEngine {
     private Room aCurrentRoom;
 
     /**
+     * The current room where the player is.
+     */
+    private Room aPreviousRoom;
+
+    /**
      * The graphical user interface of the game.
      */
     private UserInterface aGui;
@@ -69,7 +74,6 @@ public class GameEngine {
 
         Room car = this.initRoom("voiture", "c'est la voiture de Murphy Law. Pratique pour aller là où vous voulez")
                 .addItem("clés de voiture", 1);
-
 
         Room esiee = this.initRoom("ESIEE", "c'est la salle où vous avez lancé ce jeu")
                 .addItem("livre \"Objects First with Java\"", 1);
@@ -151,20 +155,43 @@ public class GameEngine {
                 break;
 
             case "go":
-                this.goRoom(vCommand);
+                this.go(vCommand);
                 break;
 
             case "look":
                 this.look(vCommand);
                 break;
 
+            case "back":
+                this.back(vCommand);
+                break;
+
             case "inspect":
                 this.inspect(vCommand);
                 break;
 
-            // On néglige la branche "default" ici car ons ait que si on arrive à l'instruction du
+            // On néglige la branche "default" ici car on sait que si on arrive à l'instruction du
             // switch, le "commandWord" est valide, c'est donc forcément un des 5 cas ci dessus.
         }
+    }
+
+    /**
+     * GOes back to the latest room.
+     *
+     * @param vCommand the command to be processed.
+     */
+    private void back(Command vCommand) {
+        if (vCommand.hasSecondWord()) {
+            this.aGui.println("retourner où ??");
+            return;
+        }
+
+        if (this.aPreviousRoom == null) {
+            this.aGui.println("Aucune salle dans laquelle retourner.");
+            return;
+        }
+
+        this.changeRoom(this.aPreviousRoom);
     }
 
     /**
@@ -197,7 +224,7 @@ public class GameEngine {
      *
      * @param pCommand the go command to be processed.
      */
-    private void goRoom(final Command pCommand) {
+    private void go(final Command pCommand) {
         if (!pCommand.hasSecondWord()) {
             this.aGui.println("Aller où ?");
 
@@ -210,11 +237,7 @@ public class GameEngine {
             return;
         }
 
-        this.aCurrentRoom = vNextRoom;
-        if (vNextRoom.getImageName() != null)
-            this.aGui.showImage(vNextRoom.getImageName());
-
-        this.printLocationInfo();
+        this.changeRoom(vNextRoom);
     }
 
     /**
@@ -234,6 +257,22 @@ public class GameEngine {
         }
 
         this.aGui.println(vToDisplay);
+    }
+
+    /**
+     * Changes the current room.
+     *
+     * @param vRoom the room to be used.
+     */
+    private void changeRoom(Room vRoom) {
+        this.aPreviousRoom = this.aCurrentRoom;
+        this.aCurrentRoom = vRoom;
+
+        if (vRoom.getImageName() != null)
+            this.aGui.showImage(vRoom.getImageName());
+
+
+        this.printLocationInfo();
     }
 
     /**
