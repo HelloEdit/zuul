@@ -25,7 +25,7 @@ public class GameEngine {
     private Room aCurrentRoom;
 
     /**
-     * The current room where the player is.
+     * The previous room where the player was.
      */
     private Room aPreviousRoom;
 
