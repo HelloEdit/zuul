@@ -19,14 +19,17 @@ public class Room {
      * The exits of the room.
      */
     private final HashMap<String, Room> aExits;
+
+    /**
+     * The items of the room.
+     */
+    private final HashMap<String, Item> aItems;
+
     /**
      * The image for the room.
      */
     private final String aImageName;
-    /**
-     * The item in the room.
-     */
-    private Item aItem;
+
 
     /**
      * Creates a new room.
@@ -40,6 +43,7 @@ public class Room {
         this.aDescription = Room.capitalize(pDescription);
         this.aImageName = pImageName;
         this.aExits = new HashMap<>();
+        this.aItems = new HashMap<>();
     }
 
     /**
@@ -75,8 +79,8 @@ public class Room {
                 this.aDescription
         );
 
-        if (this.aItem == null) vText += "Il n'y a pas d'objet.\n";
-        else vText += "Il y a un objet : \"" + this.aItem.getLongDescription() + "\".\n";
+        if (this.aItems.isEmpty()) vText += "Il n'y a pas d'objet.\n";
+        else vText += String.format("Vous voyez : %s.%n", String.join(", ", this.aItems.keySet()));
 
         vText += this.getExitString();
 
@@ -92,6 +96,19 @@ public class Room {
      */
     public Room setExit(final String pDirection, final Room pExit) {
         this.aExits.put(pDirection, pExit);
+
+        return this;
+    }
+
+    /**
+     * Add a new item in the room.
+     *
+     * @param pName name of the item.
+     * @param pWeight weight of the item.
+     * @return the current room.
+     */
+    public Room addItem(final String pName, final int pWeight) {
+        this.aItems.put(pName, new Item(pName, pWeight));
 
         return this;
     }
@@ -122,24 +139,13 @@ public class Room {
     }
 
     /**
-     * Set an item for the actual room.
-     *
-     * @param pDescription description of the item.
-     * @param pWeight      weight of the item. 0 if the item has not weight.
-     */
-    public Room setItem(final String pDescription, final int pWeight) {
-        this.aItem = new Item(pDescription, pWeight);
-
-        return this;
-    }
-
-    /**
      * Gets the current item of the room.
      *
-     * @return the item.
+     * @return the HashMap items.
+     * @see HashMap
      */
-    public Item getItem() {
-        return this.aItem;
+    public HashMap<String, Item> getItems() {
+        return this.aItems;
     }
 
     /**

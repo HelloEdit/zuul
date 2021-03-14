@@ -446,11 +446,11 @@ On retrouve cette architecture dans le web (non-exhaustivement, Laravel en PHP, 
 
 Ce succès d'utilisation s'explique par le fait que séparer en trois grandes parties l'application permet de mieux se construire une représentation mentale de l'application: chaque élement appartient à un de ces trois groupes. L'un des autres avantages est de minimiser le nombres de modifications à effectuer lorsqu'un changement est nécessaire. On voit bien maintenant pourquoi cette modification pourrait être bénéfique au projet Zuul.
 
-\textbf{Note :} J'ai, pour l'instant, décider de ne pas implémenter le modèle MVC dans mon projet Zuul. En effet, je préfère m'intéresser à comment je vais restructurer l'interface graphique avec JavaFX (voir Appendix) avant de changer les détails d'implémentation.
+\textbf{Note :} J'ai, pour l'instant, décider de ne pas implémenter le modèle MVC dans mon projet Zuul. Je planifie de refaire l'interface utilisateur du jeu avec \verb|JavaFX| qui force par design l'utilisation d'un pattern MVC.
 
 \subsection*{Image}
 
-On en profiter pour déplacer les images de la racine vers un nouveau dossier \verb|Images|.
+On en profite pour déplacer les images de la racine vers un nouveau dossier \verb|Images|.
 
 \begin{minted}{shell-session}
 $ mkdir Images
@@ -517,5 +517,25 @@ private void look(final Command pCommand) {
     this.aGui.println(vToDisplay);
 }
 \end{minted}
+\end{exercise}
+
+\begin{exercise}[subtitle=Items]
+
+On commence par remplacer la définition de la \verb|HashMap| contenue dans chaque \verb|Room|.
+
+\begin{minted}{java}
+/**
+ * The items of the room.
+ */
+private final HashMap<String, Item> aItems;
+\end{minted}
+
+Puis ensuite on s'intéresse aux erreurs de compilation lié au changement de type.
+
+On utilise ici une collection \verb|HashMap| car on veut établir une relation entre le nom de l'item et l'objet représentant cet item. On n'a pas à parcourir la \verb|HashMap| pour retrouver un item spécifique.
+\end{exercise}
+
+\begin{exercise}[subtitle=back]
+
 
 \end{exercise}

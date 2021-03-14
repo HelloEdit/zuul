@@ -65,29 +65,29 @@ public class GameEngine {
      */
     private void createRooms() {
         Room office = this.initRoom("bureau", "c'est le bureau de Murphy Law")
-                .setItem("loupe", 1);
+                .addItem("loupe", 1);
 
         Room car = this.initRoom("voiture", "c'est la voiture de Murphy Law. Pratique pour aller là où vous voulez")
-                .setItem("clés de voiture", 1);
+                .addItem("clés de voiture", 1);
 
 
         Room esiee = this.initRoom("ESIEE", "c'est la salle où vous avez lancé ce jeu")
-                .setItem("livre \"Objects First with Java\"", 1);
+                .addItem("livre \"Objects First with Java\"", 1);
 
         Room greatStair = this.initRoom("grand escalier", "l'escalier principal de Buckingham Palace")
-                .setItem("statue de la reine", 100);
+                .addItem("statue de la reine", 100);
 
         Room reception = this.initRoom("salle de réception", "la salle de réception de Buckingham Palace")
-                .setItem("cendrier", 1);
+                .addItem("cendrier", 1);
 
         Room apartments = this.initRoom("appartements", "ce sont les appartements de la Reine")
-                .setItem("boucles d'oreilles", 1);
+                .addItem("boucles d'oreilles", 1);
 
         Room kitchen = this.initRoom("cuisine", "la cuisine de Buckingham Palace")
-                .setItem("oignons", 1);
+                .addItem("oignons", 1);
 
         Room cave = this.initRoom("cave", "une cave de stockage d'objets sous Buckingham Palace")
-                .setItem("épée", 2);
+                .addItem("épée", 2);
 
         // Setting up the exits
         office.setExit("east", car);
@@ -224,10 +224,10 @@ public class GameEngine {
         String vToDisplay;
 
         if (pCommand.hasSecondWord()) {
-            Item vItem = this.aCurrentRoom.getItem();
-            vToDisplay = (vItem.getDescription().equals(pCommand.getSecondWord()))
+            Item vItem = this.aCurrentRoom.getItems().get(pCommand.getSecondWord());
+            vToDisplay = vItem != null
                     ? vItem.getLongDescription()
-                    : "Objet inconnu. Rien a afficher\n";
+                    : "Objet inconnu. Rien a afficher.\n";
         }
         else {
             vToDisplay = this.aCurrentRoom.getLongDescription();
