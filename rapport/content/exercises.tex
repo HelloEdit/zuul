@@ -125,7 +125,7 @@ for (String vExit : this.aExits.keySet())
     vResult += vExit + " ";
 \end{minted}
 
-Ce code marche car \verb|keySet| renvoit un \verb|Set| qui est énumérable et utilisable par la boucle for-each.
+Ce code marche car \verb|keySet| renvoie un \verb|Set| qui est énumérable et utilisable par la boucle for-each.
 
 La différence entre un \verb|Set| et une liste normale (un tableau) est que le \verb|Set| ne peut pas contenir deux mêmes éléments.
 
@@ -392,7 +392,7 @@ public class Game {
 
 \subsection*{zuul-with-images}
 
-Après avoir fait les changements pour intégrer l'interface graphique voulue, on peut s'intéresser à son fonctionnement, notamment à sa gestion des évenements. En effet, dans le code de \verb|UserInterface|, on retrouve cette ligne
+Après avoir fait les changements pour intégrer l'interface graphique voulue, on peut s'intéresser à son fonctionnement, notamment à sa gestion des évènements. En effet, dans le code de \verb|UserInterface|, on retrouve cette ligne
 
 \begin{minted}{java}
 private void createGUI() {
@@ -403,7 +403,7 @@ private void createGUI() {
 }
 \end{minted}
 
-Le fait de passer \verb|this| en paramètre indique que c'est la classe courante (soit \verb|UserInterface|) qui va interpréter au moyen d'une méthode \verb|actionPerformed| les évenements venant du \verb|JTextField|. Cela est rendu possible car \verb|UserInterface| implémente l'interface \verb|ActionListener|.
+Le fait de passer \verb|this| en paramètre indique que c'est la classe courante (soit \verb|UserInterface|) qui va interpréter au moyen d'une méthode \verb|actionPerformed| les évènements venant du \verb|JTextField|. Cela est rendu possible car \verb|UserInterface| implémente l'interface \verb|ActionListener|.
 
 Imaginons que nous voulions implémenter un boutton "Indice" sur le côté droit de l'interface, pour cela, on va devoir modifier \verb|createGUI|.
 
@@ -434,7 +434,7 @@ private void createGUI() {
 
 \begin{exercise}[subtitle="MVC"]
 
-L'architecture MVC (signifiant \emph{Modèle-vue-contrôleur}) permet d'organiser son code autour de trois élements :
+L'architecture MVC (signifiant \emph{Modèle-vue-contrôleur}) permet d'organiser son code autour de trois éléments :
 
 \begin{description} 
   \item[La vue] la partie responsable sur l'affichage.
@@ -461,7 +461,7 @@ $ ls Images
 
 \begin{exercise}[subtitle=Item]
 
-On crée une classe \verb|Item| avec les getters appropriés pour \verb|description| et \verb|weight|. Ensuite, on va attribuer un item à chaque objet \verb|Room|. Pour cela, on modifie la classe pour ajouter une nouvelle méthode comme ceci :
+On crée une classe \verb|Item| avec les accesseurs appropriés pour \verb|description| et \verb|weight|. Ensuite, on va attribuer un item à chaque objet \verb|Room|. Pour cela, on modifie la classe pour ajouter une nouvelle méthode comme ceci :
 
 \begin{minted}{java}
 public Room setItem(final String pDescription, final int pWeight) {
@@ -472,7 +472,7 @@ public Room setItem(final String pDescription, final int pWeight) {
 }
 \end{minted}
 
-\textbf{Note :} on rajoute aussi ici un \mintinline{java}{return this;} pour pouvoir chainer les instructions lors de la création d'un objet \verb|Room|. 
+\textbf{Note :} on rajoute aussi ici un \mintinline{java}{return this;} pour pouvoir chaîner les instructions lors de la création d'un objet \verb|Room|. 
 \end{exercise}
 
 \begin{exercise}[subtitle=Item description]
@@ -537,9 +537,9 @@ On utilise ici une collection \verb|HashMap| car on veut établir une relation e
 
 \begin{exercise}[subtitle=back]
 
-On va implémenter la commande \verb|back| de façon très naïve : on rajoute un attribut \verb|aPreviousRoom| dans \verb|GameEngine| qui contiendra la salle qui précedait, dans le parcours du joueur, la salle actuelle.
+On va implémenter la commande \verb|back| de façon très naïve : on rajoute un attribut \verb|aPreviousRoom| dans \verb|GameEngine| qui contiendra la salle qui précédait, dans le parcours du joueur, la salle actuelle.
 
-Pour cela, on change l'implémentation de la logique de notre commande \verb|go|.
+Pour cela, on change la logique de notre commande \verb|go|.
 
 \begin{minted}{java}
 private void go(final Command pCommand) {
@@ -575,7 +575,7 @@ private void back(final Command vCommand) {
 
 \begin{exercise}[subtitle=back test]
 
-En voyant l'implémentation de la commande \verb|back|, le cas singulier de la salle initiale saute aux yeux : en effet, si l'on a pas encore bougé, \verb|aPreviousRoom| est évalué à \verb|null|, pouvant ammener à un \verb|NullPointerException|. On modifie l'implémentation de \verb|back|.
+En voyant l'implémentation de la commande \verb|back|, le cas singulier de la salle initiale saute aux yeux : en effet, si l'on a pas encore bougé, \verb|aPreviousRoom| est évalué à \verb|null|, pouvant ammener à un \verb|NullPointerException|. On modifie donc \verb|back|.
 
 \begin{minted}{java}
 private void back(final Command vCommand) {
@@ -591,13 +591,13 @@ private void back(final Command vCommand) {
 
 \begin{exercise}[subtitle=back back]
 
-Exécuter deux commandes \verb|back| nous fait retourner à la salle de départ, celle où ce situait le joueur lors de la première commande \verb|back|. Ce problème est inhérent à l'implémentation faite de la commande \verb|back|, notamment du fait que lors de l'éxécution de \verb|back|, la salle dans \verb|aPreviousRoom| va dans \verb|aCurrentRoom| et un second \verb|back| fait exactement le contraire !
+Exécuter deux commandes \verb|back| nous fait retourner à la salle de départ, celle où ce situait le joueur lors de la première commande \verb|back|. Ce problème est inhérent à l'implémentation faite de la commande \verb|back|, notamment du fait que lors de l'exécution de \verb|back|, la salle dans \verb|aPreviousRoom| va dans \verb|aCurrentRoom| et un second \verb|back| fait exactement le contraire !
 
 \end{exercise}
 
 \begin{exercise}[subtitle=Stack]
 
-Pour résoudre le problème évoqué à l'exercice précédent, on va utiliser une collection \verb|Stack| dans l'attribut \verb|aPreviousRooms|. Les deux fonctions qui nous intéressent sur \verb|Stack| sont \verb|push| \verb|pop()|, permettant respectivement d'insérer un élement en haut de la pile et de récupérer l'élement le plus haut de la pile. Ainsi, on change \verb|go| et \verb|back| pour refléter ce changement.
+Pour résoudre le problème évoqué à l'exercice précédent, on va utiliser une collection \verb|Stack| dans l'attribut \verb|aPreviousRooms|. Les deux fonctions qui nous intéressent sur \verb|Stack| sont \verb|push| \verb|pop()|, permettant respectivement d'insérer un élément en haut de la pile et de récupérer l'élément le plus haut de la pile. Ainsi, on change \verb|go| et \verb|back| pour refléter ce changement.
 
 \begin{minted}{java}
 private void go(final Command pCommand) {
