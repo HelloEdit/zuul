@@ -21,17 +21,16 @@ public class GameEngine {
     private final HashMap<String, Room> aAllRooms;
 
     /**
-     * The current room where the player is.
-     */
-    private Room aCurrentRoom;
-
-    /**
      * The history of the rooms were the player was.
      *
      * @see Stack
      */
     private final Stack<Room> aPreviousRooms;
 
+    /**
+     * The current room where the player is.
+     */
+    private Room aCurrentRoom;
     /**
      * The graphical user interface of the game.
      */
@@ -257,8 +256,7 @@ public class GameEngine {
             vToDisplay = vItem != null
                     ? vItem.getLongDescription()
                     : "Objet inconnu. Rien a afficher.\n";
-        }
-        else vToDisplay = this.aCurrentRoom.getLongDescription();
+        } else vToDisplay = this.aCurrentRoom.getLongDescription();
 
         this.aGui.println(vToDisplay);
     }

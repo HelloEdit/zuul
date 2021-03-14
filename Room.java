@@ -103,7 +103,7 @@ public class Room {
     /**
      * Add a new item in the room.
      *
-     * @param pName name of the item.
+     * @param pName   name of the item.
      * @param pWeight weight of the item.
      * @return the current room.
      */
