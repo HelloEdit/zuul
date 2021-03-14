@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Stack;
 
 /**
  * This class is part of the "World of Zuul" application.
@@ -25,9 +26,11 @@ public class GameEngine {
     private Room aCurrentRoom;
 
     /**
-     * The previous room where the player was.
+     * The history of the rooms were the player was.
+     *
+     * @see Stack
      */
-    private Room aPreviousRoom;
+    private final Stack<Room> aPreviousRooms;
 
     /**
      * The graphical user interface of the game.
@@ -40,6 +43,7 @@ public class GameEngine {
     public GameEngine() {
         this.aParser = new Parser();
         this.aAllRooms = new HashMap<>();
+        this.aPreviousRooms = new Stack<>();
 
         this.createRooms();
     }
@@ -176,7 +180,7 @@ public class GameEngine {
     }
 
     /**
-     * GOes back to the latest room.
+     * Goes back to the latest room.
      *
      * @param vCommand the command to be processed.
      */
@@ -186,12 +190,13 @@ public class GameEngine {
             return;
         }
 
-        if (this.aPreviousRoom == null) {
+        if (this.aPreviousRooms.isEmpty()) {
             this.aGui.println("Aucune salle dans laquelle retourner.");
             return;
         }
 
-        this.changeRoom(this.aPreviousRoom);
+        Room vPreviousRoom = this.aPreviousRooms.pop();
+        this.changeRoom(vPreviousRoom);
     }
 
     /**
@@ -237,6 +242,7 @@ public class GameEngine {
             return;
         }
 
+        this.aPreviousRooms.push(this.aCurrentRoom);
         this.changeRoom(vNextRoom);
     }
 
@@ -252,9 +258,7 @@ public class GameEngine {
                     ? vItem.getLongDescription()
                     : "Objet inconnu. Rien a afficher.\n";
         }
-        else {
-            vToDisplay = this.aCurrentRoom.getLongDescription();
-        }
+        else vToDisplay = this.aCurrentRoom.getLongDescription();
 
         this.aGui.println(vToDisplay);
     }
@@ -265,12 +269,10 @@ public class GameEngine {
      * @param vRoom the room to be used.
      */
     private void changeRoom(Room vRoom) {
-        this.aPreviousRoom = this.aCurrentRoom;
         this.aCurrentRoom = vRoom;
 
         if (vRoom.getImageName() != null)
             this.aGui.showImage(vRoom.getImageName());
-
 
         this.printLocationInfo();
     }
