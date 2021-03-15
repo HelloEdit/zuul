@@ -107,8 +107,8 @@ public class Room {
      * @param pWeight weight of the item.
      * @return the current room.
      */
-    public Room addItem(final String pName, final int pWeight) {
-        this.aItems.put(pName, new Item(pName, pWeight));
+    public Room addItem(final String pName, final String pDescription, final int pWeight) {
+        this.aItems.put(pName, new Item(pName, pDescription, pWeight));
 
         return this;
     }
@@ -146,6 +146,15 @@ public class Room {
      */
     public HashMap<String, Item> getItems() {
         return this.aItems;
+    }
+
+    /**
+     * Gets a specific item of the room.
+     *
+     * @return the item asked.
+     */
+    public Item getItem(final String pName) {
+        return this.aItems.get(pName);
     }
 
     /**

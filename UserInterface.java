@@ -130,6 +130,7 @@ public class UserInterface implements ActionListener {
      * Actionlistener interface for entry textfield.
      *
      * @param pE the event
+     * @see ActionListener
      */
     public void actionPerformed(final ActionEvent pE) {
         // no need to check the type of action at the moment

@@ -2,7 +2,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.Stack;
 
 /**
  * This class is part of the "World of Zuul" application.
@@ -22,18 +21,10 @@ public class GameEngine {
      * All rooms created for the game.
      */
     private final HashMap<String, Room> aAllRooms;
-
     /**
-     * The history of the rooms were the player was.
-     *
-     * @see Stack
+     * The player.
      */
-    private final Stack<Room> aPreviousRooms;
-
-    /**
-     * The current room where the player is.
-     */
-    private Room aCurrentRoom;
+    private final Player aPlayer;
     /**
      * The graphical user interface of the game.
      */
@@ -45,7 +36,7 @@ public class GameEngine {
     public GameEngine() {
         this.aParser = new Parser();
         this.aAllRooms = new HashMap<>();
-        this.aPreviousRooms = new Stack<>();
+        this.aPlayer = new Player();
 
         this.createRooms();
     }
@@ -55,8 +46,12 @@ public class GameEngine {
      */
     public void setGUI(final UserInterface pUserInterface) {
         this.aGui = pUserInterface;
-        if (this.aCurrentRoom.getImageName() != null)
-            this.aGui.showImage(this.aCurrentRoom.getImageName());
+
+        Room vRoom = this.aPlayer.getCurrentRoom();
+        if (vRoom == null) return;
+
+        if (vRoom.getImageName() != null)
+            this.aGui.showImage(vRoom.getImageName());
 
         this.printWelcome();
     }
@@ -76,28 +71,28 @@ public class GameEngine {
      */
     private void createRooms() {
         Room office = this.initRoom("bureau", "c'est le bureau de Murphy Law")
-                .addItem("loupe", 1);
+                .addItem("loupe", "une simple loupe", 1);
 
         Room car = this.initRoom("voiture", "c'est la voiture de Murphy Law. Pratique pour aller là où vous voulez")
-                .addItem("clés de voiture", 1);
+                .addItem("clés de voiture", "permet de se servir de la voiture", 1);
 
         Room esiee = this.initRoom("ESIEE", "c'est la salle où vous avez lancé ce jeu")
-                .addItem("livre \"Objects First with Java\"", 1);
+                .addItem("livre", "\"Objects First with Java\"", 1);
 
         Room greatStair = this.initRoom("grand escalier", "l'escalier principal de Buckingham Palace")
-                .addItem("statue de la reine", 100);
+                .addItem("statue", "sculpture de la reine Victoria", 100);
 
         Room reception = this.initRoom("salle de réception", "la salle de réception de Buckingham Palace")
-                .addItem("cendrier", 1);
+                .addItem("cendrier", "un simple cendrier", 1);
 
         Room apartments = this.initRoom("appartements", "ce sont les appartements de la Reine")
-                .addItem("boucles d'oreilles", 1);
+                .addItem("boucles d'oreilles", "de très belles boucles d'oreilles", 1);
 
         Room kitchen = this.initRoom("cuisine", "la cuisine de Buckingham Palace")
-                .addItem("oignons", 1);
+                .addItem("oignons", "de simples oignons", 1);
 
         Room cave = this.initRoom("cave", "une cave de stockage d'objets sous Buckingham Palace")
-                .addItem("épée", 2);
+                .addItem("épée", "une vieille épée", 2);
 
         // Setting up the exits
         office.setExit("east", car);
@@ -120,7 +115,7 @@ public class GameEngine {
 
         apartments.setExit("down", reception);
 
-        this.aCurrentRoom = office;
+        this.aPlayer.setCurrentRoom(office);
     }
 
     /**
@@ -157,7 +152,7 @@ public class GameEngine {
                 break;
 
             case "quit":
-                if (this.quit(vCommand)) this.endGame();
+                this.quit(vCommand);
                 break;
 
             case "go":
@@ -196,13 +191,13 @@ public class GameEngine {
             return;
         }
 
-        if (this.aPreviousRooms.isEmpty()) {
+        Room vPrevious = this.aPlayer.getPreviousRoom();
+        if (vPrevious == null) {
             this.aGui.println("Aucune salle dans laquelle retourner.");
             return;
         }
 
-        Room vPreviousRoom = this.aPreviousRooms.pop();
-        this.changeRoom(vPreviousRoom);
+        this.changeRoom(vPrevious);
     }
 
     /**
@@ -219,15 +214,15 @@ public class GameEngine {
      * Handles the quit command.
      *
      * @param pCommand the quit command to be processed.
-     * @return true if the program should quit, false otherwise.
      */
-    private boolean quit(final Command pCommand) {
+    private void quit(final Command pCommand) {
         if (pCommand.hasSecondWord()) {
             this.aGui.println("Quitter quoi ??");
-            return false;
+            return;
         }
 
-        return true;
+        this.aGui.println("Merci d'avoir joué. Au revoir.");
+        this.aGui.enable(false);
     }
 
     /**
@@ -242,13 +237,13 @@ public class GameEngine {
             return;
         }
 
-        Room vNextRoom = this.aCurrentRoom.getExit(pCommand.getSecondWord());
+        Room vNextRoom = this.aPlayer.getCurrentRoom().getExit(pCommand.getSecondWord());
         if (vNextRoom == null) {
             this.aGui.println("Cette direction est inconnue...\n");
             return;
         }
 
-        this.aPreviousRooms.push(this.aCurrentRoom);
+        this.aPlayer.saveCurrentRoom();
         this.changeRoom(vNextRoom);
     }
 
@@ -256,14 +251,18 @@ public class GameEngine {
      * Handles the look command.
      */
     private void look(final Command pCommand) {
-        String vToDisplay;
+        Room vRoom = this.aPlayer.getCurrentRoom();
 
+        String vToDisplay;
         if (pCommand.hasSecondWord()) {
-            Item vItem = this.aCurrentRoom.getItems().get(pCommand.getSecondWord());
+            Item vItem = vRoom.getItem(pCommand.getSecondWord());
+
             vToDisplay = vItem != null
-                    ? vItem.getLongDescription()
+                    ? vItem.toString()
                     : "Objet inconnu. Rien a afficher.\n";
-        } else vToDisplay = this.aCurrentRoom.getLongDescription();
+        } else {
+            vToDisplay = vRoom.getLongDescription();
+        }
 
         this.aGui.println(vToDisplay);
     }
@@ -274,7 +273,7 @@ public class GameEngine {
      * @param vRoom the room to be used.
      */
     private void changeRoom(Room vRoom) {
-        this.aCurrentRoom = vRoom;
+        this.aPlayer.setCurrentRoom(vRoom);
 
         if (vRoom.getImageName() != null)
             this.aGui.showImage(vRoom.getImageName());
@@ -322,17 +321,9 @@ public class GameEngine {
     }
 
     /**
-     * End the game by gratefully closing it.
-     */
-    private void endGame() {
-        this.aGui.println("Merci d'avoir joué.  Au revoir.");
-        this.aGui.enable(false);
-    }
-
-    /**
      * Prints the location informations.
      */
     private void printLocationInfo() {
-        this.aGui.println(this.aCurrentRoom.getLongDescription());
+        this.aGui.println(this.aPlayer.getCurrentRoom().getLongDescription());
     }
 }
