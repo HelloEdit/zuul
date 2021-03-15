@@ -11,12 +11,14 @@ public class Player {
      * @see Stack
      */
     private final Stack<Room> aPreviousRooms;
+
     /**
      * The player inventory.
      *
      * @see HashMap
      */
     private final HashMap<String, Item> aInventory;
+
     /**
      * The current room where the player is.
      */
