@@ -1,4 +1,7 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.Stack;
 
 /**
@@ -173,6 +176,10 @@ public class GameEngine {
                 this.inspect(vCommand);
                 break;
 
+            case "test":
+                this.test(vCommand);
+                break;
+
             // On néglige la branche "default" ici car on sait que si on arrive à l'instruction du
             // switch, le "commandWord" est valide, c'est donc forcément un des 5 cas ci dessus.
         }
@@ -273,6 +280,36 @@ public class GameEngine {
             this.aGui.showImage(vRoom.getImageName());
 
         this.printLocationInfo();
+    }
+
+    /**
+     * Handles the test command by opening & executing a test file.
+     *
+     * @param vCommand the command to be processed.
+     */
+    private void test(final Command vCommand) {
+        if (!vCommand.hasSecondWord()) {
+            System.out.printf("La commande test doit avoir un second mot.%n");
+            return;
+        }
+
+        this.aGui.println("--- MODE TEST ---");
+
+        String vPath = "./test/" + vCommand.getSecondWord();
+
+        Scanner vScanner;
+        try {
+            vScanner = new Scanner(new File(vPath));
+        } catch (FileNotFoundException vError) {
+            String vMessage = String.format("Le fichier \"%s\" est introuvable.%n", vPath);
+            this.aGui.println(vMessage);
+
+            return;
+        }
+
+        while (vScanner.hasNextLine()) this.interpretCommand(vScanner.nextLine());
+
+        this.aGui.println("--- FIN MODE TEST ---");
     }
 
     /**

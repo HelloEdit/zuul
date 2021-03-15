@@ -573,7 +573,7 @@ private void back(final Command vCommand) {
 \end{minted}
 \end{exercise}
 
-\begin{exercise}[subtitle=Test de la commande back]
+\begin{exercise}[subtitle=test de la commande back]
 
 En voyant l'implémentation de la commande \verb|back|, le cas singulier de la salle initiale saute aux yeux : en effet, si l'on a pas encore bougé, \verb|aPreviousRoom| est évalué à \verb|null|, pouvant ammener à un \verb|NullPointerException|. On modifie donc \verb|back|.
 
@@ -621,6 +621,50 @@ private void back(final Command vCommand) {
     
     Room vPreviousRoom = this.aPreviousRooms.pop();
     this.changeRoom(vPreviousRoom);
+}
+\end{minted}
+\end{exercise}
+
+\begin{exercise}[subtitle=Réflexion sur les tests]
+
+Pour le projet Zuul, les tests devraient porter sur les fonctionnalités suivantes :
+
+\begin{description}
+  \item [commandes] s'assurer que la logique des commandes est fonctionnelle
+  \item [traitement] s'assurer que le traitement de l'entrée est fonctionnel
+\end{description}
+\end{exercise}
+
+\begin{exercise}[subtitle=Fonctionnement des tests]
+
+Une idée serait de mettre en place des tests unitaires et fonctionnels. On peut faire cela en créant des fichiers contenant un scénario détaillé à tester pour s'assurer qu'il n'y a pas de régression.
+
+On crée donc une nouvelle commande \verb|test| dont le but est de charger un scénario (spécifié en second mot) et de l'exécuter dans l'interface. Pour ce faire, on crée la méthode test de la façon suivante :
+
+\begin{minted}{java}
+private void test(final Command vCommand) {
+    if (!vCommand.hasSecondWord()) {
+        System.out.printf("La commande test doit avoir un second mot.%n");
+        return;
+    }
+
+    this.aGui.println("--- DEBUT MODE TEST ---");
+
+    String vPath = "./test/" + vCommand.getSecondWord();
+
+    Scanner vScanner;
+    try {
+        vScanner = new Scanner(new File(vPath));
+    } catch (FileNotFoundException vError) {
+        String vMessage = String.format("Le fichier \"%s\" est introuvable.%n", vPath);
+        this.aGui.println(vMessage);
+
+        return;
+    }
+
+    while (vScanner.hasNextLine()) this.interpretCommand(vScanner.nextLine());
+
+    this.aGui.println("--- FIN MODE TEST ---");
 }
 \end{minted}
 \end{exercise}
