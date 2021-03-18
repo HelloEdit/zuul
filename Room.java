@@ -101,7 +101,7 @@ public class Room {
     }
 
     /**
-     * Add a new item in the room.
+     * Construct and add a new item in the room.
      *
      * @param pName   name of the item.
      * @param pWeight weight of the item.
@@ -111,6 +111,25 @@ public class Room {
         this.aItems.put(pName, new Item(pName, pDescription, pWeight));
 
         return this;
+    }
+
+    /**
+     * Add a new item in the room.
+     *
+     * @param pItem the item to be added to the room.
+     */
+    public void addItem(final Item pItem) {
+        this.aItems.put(pItem.getName(), pItem);
+    }
+
+    /**
+     * Removes an item from the room.
+     *
+     * @param pName the item's name.
+     * @return the item removed from the room.
+     */
+    public Item removeItem(final String pName) {
+        return this.aItems.remove(pName);
     }
 
     /**
@@ -136,16 +155,6 @@ public class Room {
             vResult.append(vExit).append(" ");
 
         return vResult.toString();
-    }
-
-    /**
-     * Gets the current item of the room.
-     *
-     * @return the HashMap items.
-     * @see HashMap
-     */
-    public HashMap<String, Item> getItems() {
-        return this.aItems;
     }
 
     /**

@@ -74,7 +74,7 @@ public class GameEngine {
                 .addItem("loupe", "une simple loupe", 1);
 
         Room car = this.initRoom("voiture", "c'est la voiture de Murphy Law. Pratique pour aller là où vous voulez")
-                .addItem("clés de voiture", "permet de se servir de la voiture", 1);
+                .addItem("clé", "permet de se servir de la voiture", 1);
 
         Room esiee = this.initRoom("ESIEE", "c'est la salle où vous avez lancé ce jeu")
                 .addItem("livre", "\"Objects First with Java\"", 1);
@@ -159,6 +159,14 @@ public class GameEngine {
                 this.go(vCommand);
                 break;
 
+            case "take":
+                this.take(vCommand);
+                break;
+
+            case "drop":
+                this.drop(vCommand);
+                break;
+
             case "look":
                 this.look(vCommand);
                 break;
@@ -181,12 +189,59 @@ public class GameEngine {
     }
 
     /**
+     * Drops the current item holed by the player in the room.
+     *
+     * @param pCommand the command to be processed.
+     */
+    private void drop(Command pCommand) {
+        if (pCommand.hasSecondWord()) {
+            this.aGui.println("Déposer quoi ???");
+
+            return;
+        }
+
+        Item vItem;
+        try {
+            vItem = this.aPlayer.dropItem();
+        } catch (Player.CantMoveItemException vError) {
+            this.aGui.println("Aucun item déposé.");
+
+            return;
+        }
+
+        this.aGui.println("Vous avez bien déposé " + vItem.getName() + ".");
+    }
+
+    /**
+     * Takes an item from the current room and add it to the player.
+     *
+     * @param pCommand the command to be processed.
+     */
+    private void take(Command pCommand) {
+        if (!pCommand.hasSecondWord()) {
+            this.aGui.println("Vous devez spécifier l'item à prendre.");
+            return;
+        }
+
+        Item vItem;
+        try {
+            vItem = this.aPlayer.takeItem(pCommand.getSecondWord());
+        } catch (Player.CantMoveItemException vError) {
+            this.aGui.println("Cet item n'est pas dans la salle actuelle.");
+
+            return;
+        }
+
+        this.aGui.println("Vous avez bien récupéré " + vItem.getName() + ".");
+    }
+
+    /**
      * Goes back to the latest room.
      *
-     * @param vCommand the command to be processed.
+     * @param pCommand the command to be processed.
      */
-    private void back(Command vCommand) {
-        if (vCommand.hasSecondWord()) {
+    private void back(Command pCommand) {
+        if (pCommand.hasSecondWord()) {
             this.aGui.println("retourner où ??");
             return;
         }
@@ -270,13 +325,13 @@ public class GameEngine {
     /**
      * Changes the current room.
      *
-     * @param vRoom the room to be used.
+     * @param pRoom the room to be used.
      */
-    private void changeRoom(Room vRoom) {
-        this.aPlayer.setCurrentRoom(vRoom);
+    private void changeRoom(Room pRoom) {
+        this.aPlayer.setCurrentRoom(pRoom);
 
-        if (vRoom.getImageName() != null)
-            this.aGui.showImage(vRoom.getImageName());
+        if (pRoom.getImageName() != null)
+            this.aGui.showImage(pRoom.getImageName());
 
         this.printLocationInfo();
     }
@@ -284,17 +339,17 @@ public class GameEngine {
     /**
      * Handles the test command by opening & executing a test file.
      *
-     * @param vCommand the command to be processed.
+     * @param pCommand the command to be processed.
      */
-    private void test(final Command vCommand) {
-        if (!vCommand.hasSecondWord()) {
+    private void test(final Command pCommand) {
+        if (!pCommand.hasSecondWord()) {
             System.out.printf("La commande test doit avoir un second mot.%n");
             return;
         }
 
         this.aGui.println("--- MODE TEST ---");
 
-        String vPath = "./test/" + vCommand.getSecondWord();
+        String vPath = "./test/" + pCommand.getSecondWord();
 
         Scanner vScanner;
         try {

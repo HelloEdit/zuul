@@ -20,7 +20,8 @@ public class Item {
      * @param pDescription description of the item.
      * @param pWeight      weight of the item.
      */
-    public Item(final String name, final String pDescription, final int pWeight) {
+    public Item(final String pName, final String pDescription, final int pWeight) {
+        this.aName = pName;
         this.aDescription = pDescription;
         this.aWeight = pWeight;
     }
@@ -33,6 +34,13 @@ public class Item {
     public Item(final String pName, final String pDescription) {
         this(pName, pDescription, 0);
     }
+
+    /**
+     * Gets the item name.
+     *
+     * @return the item's name.
+     */
+    public String getName() { return this.aName; }
 
     /**
      * Gets the item's description.
