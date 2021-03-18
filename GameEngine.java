@@ -194,7 +194,7 @@ public class GameEngine {
      * @param pCommand the command to be processed.
      */
     private void drop(Command pCommand) {
-        if (pCommand.hasSecondWord()) {
+        if (!pCommand.hasSecondWord()) {
             this.aGui.println("Déposer quoi ???");
 
             return;
@@ -202,9 +202,9 @@ public class GameEngine {
 
         Item vItem;
         try {
-            vItem = this.aPlayer.dropItem();
-        } catch (Player.CantMoveItemException vError) {
-            this.aGui.println("Aucun item déposé.");
+            vItem = this.aPlayer.dropItem(pCommand.getSecondWord());
+        } catch (Player.CantManageItemException vError) {
+            this.aGui.println(vError.getMessage());
 
             return;
         }
@@ -226,8 +226,8 @@ public class GameEngine {
         Item vItem;
         try {
             vItem = this.aPlayer.takeItem(pCommand.getSecondWord());
-        } catch (Player.CantMoveItemException vError) {
-            this.aGui.println("Cet item n'est pas dans la salle actuelle.");
+        } catch (Player.CantManageItemException vError) {
+            this.aGui.println(vError.getMessage());
 
             return;
         }

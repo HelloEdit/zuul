@@ -17,9 +17,7 @@ public class Player {
      *
      * @see HashMap
      */
-    //private final HashMap<String, Item> aInventory;
-
-    private Item aCarriedItem;
+    private final HashMap<String, Item> aInventory;
 
     /**
      * The current room where the player is.
@@ -31,7 +29,7 @@ public class Player {
      */
     public Player() {
         this.aPreviousRooms = new Stack<>();
-        //this.aInventory = new HashMap<>();
+        this.aInventory = new HashMap<>();
     }
 
     /**
@@ -74,17 +72,17 @@ public class Player {
      *
      * @param vItemName name of the item to be taken.
      * @return the item just added.
-     * @throws CantMoveItemException if the item to be taken doesn't exist in the room.
+     * @throws CantManageItemException if the item to be taken doesn't exist in the room.
      */
-    public Item takeItem(final String vItemName) throws CantMoveItemException {
-        if (this.aCurrentRoom == null) throw new CantMoveItemException();
+    public Item takeItem(final String vItemName) throws CantManageItemException {
+        if (this.aCurrentRoom == null) throw new CantManageItemException("Le joueur n'est pas dans une salle.");
 
         // remove the item from the room...
         Item vItem = this.aCurrentRoom.removeItem(vItemName);
-        if (vItem == null) throw new CantMoveItemException();
+        if (vItem == null) throw new CantManageItemException("L'objet voulu n'existe pas dans la salle.");
 
         // ...and then add it to the player
-        this.aCarriedItem = vItem;
+        this.aInventory.put(vItem.getName(), vItem);
 
         // returns a reference of the item just dropped
         return vItem;
@@ -93,15 +91,16 @@ public class Player {
     /**
      * Drops the item held by the player in the current room.
      *
+     * @param pName name of the item to be removed.
      * @return the item just dropped.
      */
-    public Item dropItem() throws CantMoveItemException {
-        if (this.aCurrentRoom == null) throw new CantMoveItemException();
-        if (this.aCarriedItem == null) throw new CantMoveItemException();
+    public Item dropItem(final String pName) throws CantManageItemException {
+        if (this.aCurrentRoom == null) throw new CantManageItemException("Le joueur n'est pas dans une salle.");
 
         // remove the item from the player...
-        Item vItem = this.aCarriedItem;
-        this.aCarriedItem = null;
+        Item vItem = this.aInventory.remove(pName);
+
+        if (vItem == null) throw new CantManageItemException("Vous ne possédez pas l'objet que vous voulez déposer.");
 
         // ... and add it to the current room
         this.aCurrentRoom.addItem(vItem);
@@ -109,9 +108,9 @@ public class Player {
         return vItem;
     }
 
-    public static class CantMoveItemException extends Exception {
-        public CantMoveItemException() {
-            super();
+    public static class CantManageItemException extends Exception {
+        public CantManageItemException(final String pMessage) {
+            super(pMessage);
         }
     }
 }
