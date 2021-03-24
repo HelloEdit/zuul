@@ -5,6 +5,10 @@ import java.util.Stack;
  * This class represents a player of the game Zuul.
  */
 public class Player {
+    public final static int MAX_WEIGHT = 100;
+
+    private int aWeight;
+
     /**
      * The history of the rooms were the player was.
      *
@@ -17,7 +21,7 @@ public class Player {
      *
      * @see HashMap
      */
-    private final HashMap<String, Item> aInventory;
+    private final ItemList aInventory;
 
     /**
      * The current room where the player is.
@@ -29,7 +33,8 @@ public class Player {
      */
     public Player() {
         this.aPreviousRooms = new Stack<>();
-        this.aInventory = new HashMap<>();
+        this.aInventory = new ItemList();
+        this.aWeight = 0;
     }
 
     /**
@@ -70,46 +75,85 @@ public class Player {
     /**
      * Takes an item from the current room and add it to the inventory.
      *
-     * @param vItemName name of the item to be taken.
+     * @param pItemName name of the item to be taken.
      * @return the item just added.
-     * @throws CantManageItemException if the item to be taken doesn't exist in the room.
+     * @throws CannotManageItemException if the item to be taken doesn't exist in the room.
      */
-    public Item takeItem(final String vItemName) throws CantManageItemException {
-        if (this.aCurrentRoom == null) throw new CantManageItemException("Le joueur n'est pas dans une salle.");
+    public Item takeItem(final String pItemName) throws CannotManageItemException {
+        if (this.aCurrentRoom == null)
+            throw new CannotManageItemException("Aucune salle dans laquelle prendre l'objet.");
 
-        // remove the item from the room...
-        Item vItem = this.aCurrentRoom.removeItem(vItemName);
-        if (vItem == null) throw new CantManageItemException("L'objet voulu n'existe pas dans la salle.");
+        // get the item from the current room...
+        Item vItem = this.aCurrentRoom.getItem(pItemName);
+        if (vItem == null) throw new CannotManageItemException("L'objet à prendre n'existe pas dans la salle.");
 
-        // ...and then add it to the player
-        this.aInventory.put(vItem.getName(), vItem);
+        // if the difference is less than zero, the total weight of the items exceeds the allowed limit
+        if (this.aWeight + vItem.getWeight() > Player.MAX_WEIGHT) {
+            throw new CannotManageItemException("Vous ne pouvez pas prendre cet objet, votre inventaire est trop lourd !");
+        }
 
-        // returns a reference of the item just dropped
+        // then we definitely remove it from the room
+        this.aWeight += vItem.getWeight();
+        this.aCurrentRoom.removeItem(vItem);
+
+        // ...and add it to the player's inventory
+        this.aInventory.addItem(vItem);
+
         return vItem;
     }
 
     /**
-     * Drops the item held by the player in the current room.
+     * Drops an item in the current room.
      *
-     * @param pName name of the item to be removed.
-     * @return the item just dropped.
+     * @param pItemName the item to be dropped.
+     * @return the item that has been dropped.
+     * @throws CannotManageItemException if the requested object cannot be dropped.
      */
-    public Item dropItem(final String pName) throws CantManageItemException {
-        if (this.aCurrentRoom == null) throw new CantManageItemException("Le joueur n'est pas dans une salle.");
+    public Item dropItem(final String pItemName) throws CannotManageItemException {
+        if (this.aCurrentRoom == null) throw new CannotManageItemException("Aucune salle dans laquelle poser l'objet.");
 
-        // remove the item from the player...
-        Item vItem = this.aInventory.remove(pName);
+        // remove the item from the player inventory...
+        Item vItem = this.aInventory.removeItem(pItemName);
+        if (vItem == null) throw new CannotManageItemException("L'objet a déposer n'existe pas dans votre inventaire.");
 
-        if (vItem == null) throw new CantManageItemException("Vous ne possédez pas l'objet que vous voulez déposer.");
+        // subtract the item weight
+        this.aWeight -= vItem.getWeight();
 
-        // ... and add it to the current room
+        // ...and add it to the room
         this.aCurrentRoom.addItem(vItem);
 
         return vItem;
     }
 
-    public static class CantManageItemException extends Exception {
-        public CantManageItemException(final String pMessage) {
+    /**
+     * Gets the inventory description, with all items' name and the weight carried.
+     *
+     * @return inventory description
+     */
+    public String getInventoryDescription() {
+        return String.format("Inventaire : %s (poids: %d)%n", this.aInventory.getAllNames(), this.aWeight);
+    }
+
+    /**
+     * Gets the current items' weight carried.
+     *
+     * @return total items' weight.
+     */
+    public int getWeight() {
+        return this.aWeight;
+    }
+
+    /**
+     * Gets the items' count.
+     *
+     * @return items' count.
+     */
+    public int itemsCount() {
+        return this.aInventory.size();
+    }
+
+    public static class CannotManageItemException extends Exception {
+        public CannotManageItemException(final String pMessage) {
             super(pMessage);
         }
     }

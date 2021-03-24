@@ -23,7 +23,7 @@ public class Room {
     /**
      * The items of the room.
      */
-    private final HashMap<String, Item> aItems;
+    private final ItemList aItems;
 
     /**
      * The image for the room.
@@ -43,7 +43,7 @@ public class Room {
         this.aDescription = Room.capitalize(pDescription);
         this.aImageName = pImageName;
         this.aExits = new HashMap<>();
-        this.aItems = new HashMap<>();
+        this.aItems = new ItemList();
     }
 
     /**
@@ -80,7 +80,7 @@ public class Room {
         );
 
         if (this.aItems.isEmpty()) vText += "Il n'y a pas d'objet.\n";
-        else vText += String.format("Vous voyez : %s.%n", String.join(", ", this.aItems.keySet()));
+        else vText += String.format("Vous voyez : %s.%n", this.aItems.getAllNames());
 
         vText += this.getExitString();
 
@@ -108,7 +108,7 @@ public class Room {
      * @return the current room.
      */
     public Room addItem(final String pName, final String pDescription, final int pWeight) {
-        this.aItems.put(pName, new Item(pName, pDescription, pWeight));
+        this.aItems.addItem(pName, pDescription, pWeight);
 
         return this;
     }
@@ -119,7 +119,7 @@ public class Room {
      * @param pItem the item to be added to the room.
      */
     public void addItem(final Item pItem) {
-        this.aItems.put(pItem.getName(), pItem);
+        this.aItems.addItem(pItem);
     }
 
     /**
@@ -129,7 +129,17 @@ public class Room {
      * @return the item removed from the room.
      */
     public Item removeItem(final String pName) {
-        return this.aItems.remove(pName);
+        return this.aItems.removeItem(pName);
+    }
+
+    /**
+     * Removes an item from the room.
+     *
+     * @param pItem item to be removed.
+     * @return the item removed from the room.
+     */
+    public Item removeItem(final Item pItem) {
+        return this.aItems.removeItem(pItem);
     }
 
     /**
@@ -163,7 +173,7 @@ public class Room {
      * @return the item asked.
      */
     public Item getItem(final String pName) {
-        return this.aItems.get(pName);
+        return this.aItems.getItem(pName);
     }
 
     /**

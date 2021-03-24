@@ -82,4 +82,13 @@ public class ItemList {
     public String getAllNames() {
         return String.join(", ", this.aItems.keySet());
     }
+
+    /**
+     * Gets the size of the inventory.
+     *
+     * @return size of the inventory.
+     */
+    public int size() {
+        return this.aItems.size();
+    }
 }

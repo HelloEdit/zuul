@@ -71,7 +71,7 @@ public class GameEngine {
      */
     private void createRooms() {
         Room office = this.initRoom("bureau", "c'est le bureau de Murphy Law")
-                .addItem("loupe", "une simple loupe", 1);
+                .addItem("loupe", "une simple loupe", 10);
 
         Room car = this.initRoom("voiture", "c'est la voiture de Murphy Law. Pratique pour aller là où vous voulez")
                 .addItem("clé", "permet de se servir de la voiture", 1);
@@ -179,6 +179,10 @@ public class GameEngine {
                 this.inspect(vCommand);
                 break;
 
+            case "items":
+                this.items(vCommand);
+                break;
+
             case "test":
                 this.test(vCommand);
                 break;
@@ -186,6 +190,24 @@ public class GameEngine {
             // On néglige la branche "default" ici car on sait que si on arrive à l'instruction du
             // switch, le "commandWord" est valide, c'est donc forcément un des 5 cas ci dessus.
         }
+    }
+
+    /**
+     * Shows the items in inventory.
+     *
+     * @param pCommand the command to be processed.
+     */
+    private void items(Command pCommand) {
+        if (pCommand.hasSecondWord()) {
+            this.aGui.println("Pas de second mot pour items.");
+            return;
+        }
+
+        String vText = this.aPlayer.itemsCount() == 0
+                ? "Inventaire vide."
+                : this.aPlayer.getInventoryDescription();
+
+        this.aGui.println(vText);
     }
 
     /**
@@ -203,8 +225,8 @@ public class GameEngine {
         Item vItem;
         try {
             vItem = this.aPlayer.dropItem(pCommand.getSecondWord());
-        } catch (Player.CantManageItemException vError) {
-            this.aGui.println(vError.getMessage());
+        } catch (Player.CannotManageItemException pError) {
+            this.aGui.println(pError.getMessage());
 
             return;
         }
@@ -226,8 +248,8 @@ public class GameEngine {
         Item vItem;
         try {
             vItem = this.aPlayer.takeItem(pCommand.getSecondWord());
-        } catch (Player.CantManageItemException vError) {
-            this.aGui.println(vError.getMessage());
+        } catch (Player.CannotManageItemException pError) {
+            this.aGui.println(pError.getMessage());
 
             return;
         }
