@@ -30,14 +30,15 @@ public class CommandWords {
         // this map will contain all the commands without exception
         Map<String, Command> vMap = new HashMap<>();
 
-        // this object will join all available command that can be directly executed by the user
+        // this object will join all available command that can be *directly* executed by the user
         StringJoiner joiner = new StringJoiner(", ");
 
         for (CommandWord command : CommandWord.values()) {
+            // exclude the hidden command from being registered in the map
             if (command.isHidden()) continue;
             vMap.put(command.toString(), command.getCommand());
 
-            // exclude the command that cannot be executed in normal mode
+            // exclude the command that cannot be executed in normal mode from the help string
             if (!command.isExecutable(false)) continue;
 
             joiner.add(command.toString());
