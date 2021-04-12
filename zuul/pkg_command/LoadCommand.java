@@ -9,9 +9,9 @@ import zuul.pkg_ui.UserInterface;
 /**
  * Handles the charge command.
  */
-public class ChargeCommand extends Command {
-    public ChargeCommand() {
-        super("charge");
+public class LoadCommand extends Command {
+    public LoadCommand() {
+        super("load");
     }
 
     @Override

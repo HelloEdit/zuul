@@ -10,7 +10,7 @@ public enum CommandWord {
     GO(new GoCommand()),
     BACK(new BackCommand()),
     ITEM(new ItemCommand()),
-    CHARGE(new ChargeCommand()),
+    LOAD(new LoadCommand()),
     QUIT(new QuitCommand()),
     TEST(new TestCommand()),
     TAKE(new TakeCommand()),
