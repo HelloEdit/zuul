@@ -1,7 +1,7 @@
 package zuul.pkg_command;
 
 /**
- * Representation for all the valid commands of the pkg_game.
+ * Representation for all the valid commands of the game.
  *
  * @author Corentin POUPRY
  * @version 06.04.21
@@ -10,6 +10,7 @@ public enum CommandWord {
     GO(new GoCommand()),
     BACK(new BackCommand()),
     ITEM(new ItemCommand()),
+    CHARGE(new ChargeCommand()),
     QUIT(new QuitCommand()),
     TEST(new TestCommand()),
     TAKE(new TakeCommand()),
@@ -21,35 +22,45 @@ public enum CommandWord {
     UNKNOWN(new UnknownCommand());
 
     /**
-     * The pkg_command object used to process the pkg_command.
+     * The command object used to process the command.
      */
     private final Command aCommand;
 
     /**
-     * Constructor for enum's pkg_command.
+     * Constructor for enum's command.
      *
-     * @param pCommand The pkg_command object associated.
+     * @param pCommand The command object associated.
      */
     CommandWord(final Command pCommand) {
         this.aCommand = pCommand;
     }
 
     /**
-     * Gets the pkg_command object associated with the constant
+     * Gets the command object associated with the constant
      *
-     * @return The pkg_command associated.
+     * @return The command associated.
      */
     public Command getCommand() {
         return this.aCommand;
     }
 
     /**
-     * Gets if the pkg_command is hidden.
+     * Gets if the command is hidden.
      *
-     * @return true if the pkg_command is hidden, false otherwise.
+     * @return true if the command is hidden, false otherwise.
      */
     public boolean isHidden() {
         return this.aCommand.getName() == null;
+    }
+
+    /**
+     * Checks if the command can be executed in the current mode.
+     *
+     * @param pTestMode true if the test environment is enabled, false otherwise.
+     * @return true if the command can be used, false otherwise.
+     */
+    public boolean isExecutable(final boolean pTestMode) {
+        return this.aCommand.isExecutable(pTestMode);
     }
 
     @Override

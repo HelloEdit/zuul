@@ -1,7 +1,7 @@
 package zuul.pkg_room;
 
 /**
- * A transporter pkg_room that move you to a random pkg_room.
+ * A transporter room that move you to a random room.
  *
  * @author Corentin POUPRY
  * @version 06.04.21
@@ -13,7 +13,7 @@ public class TransporterRoom extends Room {
     private final RoomRandomizer aRandomizer;
 
     /**
-     * Name of the pkg_room set as forced destination.
+     * Name of the room set as forced destination.
      */
     private String aForcedExit;
 
@@ -24,10 +24,10 @@ public class TransporterRoom extends Room {
     }
 
     /**
-     * Returns a random pkg_room, independently of the direction provided.
+     * Returns a random room, independently of the direction provided.
      *
      * @param pDirection Direction of the exit.
-     * @return A random pkg_room.
+     * @return A random room.
      */
     @Override
     public Room getExit(final String pDirection) {
@@ -37,7 +37,7 @@ public class TransporterRoom extends Room {
     }
 
     /**
-     * Forces a specific pkg_room name as the exit of the pkg_room.
+     * Forces a specific room name as the exit of the room.
      *
      * @param pExitName The forced exit name.
      */

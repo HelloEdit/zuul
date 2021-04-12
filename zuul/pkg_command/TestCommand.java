@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 /**
- * Handles the test pkg_command.
+ * Handles the test command.
  *
  * @author Corentin POUPRY
  * @version 06.04.21
@@ -21,11 +21,11 @@ public class TestCommand extends Command {
     }
 
     /**
-     * Tests the program with pkg_command from a test file.
+     * Tests the program with command from a test file.
      *
-     * @param pEngine    The pkg_game engine.
-     * @param pPlayer    The player using the pkg_command.
-     * @param pInterface The user interface used by the pkg_game.
+     * @param pEngine    The game engine.
+     * @param pPlayer    The player using the command.
+     * @param pInterface The user interface used by the game.
      */
     @Override
     public void execute(Engine pEngine, Player pPlayer, UserInterface pInterface) {
@@ -45,8 +45,12 @@ public class TestCommand extends Command {
         }
 
         while (vScanner.hasNextLine()) {
-            pInterface.print("[TEST]");
-            pEngine.processCommand(vScanner.nextLine(), true);
+            String vNext = vScanner.nextLine();
+
+            pInterface.printf("[TEST] > %s", vNext);
+            pInterface.println();
+
+            pEngine.processCommand(vNext, true);
         }
     }
 

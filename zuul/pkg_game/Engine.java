@@ -11,33 +11,33 @@ import zuul.pkg_ui.UserInterface;
 
 /**
  * This class is the main class of the "World of Zuul" application.
- * "World of Zuul" is a very simple, text based adventure pkg_game. Users
+ * "World of Zuul" is a very simple, text based adventure game. Users
  * can walk around some scenery. That's all. It should really be extended
  * to make it more interesting!
  * <p>
- * This main class creates the necessary implementation objects and starts the pkg_game.
+ * This main class creates the necessary implementation objects and starts the game.
  *
  * @author Corentin POUPRY
  * @version 06.04.21
  */
 public class Engine {
     /**
-     * All the rooms created for the pkg_game.
+     * All the rooms created for the game.
      */
     private final RoomRandomizer aRandomizer;
 
     /**
-     * The player playing the pkg_game.
+     * The player playing the game.
      */
     private final Player aPlayer;
 
     /**
-     * Graphical user interface to be used for the pkg_game.
+     * Graphical user interface to be used for the game.
      */
     private UserInterface aInterface;
 
     /**
-     * Creates a new engine for the pkg_game.
+     * Creates a new engine for the game.
      */
     public Engine() {
         this.aRandomizer = new RoomRandomizer();
@@ -47,7 +47,7 @@ public class Engine {
     }
 
     /**
-     * Creates the rooms required for the pkg_game.
+     * Creates the rooms required for the game.
      */
     private void createRooms() {
         // Murphy Law Universe
@@ -56,10 +56,10 @@ public class Engine {
         vOffice.addItem(new Beamer());
 
         Room vCar = this.initRoom("voiture", "C'est la voiture de Murphy Law. Pratique pour vous déplacer");
-        vCar.addItem("clé", "Clé de la voiture. D'une utilité assez évidente");
+        vCar.addItem("clé", "d'une utilité assez évidente");
 
         // Buckingham Palace Universe
-        Room vGreatStair = this.initRoom("grand escalier", "L'escalier principal de Buckingham Palace");
+        Room vGreatStair = this.initRoom("grand escalier", "l'escalier principal de Buckingham Palace");
         vGreatStair.addItem("statue", "Une statue imposante de la reine", -1);
 
         Room vReception = this.initRoom("salle de réception", "Salle où, manifestement, on reçoit des gens importants");
@@ -82,7 +82,7 @@ public class Engine {
 
         // ESIEE Universe
         Room vEsiee = this.initRoom("salle de l'ESIEE", "mais... c'est là où vous avez lancé ce jeu");
-        vEsiee.addItem("un livre", "un livre intitulé \"Objects First with Java\"");
+        vEsiee.addItem("livre", "un livre intitulé \"Objects First with Java\"");
 
         // Setting up the "paths" between rooms
 
@@ -110,17 +110,17 @@ public class Engine {
 
         vCave.setExit("voiture", vCar);
 
-        // sets the first pkg_room where the pkg_game begins
+        // sets the first room where the game begins
         this.aPlayer.setCurrentRoom(vOffice);
     }
 
     /**
-     * Simple helper to initialize a new pkg_room and store it
+     * Simple helper to initialize a new room and store it
      * in the engine.
      *
-     * @param pName        The name of the pkg_room.
-     * @param pDescription The description of the pkg_room.
-     * @return The created pkg_room.
+     * @param pName        The name of the room.
+     * @param pDescription The description of the room.
+     * @return The created room.
      */
     private Room initRoom(final String pName, final String pDescription) {
         Room vRoom = new Room(pName, pDescription);
@@ -130,7 +130,7 @@ public class Engine {
     }
 
     /**
-     * Shows the welcome text for the pkg_game.
+     * Shows the welcome text for the game.
      */
     private void welcome() {
         this.aInterface.println("\n\t______  _                      _                                \n" +
@@ -146,17 +146,15 @@ public class Engine {
     }
 
     /**
-     * Processes the pkg_command entered by the user.
+     * Processes the command entered by the user.
      *
      * @param pInput    Command to be processed.
-     * @param pTestMode true if the pkg_game is in test mode, false otherwise.
+     * @param pTestMode true if the game is in test mode, false otherwise.
      */
     public void processCommand(final String pInput, final boolean pTestMode) {
-        this.aInterface.println("> " + pInput);
-
         Command vCommand = Parser.parseCommand(pInput, pTestMode);
 
-        // while writing my commands, I noticed that many of them needed the player instance, the pkg_game engine
+        // while writing my commands, I noticed that many of them needed the player instance, the game engine
         // and/or the interface used. So instead of repeating the getters I preferred to put the different
         // elements as parameters of the `execute` method.
 
@@ -202,7 +200,7 @@ public class Engine {
     }
 
     /**
-     * Sets the used graphical user interface for the pkg_game.
+     * Sets the used graphical user interface for the game.
      *
      * @param pInterface The user interface to be used.
      */

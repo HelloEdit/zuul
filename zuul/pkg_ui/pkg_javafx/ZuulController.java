@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import zuul.Utils;
 import zuul.pkg_game.Engine;
 import zuul.pkg_game.Player;
 import zuul.pkg_item.Item;
@@ -23,7 +24,7 @@ import zuul.pkg_ui.UserInterface;
 
 /**
  * This class is the controller of our JavaFX view.
- * It allows to make the link between the graphical interface and the pkg_game logic.
+ * It allows to make the link between the graphical interface and the game logic.
  *
  * @author Corentin POUPRY
  * @version 06.04.21
@@ -165,9 +166,10 @@ public class ZuulController implements UserInterface {
                 super.updateItem(pItem, pEmpty);
 
                 if (pItem == null || pEmpty) {
-                    setText(null);
+                    this.setText(null);
                 } else {
-                    setText(pItem.getName());
+                    String vName = Utils.capitalize(pItem.getName());
+                    this.setText(vName);
                 }
             }
         });
@@ -190,7 +192,7 @@ public class ZuulController implements UserInterface {
     }
 
     /**
-     * Handles the pkg_command input in the text field.
+     * Handles the command input in the text field.
      */
     @FXML
     private void onInput() {
@@ -199,11 +201,12 @@ public class ZuulController implements UserInterface {
 
         if (vInput.isEmpty()) return;
 
+        this.println("> " + vInput);
         this.engine.processCommand(vInput, false);
     }
 
     /**
-     * Handles the pkg_item utilization.
+     * Handles the item utilization.
      */
     @FXML
     private void onItemUse() {
@@ -212,13 +215,14 @@ public class ZuulController implements UserInterface {
         try {
             vItem.use(this.engine, this.engine.getPlayer(), this.engine.getInterface());
         } catch (Exception pError) {
-            this.engine.getInterface().println(pError.getMessage());
+            this.println(pError.getMessage());
+            this.println();
         }
 
     }
 
     /**
-     * Handles the pkg_item dropping.
+     * Handles the item dropping.
      */
     @FXML
     private void onItemDrop() {

@@ -8,7 +8,7 @@ import zuul.pkg_ui.UserInterface;
 import java.util.EmptyStackException;
 
 /**
- * Handles the back pkg_command.
+ * Handles the back command.
  *
  * @author Corentin POUPRY
  * @version 06.04.21
@@ -19,11 +19,11 @@ public class BackCommand extends Command {
     }
 
     /**
-     * Goes back to the previous pkg_room if possible.
+     * Goes back to the previous room if possible.
      *
-     * @param pEngine    The pkg_game engine.
-     * @param pPlayer    The player using the pkg_command.
-     * @param pInterface The user interface used by the pkg_game.
+     * @param pEngine    The game engine.
+     * @param pPlayer    The player using the command.
+     * @param pInterface The user interface used by the game.
      */
     @Override
     public void execute(Engine pEngine, Player pPlayer, UserInterface pInterface) throws Room.RoomNotFoundException {

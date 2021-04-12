@@ -7,7 +7,7 @@ import zuul.pkg_room.TransporterRoom;
 import zuul.pkg_ui.UserInterface;
 
 /**
- * Handles the alea pkg_command.
+ * Handles the alea command.
  *
  * @author Corentin POUPRY
  * @version 06.04.21
@@ -18,12 +18,12 @@ public class AleaCommand extends Command {
     }
 
     /**
-     * Forces the exit of the current transporter pkg_room.
+     * Forces the exit of the current transporter room.
      *
-     * @param pEngine    The pkg_game engine.
-     * @param pPlayer    The player using the pkg_command.
-     * @param pInterface The user interface used by the pkg_game.
-     * @throws UnsupportedOperationException If player is not using this pkg_command in a transporter pkg_room.
+     * @param pEngine    The game engine.
+     * @param pPlayer    The player using the command.
+     * @param pInterface The user interface used by the game.
+     * @throws UnsupportedOperationException If player is not using this command in a transporter room.
      */
     @Override
     public void execute(Engine pEngine, Player pPlayer, UserInterface pInterface) throws UnsupportedOperationException {

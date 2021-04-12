@@ -9,51 +9,51 @@ import java.io.File;
 import java.util.HashMap;
 
 /**
- * This pkg_room represents a pkg_room in the Zuul pkg_game.
- * It allows to manipulate the items inside as well as various pkg_game mechanics.
+ * This room represents a room in the Zuul game.
+ * It allows to manipulate the items inside as well as various game mechanics.
  *
  * @author Corentin POUPRY
  * @version 06.04.21
  */
 public class Room {
     /**
-     * Name of the pkg_room.
+     * Name of the room.
      */
     private final String aName;
 
     /**
-     * Description of the pkg_room.
+     * Description of the room.
      */
     private final String aDescription;
 
     /**
-     * All the exits that can be reached from this pkg_room.
+     * All the exits that can be reached from this room.
      */
     private final HashMap<String, Room> aExits;
 
     /**
-     * All the characters in the pkg_room.
+     * All the characters in the room.
      */
     private final HashMap<String, Personage> aPersonage;
 
     /**
-     * The items in this pkg_room.
+     * The items in this room.
      */
     private final ItemList aItems;
 
     /**
-     * The image path attached to the pkg_room.
+     * The image path attached to the room.
      */
     private final String aImage;
 
     /**
-     * Creates a new pkg_room.
+     * Creates a new room.
      *
-     * @param pName        Name of the pkg_room.
-     * @param pDescription Description of the pkg_room.
+     * @param pName        Name of the room.
+     * @param pDescription Description of the room.
      */
     public Room(String pName, String pDescription) {
-        // it is assumed that the image file has the same name as the pkg_room.
+        // it is assumed that the image file has the same name as the room.
         this.aName = pName;
         this.aDescription = pDescription;
         this.aExits = new HashMap<>();
@@ -66,24 +66,24 @@ public class Room {
      * Retrieves the Room associated with the exit in the requested direction.
      *
      * @param pDirection Direction of the exit.
-     * @return The pkg_room associated with the exit.
+     * @return The room associated with the exit.
      */
     public Room getExit(String pDirection) {
         return this.aExits.get(pDirection);
     }
 
     /**
-     * Checks if a specific pkg_room can be reached from the actual pkg_room.
+     * Checks if a specific room can be reached from the actual room.
      *
-     * @param vRoom The pkg_room to be reached.
-     * @return true if the pkg_room can be reached. False otherwise.
+     * @param vRoom The room to be reached.
+     * @return true if the room can be reached. False otherwise.
      */
     public boolean hasExit(final Room vRoom) {
         return this.aExits.containsValue(vRoom);
     }
 
     /**
-     * Set an exit of the pkg_room.
+     * Set an exit of the room.
      *
      * @param pDirection Direction of the exit.
      * @param pExit      Room to which the exit leads.
@@ -93,28 +93,28 @@ public class Room {
     }
 
     /**
-     * Creates and adds a new pkg_item in the pkg_room.
+     * Creates and adds a new item in the room.
      *
-     * @param pName        Name of the pkg_item.
-     * @param pDescription Description of the pkg_item.
-     * @param pWeight      Weight of the pkg_item.
+     * @param pName        Name of the item.
+     * @param pDescription Description of the item.
+     * @param pWeight      Weight of the item.
      */
     public void addItem(final String pName, final String pDescription, final int pWeight) {
         this.aItems.addItem(pName, pDescription, pWeight);
     }
 
     /**
-     * Creates and adds a new pkg_item in the pkg_room.
+     * Creates and adds a new item in the room.
      *
-     * @param pName        Name of the pkg_item.
-     * @param pDescription Description of the pkg_item.
+     * @param pName        Name of the item.
+     * @param pDescription Description of the item.
      */
     public void addItem(final String pName, final String pDescription) {
         this.addItem(pName, pDescription, 1);
     }
 
     /**
-     * Adds a new pkg_item in the pkg_room.
+     * Adds a new item in the room.
      *
      * @param pItem Item to be added.
      */
@@ -123,37 +123,37 @@ public class Room {
     }
 
     /**
-     * Removes an pkg_item from the pkg_room.
+     * Removes an item from the room.
      *
-     * @param pName Name of the pkg_item.
-     * @return The pkg_item removed.
+     * @param pName Name of the item.
+     * @return The item removed.
      */
     public Item removeItem(final String pName) {
         return this.aItems.removeItem(pName);
     }
 
     /**
-     * Gets a specific pkg_item of the pkg_room.
+     * Gets a specific item of the room.
      *
-     * @param pSearch The pkg_item name.
-     * @return The pkg_item asked.
+     * @param pSearch The item name.
+     * @return The item asked.
      */
     public Item getItem(final String pSearch) {
         return this.aItems.getItem(pSearch);
     }
 
     /**
-     * Gets a specific character in the pkg_room.
+     * Gets a specific character in the room.
      *
-     * @param pSearch The pkg_personage name.
-     * @return The pkg_personage asked.
+     * @param pSearch The personage name.
+     * @return The personage asked.
      */
     public Personage getPersonage(String pSearch) {
         return this.aPersonage.get(pSearch);
     }
 
     /**
-     * Gets the pkg_room's description.
+     * Gets the room's description.
      *
      * @return The Room description.
      */
@@ -162,7 +162,7 @@ public class Room {
     }
 
     /**
-     * Gets a long description of this pkg_room.
+     * Gets a long description of this room.
      *
      * @return The complete description.
      */
@@ -182,7 +182,7 @@ public class Room {
     }
 
     /**
-     * Gets a string listing all existing exits of the pkg_room.
+     * Gets a string listing all existing exits of the room.
      *
      * @return A string with the possibles exits.
      */
@@ -192,18 +192,18 @@ public class Room {
     }
 
     /**
-     * Gets the pkg_room name.
+     * Gets the room name.
      *
-     * @return The pkg_room name.
+     * @return The room name.
      */
     public String getName() {
         return Utils.capitalize(this.aName);
     }
 
     /**
-     * Gets the pkg_room's image file name.
+     * Gets the room's image file name.
      *
-     * @return The pkg_room's image name.
+     * @return The room's image name.
      */
     public String getImage() {
         File vFile = new File("./assets/" + this.aImage);
@@ -214,7 +214,7 @@ public class Room {
     }
 
     /**
-     * If a pkg_room is not found.
+     * If a room is not found.
      */
     public static class RoomNotFoundException extends Exception {
         public RoomNotFoundException() {

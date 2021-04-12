@@ -16,11 +16,11 @@ public class UnknownCommand extends Command {
     }
 
     /**
-     * Handles the behavior when a pkg_command entered by the user is not recognized.
+     * Handles the behavior when a command entered by the user is not recognized.
      *
-     * @param pEngine    The pkg_game engine.
-     * @param pPlayer    The player using the pkg_command.
-     * @param pInterface The user interface used by the pkg_game.
+     * @param pEngine    The game engine.
+     * @param pPlayer    The player using the command.
+     * @param pInterface The user interface used by the game.
      */
     @Override
     public void execute(Engine pEngine, Player pPlayer, UserInterface pInterface) {

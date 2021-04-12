@@ -7,7 +7,7 @@ import zuul.pkg_room.Room;
 import zuul.pkg_ui.UserInterface;
 
 /**
- * Handles the go pkg_command.
+ * Handles the go command.
  *
  * @author Corentin POUPRY
  * @version 06.04.21
@@ -18,11 +18,11 @@ public class GoCommand extends Command {
     }
 
     /**
-     * Moves the player in another pkg_room by taking an available exit.
+     * Moves the player in another room by taking an available exit.
      *
-     * @param pEngine    The pkg_game engine.
-     * @param pPlayer    The player using the pkg_command.
-     * @param pInterface The user interface used by the pkg_game.
+     * @param pEngine    The game engine.
+     * @param pPlayer    The player using the command.
+     * @param pInterface The user interface used by the game.
      */
     @Override
     public void execute(Engine pEngine, Player pPlayer, UserInterface pInterface) throws Room.RoomNotFoundException, Timer.TimerLimitException {

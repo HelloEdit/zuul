@@ -1,7 +1,7 @@
 package zuul;
 
 /**
- * This class is meant to provide simple utilities functions for the Zuul pkg_game.
+ * This class is meant to provide simple utilities functions for the Zuul game.
  *
  * @author Corentin POUPRY
  * @version 06.04.21

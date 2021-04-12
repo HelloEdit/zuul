@@ -4,7 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 
 /**
- * This class is used to represent a set of pkg_game items such as an inventory.
+ * This class is used to represent a set of game items such as an inventory.
  *
  * @author Corentin POUPRY
  * @version 06.04.21
@@ -25,41 +25,41 @@ public class ItemList {
     }
 
     /**
-     * Creates and stores in the list a new pkg_item.
+     * Creates and stores in the list a new item.
      *
-     * @param pName        Name of the pkg_item.
-     * @param pDescription Description of the pkg_item.
-     * @param pWeight      Weight of the pkg_item.
+     * @param pName        Name of the item.
+     * @param pDescription Description of the item.
+     * @param pWeight      Weight of the item.
      */
     public void addItem(final String pName, final String pDescription, final int pWeight) {
         this.addItem(new Item(pName, pDescription, pWeight));
     }
 
     /**
-     * Adds an pkg_item in the list.
+     * Adds an item in the list.
      *
-     * @param pItem The pkg_item to be added.
+     * @param pItem The item to be added.
      */
     public void addItem(final Item pItem) {
         this.aItems.put(pItem.getName(), pItem);
     }
 
     /**
-     * Gets an pkg_item from the list.
+     * Gets an item from the list.
      *
-     * @param pName Name of the pkg_item to get.
-     * @return The pkg_item retrieved.
+     * @param pName Name of the item to get.
+     * @return The item retrieved.
      */
     public Item getItem(final String pName) {
         return this.aItems.get(pName);
     }
 
     /**
-     * Removes an pkg_item from the list.
-     * This method removes from the list the pkg_item with the name given in parameter.
+     * Removes an item from the list.
+     * This method removes from the list the item with the name given in parameter.
      *
-     * @param pName Name of the pkg_item to be removed.
-     * @return The pkg_item removed.
+     * @param pName Name of the item to be removed.
+     * @return The item removed.
      */
     public Item removeItem(final String pName) {
         return this.aItems.remove(pName);
@@ -68,7 +68,7 @@ public class ItemList {
     /**
      * Tests if the list is empty.
      *
-     * @return true if the list contains at least one pkg_item, false otherwise.
+     * @return true if the list contains at least one item, false otherwise.
      */
     public boolean isEmpty() {
         return this.aItems.isEmpty();
@@ -84,7 +84,7 @@ public class ItemList {
     }
 
     /**
-     * Gets the pkg_item list.
+     * Gets the item list.
      *
      * @return The items list.
      */

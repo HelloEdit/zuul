@@ -32,11 +32,13 @@ public class LookCommand extends Command {
             return;
         }
 
+
         String vSearch = this.getSecondWord();
 
         Item vItem;
 
-        // if it is an possessed pkg_item
+        // observer loupe
+        // if it is an possessed item
         vItem = pPlayer.getItem(vSearch);
         if (vItem != null) {
             pInterface.println("Vous possédez cet objet.");
@@ -46,7 +48,7 @@ public class LookCommand extends Command {
 
         Room vRoom = pPlayer.getRoom();
 
-        // if it is an pkg_item in the current pkg_room
+        // if it is an item in the current pkg_room
         vItem = vRoom.getItem(vSearch);
         if (vItem != null) {
             pInterface.println("Cet objet est dans la pièce.");
@@ -54,7 +56,7 @@ public class LookCommand extends Command {
             return;
         }
 
-        // if it is a character in the current pkg_room
+        // if it is a character in the current room
         Personage vCharacter = vRoom.getPersonage(vSearch);
         if (vCharacter != null) {
             pInterface.println("Le personnage est dans la pièce.");

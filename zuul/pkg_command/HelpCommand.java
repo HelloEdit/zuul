@@ -5,7 +5,7 @@ import zuul.pkg_game.Player;
 import zuul.pkg_ui.UserInterface;
 
 /**
- * Handles the help pkg_command.
+ * Handles the help command.
  *
  * @author Corentin POUPRY
  * @version 06.04.21
@@ -18,9 +18,9 @@ public class HelpCommand extends Command {
     /**
      * Displays help for the player.
      *
-     * @param pEngine    The pkg_game engine.
-     * @param pPlayer    The player using the pkg_command.
-     * @param pInterface The user interface used by the pkg_game.
+     * @param pEngine    The game engine.
+     * @param pPlayer    The player using the command.
+     * @param pInterface The user interface used by the game.
      */
     @Override
     public void execute(Engine pEngine, Player pPlayer, UserInterface pInterface) {

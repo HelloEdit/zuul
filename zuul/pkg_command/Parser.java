@@ -2,31 +2,31 @@ package zuul.pkg_command;
 
 import java.util.StringTokenizer;
 
-import static zuul.pkg_command.CommandWords.VALID_COMMANDS;
+import static zuul.pkg_command.CommandWords.COMMANDS_STRING;
 
 /**
  * This class is part of the "World of Zuul" application.
- * "World of Zuul" is a very simple, text based adventure pkg_game.
+ * "World of Zuul" is a very simple, text based adventure game.
  * <p>
  * This parser reads user input and tries to interpret it as an "Adventure"
- * pkg_command. Every time it is called it reads a line from the terminal and
- * tries to interpret the line as a two word pkg_command. It returns the pkg_command
+ * command. Every time it is called it reads a line from the terminal and
+ * tries to interpret the line as a two word command. It returns the command
  * as an object of class Command.
  * <p>
- * The parser has a set of known pkg_command words. It checks user input against
+ * The parser has a set of known command words. It checks user input against
  * the known commands, and if the input is not one of the known commands, it
- * returns a pkg_command object that is marked as an unknown pkg_command.
+ * returns a command object that is marked as an unknown command.
  *
  * @author Corentin POUPRY
  * @version 06.04.21
  */
 public class Parser {
     /**
-     * Gets a pkg_command from stdin.
+     * Gets a command from stdin.
      *
-     * @param pInput    Text of the pkg_command.
-     * @param pTestMode true if the pkg_game is in test mode, false otherwise.
-     * @return The pkg_command object to be used.
+     * @param pInput    Text of the command.
+     * @param pTestMode true if the game is in test mode, false otherwise.
+     * @return The command object to be used.
      */
     public static Command parseCommand(final String pInput, final boolean pTestMode) {
         String vFirstWord = null;
@@ -52,6 +52,6 @@ public class Parser {
      * @return valid commands string.
      */
     public static String getCommandList() {
-        return String.join(", ", VALID_COMMANDS.keySet());
+        return COMMANDS_STRING;
     }
 }

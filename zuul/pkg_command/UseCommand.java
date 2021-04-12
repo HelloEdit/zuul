@@ -40,6 +40,7 @@ public class UseCommand extends Command {
             vItem.use(pEngine, pPlayer, pInterface);
         } catch (Exception pError) {
             pInterface.println("Vous ne pouvez pas utiliser cet objet.");
+            pInterface.println(pError.getMessage());
         }
     }
 

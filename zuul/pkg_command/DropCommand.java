@@ -6,7 +6,7 @@ import zuul.pkg_item.Item;
 import zuul.pkg_ui.UserInterface;
 
 /**
- * Handles the drop pkg_command.
+ * Handles the drop command.
  *
  * @author Corentin POUPRY
  * @version 06.04.21
@@ -17,11 +17,11 @@ public class DropCommand extends Command {
     }
 
     /**
-     * Drops the specified pkg_item in the current pkg_room.
+     * Drops the specified item in the current room.
      *
-     * @param pEngine    The pkg_game engine.
-     * @param pPlayer    The player using the pkg_command.
-     * @param pInterface The user interface used by the pkg_game.
+     * @param pEngine    The game engine.
+     * @param pPlayer    The player using the command.
+     * @param pInterface The user interface used by the game.
      */
     @Override
     public void execute(Engine pEngine, Player pPlayer, UserInterface pInterface) {
