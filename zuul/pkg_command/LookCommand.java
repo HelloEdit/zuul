@@ -32,12 +32,10 @@ public class LookCommand extends Command {
             return;
         }
 
-
         String vSearch = this.getSecondWord();
 
         Item vItem;
 
-        // observer loupe
         // if it is an possessed item
         vItem = pPlayer.getItem(vSearch);
         if (vItem != null) {
