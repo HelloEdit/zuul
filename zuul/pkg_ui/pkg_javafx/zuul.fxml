@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+      minWidth="-Infinity"
+      prefHeight="499.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/15.0.1"
+      fx:controller="zuul.pkg_ui.pkg_javafx.ZuulController">
+    <MenuBar>
+        <Menu mnemonicParsing="false" text="Zuul">
+            <MenuItem mnemonicParsing="false" text="Sauvegarder"/>
+            <MenuItem mnemonicParsing="false" text="Charger"/>
+            <MenuItem mnemonicParsing="false" onAction="#close" text="Quitter"/>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Option"/>
+        <Menu mnemonicParsing="false" text="Aide">
+            <MenuItem mnemonicParsing="false" text="A propos"/>
+        </Menu>
+    </MenuBar>
+    <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+        <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="SOMETIMES">
+            <TextArea fx:id="logArea" editable="false" prefHeight="200.0" prefWidth="533.0" wrapText="true"
+                      VBox.vgrow="ALWAYS">
+                <VBox.margin>
+                    <Insets left="5.0" right="5.0" top="5.0"/>
+                </VBox.margin>
+                <font>
+                    <Font name="Monospaced Regular" size="14.0"/>
+                </font>
+            </TextArea>
+            <TextField fx:id="inputField" onAction="#onInput" promptText="Entrez une commande">
+                <VBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                </VBox.margin>
+            </TextField>
+        </VBox>
+        <Separator orientation="VERTICAL" prefHeight="200.0" prefWidth="0.0"/>
+        <TabPane maxWidth="353.0" prefHeight="470.0" prefWidth="353.0" tabClosingPolicy="UNAVAILABLE"
+                 HBox.hgrow="SOMETIMES">
+            <Tab text="Lieu">
+                <BorderPane>
+                    <center>
+                        <GridPane hgap="3.0" vgap="3.0">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER"/>
+                            </rowConstraints>
+                            <padding>
+                                <Insets top="10.0"/>
+                            </padding>
+                            <Label text="Position actuelle" GridPane.halignment="CENTER"/>
+                            <Label fx:id="locationLabel" style="-fx-font-weight: bold;" text="unknown"
+                                   GridPane.columnIndex="1" GridPane.halignment="CENTER"/>
+                            <Label fx:id="descriptionLabel" textAlignment="CENTER" wrapText="true"
+                                   GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                                   GridPane.rowIndex="1" GridPane.rowSpan="2">
+                                <GridPane.margin>
+                                    <Insets right="5.0"/>
+                                </GridPane.margin>
+                            </Label>
+                        </GridPane>
+                    </center>
+                    <bottom>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                            </padding>
+                            <ImageView fx:id="placeImage" fitHeight="200.0" fitWidth="300.0"
+                                       onMouseClicked="#onImageClicked" pickOnBounds="true" preserveRatio="true">
+                                <cursor>
+                                    <Cursor fx:constant="HAND"/>
+                                </cursor>
+                            </ImageView>
+                        </HBox>
+                    </bottom>
+                </BorderPane>
+            </Tab>
+            <Tab text="Inventaire">
+                <VBox>
+                    <ListView fx:id="inventoryList" prefHeight="200.0" prefWidth="200.0"
+                              style="-fx-background-color: #f4f4f4;" VBox.vgrow="ALWAYS">
+                        <placeholder>
+                            <Label text="Inventaire vide"/>
+                        </placeholder>
+
+                        <contextMenu>
+                            <ContextMenu>
+                                <items>
+                                    <MenuItem mnemonicParsing="false" onAction="#onItemUse" text="Utiliser"/>
+                                    <MenuItem mnemonicParsing="false" onAction="#onItemDrop" text="Poser"/>
+                                </items>
+                            </ContextMenu>
+                        </contextMenu>
+                    </ListView>
+                    <Separator prefWidth="200.0">
+                        <VBox.margin>
+                            <Insets right="5.0"/>
+                        </VBox.margin>
+                    </Separator>
+                    <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0">
+                        <padding>
+                            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/>
+                        </padding>
+                        <Label maxHeight="1.7976931348623157E308" text="Poids de l'inventaire" HBox.hgrow="ALWAYS">
+                            <font>
+                                <Font size="11.0"/>
+                            </font>
+                            <textFill>
+                                <Color red="0.625" green="0.625" blue="0.625"/>
+                            </textFill>
+                        </Label>
+                        <Pane HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="actualWeightText" text="0"/>
+                        <Label text="/" textFill="#808080"/>
+                        <Label fx:id="maxWeightText" layoutX="252.0" layoutY="14.0" text="0">
+                            <font>
+                                <Font size="11.0"/>
+                            </font>
+                        </Label>
+                    </HBox>
+                </VBox>
+            </Tab>
+        </TabPane>
+    </HBox>
+</VBox>

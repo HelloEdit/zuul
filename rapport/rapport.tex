@@ -6,38 +6,66 @@
 \usepackage[french]{babel} % set french as language
 \usepackage{graphicx} % manipulate image
 \usepackage{hyperref} % use hyper reference
-\usepackage{minted} % syntax highlighting
+\usepackage[newfloat]{minted} % syntax highlighting
+\usepackage{caption} % for, well, caption
 \usepackage[use-files]{xsim} % exercise helper
 \usepackage{titlesec} % manipulate title
+\usepackage{xr} % cross-document reference
 \usepackage{xcolor} % manipulate color
 \usepackage{enumitem} % better list
 \usepackage{tikz} % for graphics
+\usepackage{float} % for figure position
 \usepackage{appendix} % for appendix
+\usepackage{stmaryrd} % for maths things
 
+\externaldocument[appendix-]{./content/appendix}
 
 % load some tikz library
 \usetikzlibrary{positioning}
 \usetikzlibrary{shapes.geometric, arrows}
 
 % define code block background color
-\definecolor{bg}{rgb}{0.95,0.95,0.95} 
+\definecolor{bg}{rgb}{0.95,0.95,0.95}
 \setminted[java]{breaklines,linenos,autogobble,bgcolor=bg}
-\setmintedinline[java]{bgcolor={}}
+\setminted[xml]{breaklines,linenos,autogobble,bgcolor=bg}
+\setmintedinline[java]{bgcolor={}} 
 
 % remove useless formating of chapter
 \titleformat{\chapter}
   {\normalfont\LARGE\bfseries}{\thechapter}{1em}{}
 \titlespacing*{\chapter}{0pt}{3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
 
+% define a macro for our code-style word
+\newcommand{\code}[1]{%
+    \texttt{#1}%
+}
+
 % add all the exercices to the TOC
 \newcommand\addsubsec[1]{%
   \section*{#1}%
-  \addcontentsline{toc}{section}{\protect\numberline{\GetExerciseProperty{counter}} \GetExerciseProperty{subtitle}}%
+  \addcontentsline{toc}{section}{\numberline{\GetExerciseProperty{counter}} \GetExerciseProperty{subtitle}}%
 }
+
+% custom exercise environment
+\DeclareExerciseEnvironmentTemplate {custom}
+  {
+    \GetExerciseHeadingF { \subsection* }
+    {
+      \XSIMmixedcase { \GetExerciseName } \nobreakspace
+      \GetExerciseProperty {counter}
+      \IfInsideSolutionF
+        {
+          \IfExercisePropertySetT {subtitle}
+            { { \normalfont \GetExerciseProperty {subtitle} } }
+        }
+    }
+  }
+  { \par }
 
 \xsimsetup{
   exercise/the-counter = \arabic{section}.\arabic{exercise}, % for "Exercice <section>.<number>
-  exercise/heading=\addsubsec
+  exercise/heading=\addsubsec,
+  exercise/template=custom
 }
 
 % some tikz styles
@@ -61,6 +89,8 @@
 \include{./content/presentation}
 
 \include{./content/exercises}
+
+\include{./content/concepts}
 
 \include{./content/appendix}
 

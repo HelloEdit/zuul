@@ -26,9 +26,9 @@ private void printLocationInfo() {
 
 \begin{exercise}[subtitle=getExit]
 
-Dans cet exercice, on se rend compte que le système "un attribut = une sortie" n'est pas le plus optimal (imaginons un hub ayant une dizaines de sorties par exemple, ce qui deviendrait problématique pour la lisibilité et la maintenance du code). L'idée étant de limiter le couplage entre la classe \verb|Room| et les autres classes. Pour cela, on cherchera à limiter la dépendance aux attributs de Room et plutôt passer par une fonction pour récupérer les sorties, ce qui permet de ne gérer la logique des sorties que du côté de \verb|Room|.
+Dans cet exercice, on se rend compte que le système "un attribut = une sortie" n'est pas le plus optimal (imaginons un hub ayant une dizaines de sorties par exemple, ce qui deviendrait problématique pour la lisibilité et la maintenance du code). L'idée étant de limiter le couplage entre la classe \code{Room} et les autres classes. Pour cela, on cherchera à limiter la dépendance aux attributs de \code{Room} et plutôt passer par une fonction pour récupérer les sorties, ce qui permet de ne gérer la logique des sorties que du côté de \code{Room}.
 
-\textbf{Notes:} Notons qu'il reste un problème dans \verb|printLocationInfo| à cause de ce changement, problème abordé dans les exercices qui suivent. On peut aussi émettre une critique quant à la façon de fonctionner de \verb|getExit|: si jamais on passe \verb|"North"| à la place de \verb|"north"| par inadvertance, on aura comme valeur de retour \verb|null|. Une solution serait d'utiliser des \verb|enum|.
+\textbf{Notes:} Notons qu'il reste un problème dans \code{printLocationInfo} à cause de ce changement, problème abordé dans les exercices qui suivent. On peut aussi émettre une critique quant à la façon de fonctionner de \code{getExit}: si jamais on passe \code{"North"} à la place de \code{"north"} par inadvertance, on aura comme valeur de retour \code{null}. Une solution serait d'utiliser des \code{enum}.
 
 \begin{minted}{java}
 public Room getExit(final String pDirection) {
@@ -53,7 +53,7 @@ public Room getExit(final String pDirection) {
 \end{exercise}
 
 \begin{exercise}[subtitle=getExitString]
-Le dernier changement a impacté la façon dont \verb|printLocationInfo| fonctionne. Pour le résoudre, on écrit une nouvelle méthode \verb|getExitString| et, fort de ce changement, on ré-usine \verb|printLocationInfo|.
+Le dernier changement a impacté la façon dont \code{printLocationInfo} fonctionne. Pour le résoudre, on écrit une nouvelle méthode \code{getExitString} et, fort de ce changement, on réécrit \code{printLocationInfo}.
 
 \begin{minted}{java}
 public String getExitString() {
@@ -78,7 +78,7 @@ private void printLocationInfo() {
 
 \begin{exercise}[subtitle=HashMap et setExit]
 
-Maintenant que le couplage entre \verb|Room| et \verb|Game| est faible, on peut remplacer les détails de l'implémentation sans risquer de casser quelque chose. On utilise une structure de données \verb|HashMap| et on doit changer les méthodes de \verb|Room| en conséquence. On en profite aussi pour remplacer \verb|setExits|, devenue inutile, par \verb|setExit|.
+Maintenant que le couplage entre \code{Room} et \code{Game} est minimisé, on peut remplacer les détails de l'implémentation sans risquer de casser quelque chose. On utilise une structure de données \code{HashMap} et on doit changer les méthodes de \code{Room} en conséquence. On en profite aussi pour remplacer \code{setExits}, devenue inutile, par \code{setExit}.
 
 \begin{minted}{java}
 public Room setExit(final String pDirection, final Room pExit) {
@@ -93,7 +93,7 @@ public Room getExit(final String pDirection) {
 \end{minted}
 \end{exercise}
 
-\textbf{Note :} J'ai ajouté en plus de ce que l'exercice demandait la dernière ligne \mintinline{java}{return this;} pour pouvoir chaîner les appels de \verb|setExit| comme ci-dessous:
+\textbf{Note :} J'ai ajouté en plus de ce que l'exercice demandait la dernière ligne \mintinline{java}{return this;} pour pouvoir chaîner les appels de \code{setExit} comme ci-dessous:
 
 \begin{minted}{java}
 office.setExit("east", car)
@@ -103,7 +103,7 @@ office.setExit("east", car)
 
 \begin{exercise}[subtitle=keySet]
 
-\verb|getExitString| doit elle aussi être modifiée. Plutôt que de tester la présence de certaines valeurs dans la \verb|HashMap| (du type "north", "east", "down", "up"...), on peut énumérer les différentes clés qui composent la \verb|HashMap| des sorties.
+\code{getExitString} doit elle aussi être modifiée. Plutôt que de tester la présence de certaines valeurs dans la \code{HashMap} (du type "north", "east", "down", "up"...), on peut énumérer les différentes clés qui composent la \code{HashMap} des sorties.
 
 \begin{minted}{java}
 public String getExitString() {
@@ -116,7 +116,7 @@ public String getExitString() {
 \end{minted}
 \end{exercise}
 
-\begin{exercise}[subtitle=Fonctionnement de keySet et Javadoc]
+\begin{exercise}[subtitle=keySet et Javadoc]
 
 Reprenons le code intéressant de l'exercice précédent et intéressons-nous à son fonctionnement.
 
@@ -125,17 +125,17 @@ for (String vExit : this.aExits.keySet())
     vResult += vExit + " ";
 \end{minted}
 
-Ce code marche car \verb|keySet| renvoie un \verb|Set| qui est énumérable et utilisable par la boucle for-each.
+Ce code marche car \code{keySet} renvoie un \code{Set} qui est énumérable et utilisable par la boucle for-each.
 
-La différence entre un \verb|Set| et une liste normale (un tableau) est que le \verb|Set| ne peut pas contenir deux mêmes éléments.
+La différence fondamentale entre un \code{Set} et une liste normale (un tableau) est que le \code{Set} ne peut pas contenir deux mêmes éléments.
 
-Pour la Javadoc, la documentation de \verb|Game| contient beaucoup moins de méthode que \verb|Room| car l'encapsulation fait que seul \verb|play| est publique pour \verb|Game|, tandis que \verb|Room| doit exposer beaucoup plus de méthodes \verb|public| pour être utilisée par \verb|Game|.
+Pour la Javadoc, la documentation de \code{Game} contient beaucoup moins de méthode que \code{Room} car l'encapsulation fait que, pour la première, seul \code{play} est publique, tandis que la seconde doit exposer beaucoup plus de méthodes \code{public} pour être utilisée par \code{Game}.
 
 \end{exercise}
 
 \begin{exercise}[subtitle=getLongDescription]
 
-Toujours dans la logique de la conception dirigée par responsabilités, on déplace la création de la description dans la classe \verb|Room|.
+Toujours dans la logique de la conception dirigée par responsabilités, on déplace la création de la description dans la classe \code{Room}.
 
 \begin{minted}{java}
 public String getLongDescription() {
@@ -146,7 +146,7 @@ public String getLongDescription() {
 }
 \end{minted}
 
-Et on change \verb|Game| en conséquence.
+Et on change \code{Game} en conséquence.
 
 \begin{minted}{java}
 private void printLocationInfo() {
@@ -208,7 +208,7 @@ private void printLocationInfo() {
 
 \begin{exercise}[subtitle=Commande look]
 
-L'ajout de la commande \verb|look| se traduit par plusieurs changements: le premier en mettant le mot de la commande dans \verb|CommandWords|.
+L'ajout de la commande \code{look} se traduit par plusieurs changements: le premier en mettant le mot de la commande dans \code{CommandWords}.
 
 \begin{minted}{java}
 // a static constant array that will hold the valid commands words
@@ -216,7 +216,7 @@ private final static String[] aValidCommands =
     { "go", "quit", "help", "look" };
 \end{minted}
 
-Il faut aussi modifier \verb|processCommand| en renseignant le nouveau mot de la commande ainsi que la fonction associée.
+Il faut aussi modifier \code{processCommand} en renseignant le nouveau mot de la commande ainsi que la fonction associée.
 
 \begin{minted}{java}
 private boolean processCommand(final Command pCommand) {
@@ -248,18 +248,18 @@ private boolean processCommand(final Command pCommand) {
 }
 \end{minted}
 
-On remarque aussi que la méthode \verb|look()| fait, pour l'instant, la même chose que \verb|printLocationInfo()|. 
+On remarque aussi que la méthode \code{look} fait, pour l'instant, la même chose que \code{printLocationInfo}.
 \end{exercise}
 
 \begin{exercise}[subtitle=Commande search]
  
- J'ai choisi d'implémenter une commande nommée \verb|search <something>| qui permettra de fouiller des objet présent dans la pièce où se trouve le joueur. Pour ajouter cette commande, on modifie \verb|CommandWords|.
+ J'ai choisi d'implémenter une commande nommée \code{search <something>} qui permettra de fouiller des objet présent dans la pièce où se trouve le joueur. Pour ajouter cette commande, on modifie \code{CommandWords}.
  
 \begin{minted}{java}
 private final static String[] aValidCommands = { "go", "quit", "help", "look", "search" };
 \end{minted}
 
-Et on doit modifier la méthode \verb|processCommand| de \verb|Game| ainsi que créer la méthode pour gérer cette commande.
+Et on doit modifier la méthode \code{processCommand} de \code{Game} ainsi que créer la méthode pour gérer cette commande.
 
 \begin{minted}{java}
 private boolean processCommand(final Command pCommand) {
@@ -285,7 +285,7 @@ private void inspect(final Command pCommand) {
 
 \begin{exercise}[subtitle=showAll et showCommands]
 
-Dans cet exercice, on rend l'affichage des commandes dans la méthode \verb|printHelp| dynamique en créant un méthode d'énumération des commandes dans \verb|CommandWords|.
+Dans cet exercice, on rend l'affichage des commandes dans la méthode \code{printHelp} dynamique en créant un méthode d'énumération des commandes dans \code{CommandWords}.
 
 
 \begin{minted}{java}
@@ -298,9 +298,9 @@ public void showAll() {
 }
 \end{minted}
 
-\textbf{Note:} On observe que la méthode \verb|showAll| pourrait être déclarée comme \verb|static| car ne dépendant que de \verb|CommandWords.aValidCommands| qui est un attribut statique de la classe \verb|CommandWords|.
+\textbf{Note:} On observe que la méthode \code{showAll} pourrait être déclarée comme \code{static} car ne dépendant que de \code{CommandWords.aValidCommands} qui est un attribut statique de la classe.
 
-On crée aussi un moyen de l'appeler depuis \verb|Game| en passant par \verb|Parser|.
+On crée aussi un moyen de l'appeler depuis \code{Game} en passant par \code{Parser}.
 
 \begin{minted}{java}
 // Dans Parser.java
@@ -322,13 +322,13 @@ private void printHelp() {
 
 \begin{exercise}[subtitle=Changer Game ?]
 
-Malgré toutes nos modifications, si l'on ajoute une nouvelle commande au jeu, il faudra quand même modifier la classe \verb|Game|. En effet, la méthode \verb|processCommand| contient un \verb|switch| dont on doit ajouter une nouvelle branche pour chaque nouvelle commande.
+Malgré toutes nos modifications, si l'on ajoute une nouvelle commande au jeu, il faudra quand même modifier la classe \code{Game}. En effet, la méthode \code{processCommand} contient un \code{switch} dont on doit ajouter une nouvelle branche pour chaque nouvelle commande.
 
 \end{exercise}
 
 \begin{exercise}[subtitle=getCommandList]
 
-Dans cet exercice, on poursuit notre travail sur le modèle de la conception axée sur la responsabilité. Pour le cas de \verb|showAll|, plutôt qu'afficher la liste des commandes disponibles, on préférera générer un \verb|String| pour ne pas imposer un affichage spécifique (notamment via \verb|System.out|).
+Dans cet exercice, on poursuit notre travail sur le modèle de la conception axée sur la responsabilité. Pour le cas de \code{showAll}, plutôt qu'afficher la liste des commandes disponibles, on préférera générer un \code{String} pour ne pas imposer un affichage spécifique (notamment via \code{System.out}).
 
 \begin{minted}{java}
 public String getCommandList() {
@@ -361,7 +361,7 @@ private void printHelp() {
 }
 \end{minted}
 
-On en profite aussi pour changer la concaténation des \verb|String| dans les boucles en utilisant \verb|StringBuilder|. Par exemple, sur la boucle dans \verb|Room|.
+On en profite aussi pour changer la concaténation des \code{String} dans les boucles en utilisant \code{StringBuilder}. Par exemple, sur la boucle dans \code{Room}.
 
 \begin{minted}{java}
 public String getExitString() {
@@ -375,7 +375,7 @@ public String getExitString() {
 
 \subsection*{Les objets Room}
 
-Dans l'optique de stocker les instances de \verb|Room| crées, on ajoute un attribut \verb|aAllRooms| qui contiendra tous les objets crées dans \verb|createRooms|. On crée une fonction utilitaire \verb|initRoom| pour nous faciliter la tâche.
+Dans l'optique de stocker les instances de \code{Room} crées, on ajoute un attribut \code{aAllRooms} qui contiendra tous les objets crées dans \code{createRooms}. On crée une fonction utilitaire \code{initRoom} pour nous faciliter la tâche.
 
 \begin{minted}{java}
 public class Game {
@@ -392,7 +392,7 @@ public class Game {
 
 \subsection*{zuul-with-images}
 
-Après avoir fait les changements pour intégrer l'interface graphique voulue, on peut s'intéresser à son fonctionnement, notamment à sa gestion des évènements. En effet, dans le code de \verb|UserInterface|, on retrouve cette ligne
+Après avoir fait les changements pour intégrer l'interface graphique voulue, on peut s'intéresser à son fonctionnement, notamment à sa gestion des évènements. En effet, dans le code de \code{UserInterface}, on retrouve cette ligne
 
 \begin{minted}{java}
 private void createGUI() {
@@ -403,9 +403,9 @@ private void createGUI() {
 }
 \end{minted}
 
-Le fait de passer \verb|this| en paramètre indique que c'est la classe courante (soit \verb|UserInterface|) qui va interpréter au moyen d'une méthode \verb|actionPerformed| les évènements venant du \verb|JTextField|. Cela est rendu possible car \verb|UserInterface| implémente l'interface \verb|ActionListener|.
+Le fait de passer \code{this} en paramètre indique que c'est la classe courante (soit \code{UserInterface}) qui va interpréter au moyen d'une méthode \code{actionPerformed} les évènements venant du \code{JTextField}. Cela est rendu possible car \code{UserInterface} implémente l'interface \code{ActionListener}.
 
-Imaginons que nous voulions implémenter un boutton "Indice" sur le côté droit de l'interface, pour cela, on va devoir modifier \verb|createGUI|.
+Imaginons que nous voulions implémenter un boutton "Indice" sur le côté droit de l'interface, pour cela, on va devoir modifier \code{createGUI}.
 
 \begin{minted}{java}
 private void createGUI() {
@@ -432,7 +432,7 @@ private void createGUI() {
 \end{minted}
 \end{exercise}
 
-\begin{exercise}[subtitle=Modèle Vue Contrôleur]
+\begin{exercise}[subtitle=Modèle-Vue-Contrôleur]
 
 L'architecture MVC (signifiant \emph{Modèle-Vue-Contrôleur}) permet d'organiser son code autour de trois éléments :
 
@@ -446,11 +446,11 @@ On retrouve cette architecture dans le web (non-exhaustivement, Laravel en PHP, 
 
 Ce succès d'utilisation s'explique par le fait que séparer en trois grandes parties l'application permet de mieux se construire une représentation mentale de l'application: chaque élement appartient à un de ces trois groupes. L'un des autres avantages est de minimiser le nombres de modifications à effectuer lorsqu'un changement est nécessaire. On voit bien maintenant pourquoi cette modification pourrait être bénéfique au projet Zuul.
 
-\textbf{Note :} J'ai, pour l'instant, décider de ne pas implémenter le modèle MVC dans mon projet Zuul. Je planifie de refaire l'interface utilisateur du jeu avec \verb|JavaFX| qui force par design l'utilisation d'un pattern MVC.
+\textbf{Note :} J'ai décidé de ne pas implémenter le modèle MVC dans mon projet Zuul, préférant me concentrer sur le modèle de programmation réactive proposé par \code{JavaFX}. 
 
 \subsection*{Image}
 
-On en profite pour déplacer les images de la racine vers un nouveau dossier \verb|Images|.
+On en profite pour déplacer les images de la racine vers un nouveau dossier \code{Images}.
 
 \begin{minted}{shell-session}
 $ mkdir Images
@@ -461,7 +461,7 @@ $ ls Images
 
 \begin{exercise}[subtitle=Item]
 
-On crée une classe \verb|Item| avec les accesseurs appropriés pour \verb|description| et \verb|weight|. Ensuite, on va attribuer un item à chaque objet \verb|Room|. Pour cela, on modifie la classe pour ajouter une nouvelle méthode comme ceci :
+On crée une classe \code{Item} avec les accesseurs appropriés pour \code{description} et \code{weight}. Ensuite, on va attribuer un item à chaque objet \code{Room}. Pour cela, on modifie la classe pour ajouter une nouvelle méthode comme ceci :
 
 \begin{minted}{java}
 public Room setItem(final String pDescription, final int pWeight) {
@@ -472,12 +472,12 @@ public Room setItem(final String pDescription, final int pWeight) {
 }
 \end{minted}
 
-\textbf{Note :} on rajoute aussi ici un \mintinline{java}{return this;} pour pouvoir chaîner les instructions lors de la création d'un objet \verb|Room|. 
+\textbf{Note :} on rajoute aussi ici un \mintinline{java}{return this;} pour pouvoir chaîner les instructions lors de la création d'un objet \code{Room}.
 \end{exercise}
 
 \begin{exercise}[subtitle=Item description]
 
-En suivant la logique de cohésion, les informations d'un objet \verb|Item| doit-être généré par \verb|Item| lui-même. La classe en charge d'afficher la description de l'\verb|Item| doit-être \verb|GameEngine|.
+En suivant la logique de cohésion, les informations d'un objet \code{Item} doit-être généré par \code{Item} lui-même. La classe en charge d'afficher la description de l'\code{Item} doit-être \code{GameEngine}.
 
 \begin{minted}{java}
 public String getLongDescription() {
@@ -498,7 +498,7 @@ public String getLongDescription() {
 
 \subsection*{Améliorer la commande look}
 
-Pour améliorer la commande look, on remplace dans \verb|GameEngine| la méthode éponyme.
+Pour améliorer la commande look, on remplace dans \code{GameEngine} la méthode éponyme.
 
 \begin{minted}{java}
 private void look(final Command pCommand) {
@@ -521,7 +521,7 @@ private void look(final Command pCommand) {
 
 \begin{exercise}[subtitle=Items]
 
-On commence par remplacer la définition de la \verb|HashMap| contenue dans chaque \verb|Room|.
+On commence par remplacer la définition de la \code{HashMap} contenue dans chaque \code{Room}.
 
 \begin{minted}{java}
 /**
@@ -532,14 +532,14 @@ private final HashMap<String, Item> aItems;
 
 Puis ensuite on s'intéresse aux erreurs de compilation lié au changement de type.
 
-On utilise ici une collection \verb|HashMap| car on veut établir une relation entre le nom de l'item et l'objet représentant cet item. On n'a pas à parcourir la \verb|HashMap| pour retrouver un item spécifique.
+On utilise ici une collection \code{HashMap} car on veut établir une relation entre le nom de l'item et l'objet représentant cet item. On n'a pas à parcourir la \code{HashMap} pour retrouver un item spécifique.
 \end{exercise}
 
 \begin{exercise}[subtitle=Commande back]
 
-On va implémenter la commande \verb|back| de façon très naïve : on rajoute un attribut \verb|aPreviousRoom| dans \verb|GameEngine| qui contiendra la salle qui précédait, dans le parcours du joueur, la salle actuelle.
+On va implémenter la commande \code{back} de façon très naïve : on rajoute un attribut \code{aPreviousRoom} dans \code{GameEngine} qui contiendra la salle qui précédait, dans le parcours du joueur, la salle actuelle.
 
-Pour cela, on change la logique de notre commande \verb|go|.
+Pour cela, on change la logique de notre commande \code{go}.
 
 \begin{minted}{java}
 private void go(final Command pCommand) {
@@ -559,11 +559,11 @@ private void go(final Command pCommand) {
 }
 \end{minted}
 
-Et on rajoute en conséquence une méthode pour notre commande \verb|back|.
+Et on rajoute en conséquence une méthode pour notre commande \code{back}.
 
 \begin{minted}{java}
-private void back(final Command vCommand) {
-    if (vCommand.hasSecondWord()) {
+private void back(final Command pCommand) {
+    if (pCommand.hasSecondWord()) {
         this.aGui.println("retourner où ??");
         return;
     }
@@ -573,12 +573,12 @@ private void back(final Command vCommand) {
 \end{minted}
 \end{exercise}
 
-\begin{exercise}[subtitle=test de la commande back]
+\begin{exercise}[subtitle=Test de la commande back]
 
-En voyant l'implémentation de la commande \verb|back|, le cas singulier de la salle initiale saute aux yeux : en effet, si l'on a pas encore bougé, \verb|aPreviousRoom| est évalué à \verb|null|, pouvant ammener à un \verb|NullPointerException|. On modifie donc \verb|back|.
+En voyant l'implémentation de la commande \code{back}, le cas singulier de la salle initiale saute aux yeux : en effet, si l'on a pas encore bougé, \code{aPreviousRoom} est évalué à \code{null}, pouvant ammener à un \code{NullPointerException}. On modifie donc \code{back}.
 
 \begin{minted}{java}
-private void back(final Command vCommand) {
+private void back(final Command pCommand) {
     if (this.aPreviousRoom == null) {
         this.aGui.println("Aucune salle dans laquelle retourner.");
         return;
@@ -591,13 +591,13 @@ private void back(final Command vCommand) {
 
 \begin{exercise}[subtitle=back back]
 
-Exécuter deux commandes \verb|back| nous fait retourner à la salle de départ, celle où ce situait le joueur lors de la première commande \verb|back|. Ce problème est inhérent à l'implémentation faite de la commande \verb|back|, notamment du fait que lors de l'exécution de \verb|back|, la salle dans \verb|aPreviousRoom| va dans \verb|aCurrentRoom| et un second \verb|back| fait exactement le contraire !
+Exécuter deux commandes \code{back} nous fait retourner à la salle de départ, celle où ce situait le joueur lors de la première commande \code{back}. Ce problème est inhérent à l'implémentation faite de la commande \code{back}, notamment du fait que lors de l'exécution de \code{back}, la salle dans \code{aPreviousRoom} va dans \code{aCurrentRoom} et un second \code{back} fait exactement le contraire !
 
 \end{exercise}
 
 \begin{exercise}[subtitle=Stack]
 
-Pour résoudre le problème évoqué à l'exercice précédent, on va utiliser une collection \verb|Stack| dans l'attribut \verb|aPreviousRooms|. Les deux fonctions qui nous intéressent sur \verb|Stack| sont \verb|push| \verb|pop()|, permettant respectivement d'insérer un élément en haut de la pile et de récupérer l'élément le plus haut de la pile. Ainsi, on change \verb|go| et \verb|back| pour refléter ce changement.
+Pour résoudre le problème évoqué à l'exercice précédent, on va utiliser une collection \code{Stack} dans l'attribut \code{aPreviousRooms}. Les deux fonctions qui nous intéressent sur \code{Stack} sont \code{push} et \code{pop}, permettant respectivement d'insérer un élément en haut de la pile et de récupérer l'élément le plus haut de la pile. Ainsi, on change \code{go} et \code{back} pour refléter ce changement.
 
 \begin{minted}{java}
 private void go(final Command pCommand) {
@@ -608,10 +608,10 @@ private void go(final Command pCommand) {
 }
 \end{minted}
 
-Pour ne pas faire de régression (et faire en sort que Java ne soulève pas une exception \verb|EmptyStackException|), on va tester à chaque appel de \verb|back| si \verb|aPreviousRooms| est vide.
+Pour ne pas faire de régression (et faire en sort que Java ne soulève pas une exception \code{EmptyStackException}), on va tester à chaque appel de \code{back} si \code{aPreviousRooms} est vide.
 
 \begin{minted}{java}
-private void back(final Command vCommand) {
+private void back(final Command pCommand) {
     // code omitted for brevity
     
     if (this.aPreviousRooms.isEmpty()) {
@@ -639,18 +639,18 @@ Pour le projet Zuul, les tests devraient porter sur les fonctionnalités suivant
 
 Une idée serait de mettre en place des tests unitaires et fonctionnels. On peut faire cela en créant des fichiers contenant un scénario détaillé à tester pour s'assurer qu'il n'y a pas de régression.
 
-On crée donc une nouvelle commande \verb|test| dont le but est de charger un scénario (spécifié en second mot) et de l'exécuter dans l'interface. Pour ce faire, on crée la méthode test de la façon suivante :
+On crée donc une nouvelle commande \code{test} dont le but est de charger un scénario (spécifié en second mot) et de l'exécuter dans l'interface. Pour ce faire, on crée la méthode test de la façon suivante :
 
 \begin{minted}{java}
-private void test(final Command vCommand) {
-    if (!vCommand.hasSecondWord()) {
+private void test(final Command pCommand) {
+    if (!pCommand.hasSecondWord()) {
         System.out.printf("La commande test doit avoir un second mot.%n");
         return;
     }
 
     this.aGui.println("--- DEBUT MODE TEST ---");
 
-    String vPath = "./test/" + vCommand.getSecondWord();
+    String vPath = "./test/" + pCommand.getSecondWord();
 
     Scanner vScanner;
     try {
@@ -665,6 +665,1053 @@ private void test(final Command vCommand) {
     while (vScanner.hasNextLine()) this.interpretCommand(vScanner.nextLine());
 
     this.aGui.println("--- FIN MODE TEST ---");
+}
+\end{minted}
+\end{exercise}
+
+\begin{exercise}[subtitle=Player]
+
+On va réduire de taille \code{GameEngine} en la déchargeant de certaines responsabilités, que l'on va transférer vers une nouvelle classe \code{Player}, qui représentera l'état d'un joueur durant notre jeu. Les attributs qui sont relatifs au joueur sont immédiats et doivent donc être transférés.
+
+\begin{minted}{java}
+public class Player {
+    /**
+     * The history of the rooms were the player was.
+     */
+    private final Stack<Room> aPreviousRooms;
+
+    /**
+     * The room where the player is.
+     */
+    private Room aCurrentRoom;
+    
+    // constructor omitted for brevity
+}
+\end{minted}
+
+Fort de ce changement, on déplace le code dont la responsabilité va directement à la classe \code{Player} et non plus à \code{GameEngine}, par exemple, le changement de salle, maintenant entièrement géré par \code{Player} comme on peut le voir :
+
+\begin{minted}{java}
+/**
+ * Goes back to the previous room.
+ *
+ * @throws EmptyStackException if there is no previous room.
+ */
+public void toPreviousRoom() throws EmptyStackException {
+    this.aCurrentRoom = this.aPreviousRooms.pop();
+}
+
+/**
+ * Sets the new current room where the player will be.
+ *
+ * @param pRoom the new current room.
+ */
+public void setCurrentRoom(final Room pRoom) {
+    if (this.aCurrentRoom != null) this.aPreviousRooms.push(this.aCurrentRoom);
+    this.aCurrentRoom = pRoom;
+}
+\end{minted}
+\end{exercise}
+
+\section*{Changement d'architecture}
+
+A ce niveau de projet, il est clairement apparu une nécessité d'agencer différemment l'organisation et l'architecture du Zuul. De plus, j'ai proposé une idée à Monsieur Bureau pour faire cohabiter trois types d'interfaces pour jouer au jeu: \code{JavaFX}, \code{Swing} et l'interface \code{Console}.
+
+Pour plus détails concernant l'implémentation de JavaFX dans le projet Zuul, l'annexe \ref{appendix-javafx} est disponible dans ce rapport.
+
+\begin{exercise}[subtitle=Take et Drop]
+
+On commence par se poser la question suivante : quelle classe devrait être en charge de gérer l'inventaire du joueur ainsi que la logique de gestion des items d'une salle ? En prenant appui sur les modification de l'exercice précédent, \code{Player} semble être un bon candidat. On rajoute donc l'attribut nécessaire \mintinline{java}{private Item aCarriedItem;} et on la modifie en conséquence.
+
+\begin{minted}{java}
+/**
+ * Takes an item in the current room.
+ *
+ * @param pItemName the item to be taken.
+ * @return the item that has been taken.
+ * @throws CannotManageItemException if the requested object cannot be took.
+ */
+public Item takeItem(final String pItemName) throws CannotManageItemException {
+    if (this.aCurrentRoom == null) throw new CannotManageItemException("Aucune salle dans laquelle prendre l'objet.");
+
+    // remove the item from the current room...
+    Item vItem = this.aCurrentRoom.removeItem(pItemName);
+    if (vItem == null) throw new CannotManageItemException("L'objet à prendre n'existe pas dans la salle.");
+
+    // ...and add it to the player's inventory
+    this.aCarriedItem = vItem;
+
+    return vItem;
+}
+
+/**
+ * Drops an item in the current room.
+ *
+ * @return the item that has been dropped.
+ * @throws CannotManageItemException if the requested object cannot be dropped.
+ */
+public Item dropItem() throws CannotManageItemException {
+    if (this.aCurrentRoom == null) throw new CannotManageItemException("Aucune salle dans laquelle prendre l'objet.");
+
+    // remove the item from the player inventory...
+    Item vItem = this.aCarriedItem;
+    if (vItem == null) throw new CannotManageItemException("L'objet a déposer n'existe pas dans votre inventaire.");
+    
+    this.aCarriedItem = null;
+    
+    // ...and add it to the room
+    this.aCurrentRoom.addItem(vItem);
+
+    return vItem;
+}
+\end{minted}
+
+\textbf{Notes :} on utilise ici le système de gestion d'erreurs pour alerter la méthode appelante que certaines actions ne peuvent pas être effectuées. Pourquoi ne pas utiliser un simple if / else pour vérifier que la méthode ne retourne pas \code{null} ? Simplement car l'impossibilité de manipuler l'item peut venir de différentes raisons (pour l'instant, il y en a deux, soit le joueur n'est pas dans une salle, soit l'item n'existe pas).
+
+L'ajout des commandes et leurs implémentations dans \code{GameEngine} découlent directement de ces modifications.
+
+\begin{minted}{java}
+private void drop(Command pCommand) {
+    if (pCommand.hasSecondWord()) {
+        this.aGui.println("Déposer quoi ???");
+
+        return;
+    }
+
+    Item vItem;
+    try {
+        vItem = this.aPlayer.dropItem();
+    } catch (Player.CannotManageItemException vError) {
+        this.aGui.println("Aucun item déposé.\n" + vError.getMessage());
+        return;
+    }
+
+    this.aGui.println("Vous avez bien déposé " + vItem.getName() + ".");
+}
+
+private void take(Command pCommand) {
+    if (!pCommand.hasSecondWord()) {
+        this.aGui.println("Prendre quoi ???");
+        return;
+    }
+
+    Item vItem;
+    try {
+        vItem = this.aPlayer.takeItem(pCommand.getSecondWord());
+    } catch (Player.CannotManageItemException vError) {
+        this.aGui.println("Impossible de prendre l'objet.\n" + vError.getMessage());
+        return;
+    }
+
+    this.aGui.println("Vous avez bien récupéré " + vItem.getName() + ".");
+}
+\end{minted}
+\end{exercise}
+
+\begin{exercise}[subtitle=Plusieurs items et ItemList]
+
+Pour porter plusieurs objets, il suffit de faires plusieurs modifications simple sur notre code. Premièrement, dans \code{Player}, changeons notre attribut et réécrivons nos méthodes manipulant les objets.
+
+\begin{minted}{java}
+public class Player {
+    private final HashMap<String, Item> aInventory;
+
+    public Item takeItem(final String pItemName) throws CannotManageItemException {
+        if (this.aCurrentRoom == null) throw new CannotManageItemException("Aucune salle dans laquelle prendre l'objet.");
+
+        // remove the item from the current room...
+        Item vItem = this.aCurrentRoom.removeItem(pItemName);
+        if (vItem == null) throw new CannotManageItemException("L'objet à prendre n'existe pas dans la salle.");
+
+        // ...and add it to the player's inventory
+        this.aInventory.put(vItem.getName(), vItem);
+
+        return vItem;
+    }
+
+    public Item dropItem(final String pItemName) throws CannotManageItemException {
+        if (this.aCurrentRoom == null) throw new CannotManageItemException("Aucune salle dans laquelle poser l'objet.");
+
+        // remove the item from the player inventory...
+        Item vItem = this.aInventory.remove(pItemName);
+        if (vItem == null) throw new CannotManageItemException("L'objet a déposer n'existe pas dans votre inventaire.");
+
+        // ...and add it to the room
+        this.aCurrentRoom.addItem(vItem);
+
+        return vItem;
+    }
+    
+    // code omitted for brevity
+}
+\end{minted}
+\end{exercise}
+
+\begin{exercise}[subtitle=Poids maximum]
+
+Arbitrairement, spécifions le poids maximum pouvant être porté par \code{Player} comme étant 100. On crée une constante contenant cette information pour pouvoir la changer plus facilement si le besoin se fait sentir. On crée aussi un attribut initialisé à 0 pour suivre le poids actuel de l'inventaire du joueur.
+
+\begin{minted}{java}
+class Player {
+    public final static int MAX_WEIGHT = 100;
+
+    private int aWeight;
+}
+\end{minted}
+
+On doit aussi modifier \code{takeItem} et \code{dropItem} pour qu'ils mettent à jour le poids porté par le joueur. Évidemment, \code{takeItem} augment le poids tandis que \code{dropItem} le diminue. Il ne faut pas oublier pour \code{takeItem} les conditions nécessaires pour déterminer si le joueur peut prendre ou non un item de la salle.
+
+\begin{minted}{java}
+public Item takeItem(final String pItemName) throws CannotManageItemException {
+    if (this.aCurrentRoom == null)
+        throw new CannotManageItemException("Aucune salle dans laquelle prendre l'objet.");
+
+    // get the item from the current room...
+    Item vItem = this.aCurrentRoom.getItem(pItemName);
+    if (vItem == null) throw new CannotManageItemException("L'objet à prendre n'existe pas dans la salle.");
+
+    // if the difference is less than zero, the total weight of the items exceeds the allowed limit
+    if (this.aWeight + vItem.getWeight() > Player.MAX_WEIGHT) {
+        throw new CannotManageItemException("Vous ne pouvez pas prendre cet objet, votre inventaire est trop lourd !");
+    }
+
+    // then we definitely remove it from the room
+    this.aWeight += vItem.getWeight();
+    this.aCurrentRoom.removeItem(vItem);
+
+    // ...and add it to the player's inventory
+    this.aInventory.addItem(vItem);
+
+    return vItem;
+}
+
+public Item dropItem(final String pItemName) throws CannotManageItemException {
+    if (this.aCurrentRoom == null) throw new CannotManageItemException("Aucune salle dans laquelle poser l'objet.");
+
+    // remove the item from the player inventory...
+    Item vItem = this.aInventory.removeItem(pItemName);
+    if (vItem == null) throw new CannotManageItemException("L'objet a déposer n'existe pas dans votre inventaire.");
+
+    // subtract the item weight
+    this.aWeight -= vItem.getWeight();
+
+    // ...and add it to the room
+    this.aCurrentRoom.addItem(vItem);
+
+    return vItem;
+}
+\end{minted}
+\end{exercise}
+
+\begin{exercise}[subtitle=Inventaire]
+
+On a besoin de récupérer tous les noms des items d'un inventaire, on implémente donc une nouvelle méthode dans \code{ItemList}.
+
+\begin{minted}{java}
+public String getAllNames() {
+    return String.join(", ", this.aItems.keySet());
+}
+\end{minted}
+
+Et, dans \code{Player}, on va adjoindre à cette description le poids de tous les items.
+
+\begin{minted}{java}
+public String getInventoryDescription() {
+    if (this.aInventory.isEmpty()) return "L'inventaire est vide !";
+
+    return String.format("Inventaire : %s (poids %d)", this.aInventory.getAllNames(), this.aWeight.get());
+}
+\end{minted}
+
+Et on finit par implémenter une nouvelle commande \code{inventaire} dans \code{GameEngine}.
+
+\begin{minted}{java}
+private void item(final Command pCommand) {
+    if (pCommand.hasSecondWord()) {
+        this.aGui.println("Pas de second mot pour items.");
+        return;
+    }
+
+    this.aGui.println(this.aPlayer.getInventoryDescription());
+}
+\end{minted}
+
+On peut aussi en profiter pour changer le comportement de la commande quand un second mot est donné. On affchera la description de l'item demandé s'il est dans l'inventaire.
+
+\begin{minted}{java}
+     */
+private void item(final Command pCommand) {
+    if (pCommand.hasSecondWord()) {
+        Item vItem = this.aPlayer.getItem(pCommand.getSecondWord());
+        
+        if (vItem == null) this.aInterface.println("Vous ne possédez pas cet item.");
+        else this.aInterface.println(vItem.getLongDescription());
+        
+        return;
+    }
+
+    this.aInterface.println(this.aPlayer.getInventoryDescription());
+}
+\end{minted}
+
+\end{exercise}
+
+\begin{exercise}[subtitle=Cookie magique]
+
+Pour implémenter le cookie magique, on va créer une nouvelle commande \code{use} plutôt que de créer une commande \code{eat}. La raison est qu'une commande \code{eat} servirait uniquemment une fois pour le cookie magique tandis que, grâce à sa sémantique plus large, \code{use} est réutilisable dans d'autre situation, avec d'autres items.
+
+Une cookie magique est donc une sorte d'\code{Item} mais possédant la capacité de modifier certaines caractéristiques de notre joueur quand celui-ci l'utilise. On va donc créer dans \code{Item} une méthode \code{use} lançant une exception et qui pourra être redéfinie dans les classes définissant un item spécial tel que \code{Beamer} ou \code{Cookie}.
+
+\begin{minted}{java}
+/**
+ * Uses the current item.
+ *
+ * @param vPlayer player that is using the item.
+ */
+public void use(final Player vPlayer) {
+    throw new UnsupportedOperationException("Cet item ne peut pas être utilisé.");
+}
+\end{minted}
+
+Ensuite on peut définir notre cookie magique assez facilement.
+
+\begin{minted}{java}
+public class Cookie extends Item {
+    public final static int WEIGHT_ADDED = 10;
+
+    public Cookie() {
+        super("cookie", "Un cookie qui semble... particulier.", 2);
+    }
+
+    /**
+     * Uses the cookie and modify the maximum weight that
+     * the player can be carried.
+     *
+     * @param pPlayer player that is using the item.
+     */
+    @Override
+    public void use(final Player pPlayer) {
+        int vNewMax = pPlayer.getMaxWeight() + WEIGHT_ADDED;
+
+        pPlayer.setMaxWeight(vNewMax);
+        pPlayer.deleteItem(this.getName());
+    }
+}
+\end{minted}
+
+Et on implémente la logique de notre commande \code{use}.
+
+\begin{minted}{java}
+private void use(final Command pCommand) {
+    if (!pCommand.hasSecondWord()) {
+        this.aInterface.println("Vous devez spécifier un objet à utiliser.");
+        return;
+    }
+
+    Item vItem = this.aPlayer.getItem(pCommand.getSecondWord());
+    if (vItem == null) {
+        this.aInterface.println("Vous ne possédez pas cet item.");
+        return;
+    }
+
+    try {
+        vItem.use(this.aPlayer);
+    } catch (Exception pError) {
+        this.aInterface.println(pError.getMessage());
+        return;
+    }
+
+    this.aInterface.printf("Vous avez bien utilisé %s.", vItem.getName());
+    this.aInterface.println();
+}
+\end{minted}
+\end{exercise}
+
+\begin{exercise}[subtitle=zuul-with-enums-v1]
+
+On utilisait déjà un \code{switch} pour traiter plus efficacement les commandes. Après implémentation de la nouvelle classe \code{CommandWord}, on le change juste pour être utilisé avec des \code{enum}.
+
+\begin{minted}{java}
+public void processCommand(final String pInput) {
+    this.aInterface.println("> " + pInput);
+
+    Command vCommand = Parser.parseCommand(pInput);
+
+    switch (vCommand.getCommandWord()) {
+        case GO:
+            this.go(vCommand);
+            break;
+            
+    // code omitted for brevity
+}
+\end{minted}
+\end{exercise}
+
+\setcounter{exercise}{39}
+
+\begin{exercise}[subtitle=enum/look]
+
+On va ré-implémenter \code{look} en utilisant le système d'\code{enum} établit à l'exercise précédent. On commence par modifier \code{CommandWord}.
+
+\begin{minted}{java}
+public enum CommandWord {
+    GO("go"),
+    BACK("back"),
+    LOOK("look"),
+    
+    // code omitted for brevity
+}
+\end{minted}
+
+Puis on ajoute la gestion de la commande dans le switch de \code{GameEngine}.
+
+\begin{minted}{java}
+switch (vCommand.getCommandWord()) {
+    case GO:
+        this.go(vCommand);
+        break;
+
+    case LOOK:
+        this.look(vCommand);
+        break;
+        
+    // code omitted for brevity
+}
+\end{minted}
+
+On remarquera un énorme gain de temps et de maintenabilité pour l'ajout d'une nouvelle commande, seulement deux classes ont eu besoin d'être modifiés, de plus de façon minime. Ceci est rendu possible grâce au chargement automatique de la \code{Map} de \code{CommandWords} et lors du bouclage des valeurs de l'enum.
+
+\textbf{Notes :} en implémentant la logique de \code{zuul-with-enum-v2}, j'ai trouvé que la syntaxe pour le chargement de la \code{Map} de correspondance commande-enum était assez lourde. J'ai préféré ajouté un nouveau attribut dans mon \code{enum} comme ceci :
+
+\begin{minted}{java}
+public enum CommandWord {
+    GO("go"),
+    BACK("back"),
+    // code omitted for brevity
+    UNKNOWN("???", true);
+
+    private String aCommandName;
+    private boolean aIsHidden;
+
+    CommandWord(final String pCommandName, final boolean pIsHidden) {
+        this.aCommandName = pCommandName;
+        this.aIsHidden = pIsHidden;
+    }
+
+    CommandWord(final String pCommandName) {
+        this(pCommandName, false);
+    }
+
+    public boolean getIsHidden() {
+        return this.aIsHidden;
+    }
+
+    @Override
+    public String toString() {
+        return this.aCommandName;
+    }
+}
+
+\end{minted}
+
+Avec cette modification, on peut modifier le chargement de la \code{Map} dans \code{CommandWords} comme ceci :
+
+\begin{minted}{java}
+public class CommandWords {
+    public static final Map<String, CommandWord> aValidCommands;
+
+    static {
+        Map vMap = new HashMap<String, CommandWord>();
+        for (CommandWord command : CommandWord.values()) {
+            if (command.getIsHidden()) continue;
+            vMap.put(command.toString(), command);
+        }
+
+        aValidCommands = Collections.unmodifiableMap(vMap);
+    }
+\end{minted}
+\end{exercise}
+
+\begin{exercise}[subtitle=enum/help]
+
+Changeons la constante associé à \code{help} dans l'enum de \code{CommandWord} pour le faire passer de \mintinline{java}{HELP("help")} à une version comme ceci \mintinline{java}{HELP("aide")}. Lançons le jeu et observons.
+
+\begin{verbatim}
+> help
+Commande inconnue.
+Essayez une des commandes suivantes:
+	take item test drop aide use go back quit
+\end{verbatim}
+
+La liste des commandes à bien été mise-à-jour sans aucun changement de code, ce qui démontre encore une fois l'utilité énorme des \code{enum}.
+
+\textbf{Note :} Il est a noté que j'ai choisi de faire l'exercice "Commande abstraite" à ce moment là car il me semblait logique de continuer dans cette lancée avec les enums. Ceci a aussi permis de simplifier grandement certaines logiques et certains exercices.
+
+\end{exercise}
+
+\begin{exercise}[subtitle=Limite de temps]
+
+On va ajouter la possibilité de limiter le nombre de mouvements fait par un joueur dans le jeu.
+
+Déjà, il faut que ce système soit activable et désactivable à souhait. Je fais donc le choix de baser toute la logique du compteur de temps dans une nouvelle classe \code{Timer}.
+Aussi, j'ai fait le choix de baser la logique du limiteur de temps en utilisant des exceptions.
+
+\begin{minted}{java}
+/**
+ * This class represents a movement constraint based on an internal counter.
+ */
+public class Timer {
+    /**
+     * The internal counter.
+     */
+    private int aCounter;
+
+    /**
+     * If the instance is activated or not.
+     */
+    private boolean aDisabled;
+
+    /**
+     * Creates a new disabled Timer.
+     */
+    public Timer() {
+        this.aCounter = 0;
+        this.aDisabled = true;
+    }
+
+    /**
+     * Indicates that a new action has taken place & decrement the internal counter.
+     * @throws TimerLimitException If the timer does not allow any more actions.
+     */
+    public void action() throws TimerLimitException {
+        if (this.aDisabled) return;
+
+        if (this.aCounter <= 0) throw new TimerLimitException();
+    }
+
+    /**
+     * Sets the new internal counter.
+     * @param pCounter The new counter.
+     */
+    public void setCounter(final int pCounter) {
+        this.aCounter = pCounter;
+    }
+
+    /**
+     * Sets the activation state of the counter.
+     * @param pDisabled true if the counter is disabled, false otherwise.
+     */
+    public void setDisabled(final boolean pDisabled) {
+        this.aDisabled = pDisabled;
+    }
+
+    public static class TimerLimitException extends Exception {
+        TimerLimitException() {
+            super("La limite de mouvement est atteinte, vous avez perdu.");
+        }
+    }
+}
+\end{minted}
+
+L'idée est la suivante :
+
+On va créer un nouvel attribut \code{aTimer} dans \code{Player} et dans les fonctions de déplacement tel que \code{toPreviousRoom} et \code{takeExit}, on va ajouter un simple \code{this.aTimer.action()}. Ces fonctions sont uniquement appelées par des commandes et les commandes sont appelées dans \code{GameEngine} de la manière suivante :
+
+\begin{minted}{java}
+public void processCommand(final String pInput, final boolean pTestMode) {
+    this.aInterface.println("> " + pInput);
+
+    Command vCommand = Parser.parseCommand(pInput, pTestMode);
+
+    // while writing my commands, I noticed that many of them needed the player instance, the game engine
+    // and / or the interface used. So instead of using the getters I preferred to put the different
+    // elements as parameters of the `execute` method.
+
+    try {
+        vCommand.execute(this, this.aPlayer, this.aInterface);
+    } catch (Timer.TimerLimitException pError) {
+        // here we are in the case where the game cannot continue because a timer has expired
+        this.aInterface.printf(pError.getMessage());
+        this.aInterface.disable();
+    } catch (Exception pError) {
+        // a non-fatal error occurred
+        this.aInterface.println(pError.getMessage());
+    }
+
+    this.aInterface.println();
+}
+\end{minted}
+ 
+On pourra donc attraper les exceptions du \code{Timer} directement au niveau du \code{GameEngine}. Cette approche laisse une grande liberté, implémenter plusieurs \code{Timer}, changer la logique de gestion de l'erreur etc. Et ne complexifie pas le code de \code{Player} à outrance (simple rajout de \code{this.aTimer.action()}).
+
+\end{exercise}
+
+\begin{exercise}[subtitle=Trap Door]
+
+Tout l'interêt de cet exercice repose sur la supression du contenu du \code{Stack}, gérant notre historique, au bon moment. Pour cela, on définit une porte piégée comme étant une salle A donnant accès à une salle B tandis que la salle B ne donne pas accès à la salle A (on peut voir ça comme une relation asymétrique). Si tel est le cas, on supprime notre historique pour ne pas permettre au joueur d'utiliser \code{back}.
+
+On pourrait vérifier que si l'on va par exemple au nord, la nouvelle salle possède bien une sortie au sud qui rammène à la salle initiale, mais essayons autre chose en exploitant toutes les possibilités offertes par une \code{Map}.
+
+Pour implémenter ceci, on va créer dans \code{Room} une méthode \code{hasExit} qui vérifira si l'on peut rejoindre une salle depuis la salle actuelle, peut-importe la direction (on ne s'intéresse qu'à la valeur de la \code{Map}, pas la clé).
+
+\begin{minted}{java}
+public boolean hasExit(final Room vRoom) {
+    return this.aExits.containsValue(vRoom);
+}
+\end{minted}
+
+Ensuite, on se place dans \code{Player} et dans la méthode \code{goToExit} qui permet au joueur de changer de salle.
+
+\begin{minted}{java}
+public void goToExit(final String pDirection) throws RoomNotFoundException {
+    Room vCurrent = this.aCurrentRoom.get();
+
+    Room vNext = vCurrent.getExit(pDirection);
+    if (vNext == null) throw new RoomNotFoundException();
+
+    this.setCurrentRoom(vNext);
+
+    // check if the door was a trapdoor
+    if (!vNext.hasExit(vCurrent)) {
+        this.clearRoomHistory();
+    }
+}
+\end{minted}
+\end{exercise}
+
+\begin{exercise}[subtitle=Beamer]
+
+Pour implémenter le \code{Beamer}, on va s'appuyer sur la même structure que le cookie magique, c'est-à-dire créer une nouvelle classe \code{Beamer} étendant \code{Item}. 
+
+\begin{minted}{java}
+public class Beamer extends Item {
+    private Room aSavedLocation;
+
+    public Beamer() {
+        super("beamer", "Pratique pour revenir sur vos pas rapidement !", 50);
+    }
+
+    @Override
+    public void use(final Engine pEngine) {
+        UserInterface vInterface = pEngine.getInterface();
+        Player vPlayer = pEngine.getPlayer();
+
+        if (this.aSavedLocation == null) {
+            this.aSavedLocation = pEngine.getPlayer().getCurrentRoom();
+            vInterface.println("Beamer chargé !");
+        } else {
+            vPlayer.clearRoomHistory();
+            vPlayer.setCurrentRoom(this.aSavedLocation);
+            vPlayer.deleteItem(this.getName());
+
+            vInterface.println("Beamer utilisé !");
+            vInterface.println();
+
+            pEngine.printLocationInfo();
+        }
+    }
+}
+\end{minted}
+
+On utilisera la commande \code{use} pour chargé le beamer puis une deuxième fois \code{use} pour l'utiliser.
+
+\textbf{Note :} On peut remarquer que le beamer se supprime de lui-même de l'inventaire du joueur après utilisation.
+
+\end{exercise}
+
+\begin{exercise}[subtitle=locked door]
+
+TODO
+
+\end{exercise}
+
+\begin{exercise}[subtitle=Transporter]
+
+On commence par définir une classe \code{RoomRandomizer} dont le but sera de gérer et de retourne une pièce aléatoire parmis un ensemble de pièce du jeu.
+
+\begin{minted}{java}
+public class RoomRandomizer {
+    private final Map<String, Room> aRooms;
+    private final Random aRandom;
+
+    public RoomRandomizer() {
+        this.aRooms = new HashMap<>();
+        this.aRandom = new Random();
+    }
+
+    public void add(final Room pRoom) {
+        this.aRooms.put(pRoom.getName(), pRoom);
+    }
+
+    public Room getRoom(final String pName) {
+        return this.aRooms.get(pName);
+    }
+
+    public Room getRandomRoom() {
+        if (this.aRooms.isEmpty()) return null;
+
+        int vRandom = this.aRandom.nextInt(this.aRooms.size());
+        Object vRoom = this.aRooms.values().toArray()[vRandom];
+        return (Room) vRoom;
+    }
+}
+\end{minted}
+
+\textbf{Note :} Pour le code de \code{getRandomRoom}, on peut simplifier le corps de la fonction en utilisant un \code{Stream}\footnote{Un Stream est une séquence d'éléments prenant en charge les opérations d'agrégation séquentielles et parallèles.} de Java.
+
+\begin{minted}{java}
+public Room getRandomRoom() {
+    if (this.aRooms.isEmpty()) return null;
+
+    int vSize = this.aRooms.size();
+
+    return this.aRooms.values()
+            .stream() // converts the collection to a stream of rooms
+            .skip(this.aRandom.nextInt(vSize)) // skip a random number of rooms
+            .findFirst() // selects only one room
+            .orElse(null); // if there is no room (an empty stream), returns null
+}
+\end{minted}
+
+Ce qui permet de se passer de l'allocation de mémoire pour un tableau à chaque appel de la méthode.
+
+Ensuite, on défini notre nouvelle \code{TransporterRoom} comme étant un type de \code{Room} particulier.
+
+\begin{minted}{java}
+public class TransporterRoom extends Room {
+    private final RoomRandomizer aRandomizer;
+    private String aForcedExit;
+
+    public TransporterRoom(final RoomRandomizer pRandomizer) {
+        super("Salle de téléportation", "Pratique pour se déplacer dans le vaisseau");
+
+        this.aRandomizer = pRandomizer;
+    }
+
+    @Override
+    public Room getExit(final String pDirection) {
+        return this.aForcedExit == null
+                ? this.aRandomizer.getRandomRoom()
+                : this.aRandomizer.getRoom(this.aForcedExit);
+    }
+
+    public void setForcedExit(final String pExitName) {
+        this.aForcedExit = pExitName;
+    }
+}
+\end{minted}
+
+Ainsi, chaque \code{TransporterRoom} recevra, lors de son initialisation, une instance de \code{RoomRandomizer} pour pouvoir téléporter le joueur. On passera cette instance dans \code{GameEngine}.
+
+\begin{minted}{java}
+private void createRooms() {
+    // code omitted for brevity
+
+    Room vTeleporter = new TransporterRoom(this.aRandomizer);
+}
+\end{minted}
+
+\subsection*{Commande alea}
+
+Ayant fait l'exercice sur Command abstract avant cet exercice, on va juste créer une nouvelle classe pour une nouvelle commande \code{alea}.
+
+\begin{minted}{java}
+public class AleaCommand extends Command {
+    public AleaCommand() {
+        super("alea", true);
+    }
+
+    /**
+     * Forces the exit of the current transporter room.
+     *
+     * @param pEngine    The game engine.
+     * @param pPlayer    The player using the command.
+     * @param pInterface The user interface used by the game.
+     * @throws UnsupportedOperationException If player is not using this command in a transporter room.
+     */
+    @Override
+    public void execute(Engine pEngine, Player pPlayer, UserInterface pInterface) throws UnsupportedOperationException {
+        if (!this.hasSecondWord()) {
+            pInterface.println("Vous devez spécifier la sortie forcée.");
+
+            return;
+        }
+
+        Room vRoom = pPlayer.getCurrentRoom();
+
+        if (!(vRoom instanceof TransporterRoom))
+            throw new UnsupportedOperationException("alea ne peut être utilisé uniquement que dans un transporter.");
+
+        TransporterRoom vTransporter = (TransporterRoom) vRoom;
+        vTransporter.setForcedExit(this.getSecondWord());
+
+        pInterface.printf("Sortie de %s mise sur %s.", vRoom.getName(), this.getSecondWord());
+        pInterface.println();
+    }
+}
+\end{minted}
+
+\end{exercise}
+
+\begin{exercise}[subtitle=Commande abstraite]
+
+On va modifier la manière dont nos commandes sont gérés par le jeu. A la place d'avoir notre logique centralisée dans \code{GameEngine}, on va les éclater en classe indépendant telle que \code{GoCommand}, \code{HelpCommand}... implémentant la classe abstraite \code{Command}.
+
+\begin{minted}{java}
+public abstract class Command {
+    /**
+     * Name of the command.
+     */
+    private final String aName;
+
+    /**
+     * Indicate if the command is only intended to be used in test.
+     */
+    private final boolean aIsTestCommand;
+
+    /**
+     * The second word provided with the command.
+     */
+    private String aSecondWord;
+
+    /**
+     * Creates a new command object.
+     *
+     * @param pName Name of the command.
+     * @param pIsTestCommand true if the command is only intended to be used in test context, false otherwise.
+     */
+    public Command(final String pName, final boolean pIsTestCommand) {
+        this.aName = pName;
+        this.aIsTestCommand = pIsTestCommand;
+
+        this.aSecondWord = null;
+    }
+
+    /**
+     * Creates a new command object.
+     *
+     * @param pName Name of the command.
+     */
+    public Command(final String pName) {
+        this(pName, false);
+    }
+
+    /**
+     * Gets the second word.
+     *
+     * @return the second word.
+     */
+    public String getSecondWord() {
+        return this.aSecondWord;
+    }
+
+    /**
+     * Define the second word of this command (the word
+     * entered after the command word). Null indicates that
+     * there was no second word.
+     *
+     * @param pSecondWord The second word.
+     */
+    public void setSecondWord(final String pSecondWord) {
+        this.aSecondWord = pSecondWord;
+    }
+
+    /**
+     * Checks if a command has a second word
+     *
+     * @return true if the command has a second word, false otherwise.
+     */
+    public boolean hasSecondWord() {
+        return this.aSecondWord != null;
+    }
+
+    /**
+     * Execute the command.
+     *
+     * @param pEngine    The game engine.
+     * @param pPlayer    The player using the command.
+     * @param pInterface The user interface used by the game.
+     * @throws Exception If the command execution fail.
+     */
+    public abstract void execute(final Engine pEngine, final Player pPlayer, final UserInterface pInterface) throws Exception;
+
+    /**
+     * Gets the command name.
+     *
+     * @return The command name.
+     */
+    public String getName() {
+        return this.aName;
+    }
+
+    /**
+     * Checks if the command be executed in the current context.
+     *
+     * @param pTestMode true if the test environment is enabled, false otherwise.
+     * @return true if the command can be used, false otherwise.
+     */
+    public boolean isExecutable(boolean pTestMode) {
+        return !this.aIsTestCommand || pTestMode;
+    }
+}
+\end{minted}
+
+Par exemple, \code{GoCommand} sera implémenté comme ceci :
+
+\begin{minted}{java}
+public class GoCommand extends Command {
+    public GoCommand() {
+        super("go");
+    }
+
+    /**
+     * Moves the player in another room by taking an available exit.
+     *
+     * @param pEngine    The game engine.
+     * @param pPlayer    The player using the command.
+     * @param pInterface The user interface used by the game.
+     */
+    @Override
+    public void execute(Engine pEngine, Player pPlayer, UserInterface pInterface) throws Room.RoomNotFoundException {
+        if (!this.hasSecondWord()) {
+            pInterface.println("Cette direction est inconnue.");
+            pInterface.printf("Vous pouvez aller : %s", pPlayer.getExitsDescription());
+            pInterface.println();
+            return;
+        }
+
+        pPlayer.goToExit(this.getSecondWord());
+
+        pEngine.printLocationInfo();
+    }
+}
+\end{minted}
+
+Maintenant, on doit modifier notre \code{CommandWord} pour prendre en comptre notre modification de comment s'organise les classes. On va utiliser ces enums pour relier les noms de commandes aux objets commandes.
+
+\begin{minted}{java}
+/**
+ * Representation for all the valid commands of the game.
+ */
+public enum CommandWord {
+    GO(new GoCommand()),
+    BACK(new BackCommand()),
+    ITEM(new ItemCommand()),
+    QUIT(new QuitCommand()),
+    TEST(new TestCommand()),
+    TAKE(new TakeCommand()),
+    DROP(new DropCommand()),
+    USE(new UseCommand()),
+    HELP(new HelpCommand()),
+    ALEA(new AleaCommand()),
+    UNKNOWN(new UnknownCommand());
+
+    /**
+     * The command object used to process the command.
+     */
+    private final Command aCommand;
+
+    /**
+     * Constructor for enum's command.
+     *
+     * @param pCommand The command object associated.
+     */
+    CommandWord(final Command pCommand) {
+        this.aCommand = pCommand;
+    }
+
+    /**
+     * Gets the command object associated with the constant
+     *
+     * @return The command associated.
+     */
+    public Command getCommand() {
+        return this.aCommand;
+    }
+
+    /**
+     * Gets if the command is hidden.
+     *
+     * @return true if the command is hidden, false otherwise.
+     */
+    public boolean isHidden() {
+        return this.aCommand.getName() == null;
+    }
+
+    @Override
+    public String toString() {
+        return this.aCommand.getName();
+    }
+}
+\end{minted}
+\end{exercise}
+
+\begin{exercise}[subtitle=Character]
+
+
+
+\end{exercise}
+
+\begin{exercise}[subtitle=Moving character]
+
+
+
+\end{exercise}
+
+
+\begin{exercise}[subtitle=maximum]
+
+La classe \code{Math} du paquetage \code{java.lang} possède plusieurs méthode statiques pour comparer deux valeurs et retourner la plus grande. Ces méthodes, définies par surcharge, sont nommées \code{max} et accessible statiquement. Pour deux entiers, la signature est la suivante:
+
+\begin{figure}[h]
+  \centering
+  \mintinline{java}{public static int min(int a, int b)}
+\end{figure}
+
+\end{exercise}
+
+\begin{exercise}[subtitle=static]
+
+Les méthodes \code{max} de \code{Math} ne s'appuient que sur ses deux paramètres pour déterminer le résultat. En ça, ce sont des fonctions pures car pour les mêmes arguments, le même résultat sera donné. Il est évidemment possible de les écrire sous une forme de méthode d'instance en enlevant le mot clé \code{static}, mais cela ne représente par d'intérêt.
+
+\end{exercise}
+
+\begin{exercise}[subtitle=currentTimeMillis]
+
+Pour tester le comptage de 1 à 100 par une boucle, on récupère le temps écoulé entre le début et la fin.
+
+\textbf{Note :} Dans pratiquement tous les programmes, les perfomances sont limités par l'IO\footnote{\textit{Input Output}, les entrées et sorties.} notamment \code{System.out.*} qui effectue des opérations d'écriture. Pour ne pas biaiser le test, on ne va pas logger le comptage fait par le boucle.
+
+\begin{minted}{java}
+public static void countFrom0to100() {
+    long vStart = System.currentTimeMillis();
+
+    for (int i = 1; i <= 100; i++) { }
+
+    long vEnd = System.currentTimeMillis();
+    System.out.printf("From 1 to 100 in %dms.", vEnd - vStart);
+    System.out.println();
+}
+\end{minted}
+
+Le résultat est le suivant:
+
+\code{From 1 to 100 in 0ms.}
+
+Ce qui n'est absolument pas étonnant étant donné la simplicité de l'opération demandée.
+\end{exercise}
+
+\begin{exercise}[subtitle=Main]
+
+On crée une classe \code{Main} à la racine du projet
+
+\begin{minted}{java}
+import zuul.pkg_ui.pkg_javafx.JavaFX;
+
+public class Main {
+    public static void main(String[] args) {
+        JavaFX.play();
+    }
 }
 \end{minted}
 \end{exercise}

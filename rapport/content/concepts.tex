@@ -1,0 +1,199 @@
+\chapter{A savoir expliquer}
+
+\textbf{Note :} Plusieurs des exemples présentés ci-dessous sont extrait de la documentation Java. 
+ 
+\section{Scanner}
+ 
+\code{Scanner} est une classe se trouvant dans \code{java.util} et qui permet d'analyser et de manipuler du texte selon plusieurs stratégies. Par exemple ligne par ligne avec \code{nextLine} ou encore mot par mot avec \code{next}. Lors de sa création, on doit préciser dans le constructeur la source des données à analyser (soit un stream comme \code{System.in}, soit un fichier ou encore une chaîne de caractères).
+
+\section{HashMap}
+
+Une \code{HashMap} est une structure de données de type dictionnaire. C'est une implémentation de l'interface \code{Map}. Elle permet à partir d'une clé de trouver la valeur associée.
+
+\section{Set}
+
+Un \code{Set} est une structure de données permettant de créer une liste d'éléments uniques, le \code{Set} nous donnant la garantie qu'un même élément ne peut pas être présent plus d'une fois. Il est aussi à noter qu'un \code{Set} n'est qu'une interface et peut donc être utilisé avec l'implémentation faite par \code{HashSet}.
+
+\subsection{keySet()}
+
+\code{keySet()} est une méthode pouvant être appelée sur une \code{Map}. Elle permet de récupérer un \code{Set} contenant les clés utilisées dans une \code{Map}.
+
+\section{La boucle for each}
+
+Une boucle for each s'écrit de la façon suivante:
+
+\begin{minted}{java}
+for ( TypeElement vElement : enumerable ) {
+  // do something
+}
+\end{minted}
+
+Elle permet de parcourir les élements contenus dans un certain objet comme un \code{Set} ou un tableau.
+
+\section{ActionListener}
+
+\code{ActionListener} est une interface qui permet à une classe d'être à l'écoute de certains évènements. La classe implémentant cetter interface doit posséder une méthode \code{actionPerformed} et peut être enregistré comme écouteur d'évènements à l'aide de la méthode \code{addActionListener}.
+
+\subsection{addActionListener()}
+
+\code{addActionListener()} est une méthode permettant d'enregistrer la classe implémentant \code{ActionListener} sur laquelle appeler \code{actionPerformed} quand un évènement se produit.
+
+\subsection{actionPerformed()}
+
+\code{actionPerformed()} est la méthode qui va recevoir en paramètre un objet de type \code{ActionEvent}. Cette méthode sera appelée pour chaque évenement qui se produira sur les éléments graphiques auxquels elle est attachée.
+
+\subsection{ActionEvent}
+
+\code{ActionEvent} est l'objet qui définit un évènement s'étant produit sur l'interface graphique.
+
+\subsection{getActionCommand()}
+
+\code{getActionCommand()} est une méthode disponible sur un \code{ActionEvent} et permet de récupérer une chaîne de caractère correspondant à la commande d'action pouvant être définit sur un élement par \mintinline{java}{setActionCommand(String command)}.
+
+\subsection{getSource()}
+
+\code{getSource()} est une méthode disponible sur un \code{ActionEvent} et donne une référence de l'objet qui a émit l'évènement.
+
+\section{Stack}
+
+\code{Stack} est une structure de données qui fonctionne comme une pile de type LIFO\footnote{Last In First Out}. Il permet d'empiler des objets d'un certain type et de conserver l'ordre d'insertion.
+
+\subsection{push()}
+
+\code{push()} permet de rajouter un objet en le positionnant en haut du \code{Stack}.
+
+\subsection{pop()}
+
+\code{pop()} permet de récupérer l'élément le plus en haut du \code{Stack} et de l'enlever par la même occasion.
+
+\subsection{empty()}
+
+\code{empty()} permet de tester si le \code{Stack} ne contient pas d'objet et est donc vide. Il est a noter que \code{Stack} contient aussi une méthode \code{isEmpty()} faisant exactement la même chose. La raison à cette duplication est que \code{Collection} n'existait pas dans la version 1 du JDK, ainsi chaque classe comme \code{HashMap}, \code{Stack}, \code{Vector}... ont tous une méthode \code{empty()}. \code{Collection} requiert la méthode \code{isEmpty()} d'être implementé et \code{emtpy()} fût garder pour des raisons de compatibilité.
+
+\subsection{peek()}
+
+\code{peek()} permet de récupérer l'objet sur le haut du \code{Stack} sans le supprimer de ce dernier.
+
+\section{switch}
+
+Un \code{switch} est une instruction permettant de définir plusieurs chemins d'éxécutions en fonction de la valeur testé. La syntaxe est la suivante :
+
+\begin{minted}{java}
+int val = 12;
+String result;
+
+switch (val) {
+    case 6:
+        result = "six";
+        break;
+        
+    case 10:
+        result = "dix";
+        break;
+        
+    case 12:
+        result = "douze";
+        break;
+        
+    default:
+        result = "autre chose"
+}
+\end{minted}
+
+\subsection{case}
+
+\code{case} permet de spécifier un nouveau chemin d'éxécution si la valeur testée correspond à la valeur attendue par le \code{case}.
+
+\subsection{default}
+
+\code{default} permet de spécifier un chemin à prendre par défaut si aucun \code{break} n'a été rencontré pendant l'éxécution du \code{switch}
+
+\subsection{break}
+
+\code{break} arrête l'éxécution de l'instruction du \code{switch}.
+
+\section{enum}
+
+Un \code{enum} liste toutes les valeurs possibles que pourra prendre une variable du type de l'enum, par exemple :
+
+\begin{minted}{java}
+public enum Day {
+    SUNDAY, MONDAY, TUESDAY, WEDNESDAY,
+    THURSDAY, FRIDAY, SATURDAY 
+}
+
+Day today = Day.MONDAY;
+\end{minted}
+
+\subsection{values()}
+
+Apeller \code{values()} sur un enum (dans notre cas précédent \code{Day.values()} retourne toutes les constantes possibles de l'enum (toujours dans notre cas, nos constantes sont \code{MONDAY}, \code{TUESDAY}, \code{WEDNESDAY}, \code{THURSDAY}, \code{FRIDAY}, \code{SATURDAY} et \code{SUNDAY}).
+
+\subsection{toString()}
+
+\code{toString()} renvoit par défaut le nom de la constante (par exemple pour le code \code{Day.MONDAY.toString()} on obtient "MONDAY"). L'implémentation de \code{toString()} peut être supplanté pour redéfinir sa valeur de retour.
+
+\subsection{attributs / constructeur}
+
+Chaque constante de l'enum peut prendre des paramètres, définit par le constructeur de l'enum. Chaque attribut est propre à chaque constante, par exemple :
+
+\begin{minted}{java}
+public enum Planet {
+    MERCURY (3.303e+23, 2.4397e6),
+    VENUS   (4.869e+24, 6.0518e6),
+    EARTH   (5.976e+24, 6.37814e6),
+    MARS    (6.421e+23, 3.3972e6),
+    JUPITER (1.9e+27,   7.1492e7),
+    SATURN  (5.688e+26, 6.0268e7),
+    URANUS  (8.686e+25, 2.5559e7),
+    NEPTUNE (1.024e+26, 2.4746e7);
+
+    private final double mass;   // in kilograms
+    private final double radius; // in meters
+    
+    Planet(double mass, double radius) {
+        this.mass = mass;
+        this.radius = radius;
+    }
+    
+    private double mass() { return mass; }
+    private double radius() { return radius; }
+
+    // universal gravitational constant  (m3 kg-1 s-2)
+    public static final double G = 6.67300E-11;
+
+    double surfaceGravity() {
+        return G * mass / (radius * radius);
+    }
+    
+    double surfaceWeight(double otherMass) {
+        return otherMass * surfaceGravity();
+    }
+}
+\end{minted}
+
+Ici, chacune des constantes de l'enum \code{Planet} contiendra une masse et un rayon qui lui seront propre.
+
+\section{Random}
+
+\code{Random} est une classe se trouvant dans \code{Java.util} permettant de créer un générateur de nombres pseudo-aléatoire.
+
+\subsection{nextInt()}
+
+\code{nextInt()} permet de récupérer un entier généré pseudo-aléatoirement. Sans paramètre, le résultat sera dans l'intervalle $\llbracket 0, 2^{32} \rrbracket$ avec tous les nombres ayant une probabilité égal d'être généré. Si un paramètre \code{x} est précisé, alors cet intervalle devient $\llbracket 0, x \rrbracket$.
+
+\subsection{seed}
+
+Dans un générateur pseudo-aléatoire, la sortie n'est pas réellement aléatoire mais déterminée par une formule mathématique. La seed (ou graine en français) est l'élement qui va permettre d'initialiser cette formule. Ainsi, pour reproduire deux fois la même séquence de nombres, il suffit de passer deux fois la même graine.
+
+\section{Polymorphisme}
+
+Le polymorphisme est la capacité de mettre en place des liens entre objets et de rassembler certaines caractéristiques communes, notamment avec le procédé d'héritage en Java.
+
+\section{Paquetages}
+
+Le système de paquetage en Java permet de compartimenter le code en sections logiques (un paquet pour l'interface, une pour les items, une pour les rooms etc.) plutôt que de laisser les fichiers s'accumuler à un seul endroit sans organisation.
+
+\subsection{le paquetage par défaut}
+
+Le paquetage anonyme permet d'utiliser les classes du paquet courant sans avoir à préciser son nom (il peut même ne pas en avoir, c'est alors le paquetage anonyme).

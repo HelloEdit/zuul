@@ -1,4 +1,0 @@
-go east
-go buckingham
-back
-go esiee
