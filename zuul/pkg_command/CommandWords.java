@@ -22,7 +22,7 @@ public class CommandWords {
     public static final Map<String, Command> VALID_COMMANDS;
 
     /**
-     * An array of strings containing the available commands.
+     * A string containing the available commands for help purpose.
      */
     public static final String COMMANDS_STRING;
 
