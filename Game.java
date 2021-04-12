@@ -58,8 +58,7 @@ public class Game {
         long vStart = System.currentTimeMillis();
 
         //noinspection StatementWithEmptyBody
-        for (int i = 1; i <= 100; i++) {
-        }
+        for (int i = 1; i <= 100; i++) {}
 
         long vEnd = System.currentTimeMillis();
         System.out.printf("From 1 to 100 in %dms.", vEnd - vStart);
