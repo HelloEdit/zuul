@@ -53,14 +53,13 @@ public class Engine {
         // Murphy Law Universe
         Room vOffice = new Room("bureau", "C'est le bureau de Murphy Law");
         vOffice.addItem("loupe", "une simple loupe");
-        vOffice.addItem(new Beamer());
 
         Room vCar = new Room("voiture", "C'est la voiture de Murphy Law. Pratique pour vous déplacer");
         vCar.addItem("clé", "d'une utilité assez évidente");
 
         // Buckingham Palace Universe
         Room vGreatStair = new Room("grand escalier", "L'escalier principal de Buckingham Palace");
-        vGreatStair.addItem("statue", "Une statue imposante de la reine", -1);
+        vGreatStair.addItem("statue", "Une statue imposante de la reine", 500);
 
         Room vReception = new Room("salle de réception", "Salle où, manifestement, on reçoit des gens importants");
         vReception.addItem("cendrier", "C'est un beau cendrier, vraiment");
@@ -79,9 +78,20 @@ public class Engine {
         vCave.addItem("tableau", "un vieux tableau poussiéreux, représentant un semblant de bataille");
 
         // Star Trek Universe
+        Room vStorage = new Room("entrepôt", "une salle dédiée au stockage pour le vaisseau");
+        vStorage.addItem(new Beamer());
 
-        this.aRandomizer.addAll();
-        Room vTeleporter = new TransporterRoom(this.aRandomizer);
+        Room vCorridor = new Room("couloir", "un couloir normal");
+        vCorridor.addItem("tournevis", "un tournevis", 10);
+
+        Room vBridge = new Room("pont", "c'est la passerelle du vaisseau");
+
+        Room vMess = new Room("cantine", "là où mange les membres de l'équipage");
+        vMess.addItem("assiette", "une assiette malheureusement vide", 10);
+        vMess.addItem("chaise", "une chaise pour se reposer", 40);
+
+        Room vTransporter = new TransporterRoom(this.aRandomizer);
+        this.aRandomizer.addAll(vStorage, vCorridor, vMess, vBridge);
 
         // ESIEE Universe
         Room vEsiee = new Room("salle de l'ESIEE", "mais... c'est là où vous avez lancé ce jeu");
@@ -111,7 +121,19 @@ public class Engine {
         vKitchen.setExit("north", vReception);
         vKitchen.setExit("down", vCave);
 
-        vCave.setExit("voiture", vCar);
+        vCave.setExit("???", vStorage);
+
+        vStorage.setExit("east", vCorridor);
+
+        vCorridor.setExit("west", vStorage);
+        vCorridor.setExit("north", vMess);
+        vCorridor.setExit("south", vTransporter);
+        vCorridor.setExit("east", vBridge);
+
+        vMess.setExit("south", vCorridor);
+
+        vBridge.setExit("west", vCorridor);
+        vBridge.setExit("airlock", vCar);
 
         // sets the first room where the game begins
         this.aPlayer.setCurrentRoom(vOffice);

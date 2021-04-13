@@ -35,5 +35,7 @@ public class Cookie extends Item {
 
         vPlayer.setMaxWeight(vNewMax);
         vPlayer.deleteItem(this.getName());
+
+        pInterface.println("Le cookie était délicieux ! Il vous a donné de la force.");
     }
 }

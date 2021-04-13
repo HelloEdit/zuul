@@ -26,14 +26,26 @@ public class Game {
         System.out.println("[1] JavaFX");
         System.out.println("[2] Console");
 
-        Scanner vScanner = new Scanner(System.in);
-
         int choice;
-        try {
-            choice = vScanner.nextInt();
-        } catch (Exception e) {
-            System.out.println("Error during selection. Aborting.");
-            return;
+        if (args != null && args.length != 0) {
+            try {
+                choice = Integer.parseInt(args[0]);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid argument format. Aborting.");
+                return;
+            }
+
+            System.out.printf("> %d", choice);
+            System.out.println();
+        } else {
+            Scanner vScanner = new Scanner(System.in);
+
+            try {
+                choice = vScanner.nextInt();
+            } catch (Exception e) {
+                System.out.println("Error during selection. Aborting.");
+                return;
+            }
         }
 
         switch (choice) {

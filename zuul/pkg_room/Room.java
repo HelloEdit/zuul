@@ -59,7 +59,7 @@ public class Room {
         this.aExits = new HashMap<>();
         this.aPersonage = new HashMap<>();
         this.aItems = new ItemList();
-        this.aImage = pName.replaceAll(" ", "_") + ".png";
+        this.aImage = pName.toLowerCase().replaceAll(" ", "_") + ".png";
     }
 
     /**

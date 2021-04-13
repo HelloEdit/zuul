@@ -40,6 +40,6 @@ public class BackCommand extends Command {
         }
 
         pInterface.printf("Vous êtes de retour dans %s", vPrevious.getName());
-        pInterface.println();
+        pEngine.printLocationInfo();
     }
 }
