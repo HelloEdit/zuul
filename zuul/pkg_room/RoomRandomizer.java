@@ -40,6 +40,15 @@ public class RoomRandomizer {
     }
 
     /**
+     * Add new rooms to the randomizer choices.
+     *
+     * @param pRooms The rooms to be added
+     */
+    public void addAll(final Room ...pRooms) {
+        for (Room room : pRooms) this.add(room);
+    }
+
+    /**
      * Gets a specific room.
      *
      * @param pName Name of the room.

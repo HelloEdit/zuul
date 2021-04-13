@@ -51,37 +51,40 @@ public class Engine {
      */
     private void createRooms() {
         // Murphy Law Universe
-        Room vOffice = this.initRoom("bureau", "C'est le bureau de Murphy Law");
+        Room vOffice = new Room("bureau", "C'est le bureau de Murphy Law");
         vOffice.addItem("loupe", "une simple loupe");
         vOffice.addItem(new Beamer());
 
-        Room vCar = this.initRoom("voiture", "C'est la voiture de Murphy Law. Pratique pour vous déplacer");
+        Room vCar = new Room("voiture", "C'est la voiture de Murphy Law. Pratique pour vous déplacer");
         vCar.addItem("clé", "d'une utilité assez évidente");
 
         // Buckingham Palace Universe
-        Room vGreatStair = this.initRoom("grand escalier", "l'escalier principal de Buckingham Palace");
+        Room vGreatStair = new Room("grand escalier", "L'escalier principal de Buckingham Palace");
         vGreatStair.addItem("statue", "Une statue imposante de la reine", -1);
 
-        Room vReception = this.initRoom("salle de réception", "Salle où, manifestement, on reçoit des gens importants");
+        Room vReception = new Room("salle de réception", "Salle où, manifestement, on reçoit des gens importants");
         vReception.addItem("cendrier", "C'est un beau cendrier, vraiment");
 
-        Room vTerrace = this.initRoom("terrasse", "terrasse donnant sur le jardin de Buckingham Palace");
+        Room vTerrace = new Room("terrasse", "terrasse donnant sur le jardin de Buckingham Palace");
         vTerrace.addItem("jumelles", "les jumelles sont en effet pratique pour observer loin");
 
-        Room vAppartements = this.initRoom("appartements", "les appartements de la reine");
+        Room vAppartements = new Room("appartements", "les appartements de la reine");
         vAppartements.addItem("bijoux", "des boucles d'oreilles en or, évidemment");
 
-        Room vKitchen = this.initRoom("cuisine", "les cuisine du palais");
+        Room vKitchen = new Room("cuisine", "les cuisine du palais");
         vKitchen.addItem(new Cookie());
 
-        Room vCave = this.initRoom("cave", "une cave de stockage bien caché");
+        Room vCave = new Room("cave", "une cave de stockage bien caché");
         vCave.addItem("caisses", "une caisse scellé");
         vCave.addItem("tableau", "un vieux tableau poussiéreux, représentant un semblant de bataille");
 
+        // Star Trek Universe
+
+        this.aRandomizer.addAll();
         Room vTeleporter = new TransporterRoom(this.aRandomizer);
 
         // ESIEE Universe
-        Room vEsiee = this.initRoom("salle de l'ESIEE", "mais... c'est là où vous avez lancé ce jeu");
+        Room vEsiee = new Room("salle de l'ESIEE", "mais... c'est là où vous avez lancé ce jeu");
         vEsiee.addItem("livre", "un livre intitulé \"Objects First with Java\"");
 
         // Setting up the "paths" between rooms
@@ -112,21 +115,6 @@ public class Engine {
 
         // sets the first room where the game begins
         this.aPlayer.setCurrentRoom(vOffice);
-    }
-
-    /**
-     * Simple helper to initialize a new room and store it
-     * in the engine.
-     *
-     * @param pName        The name of the room.
-     * @param pDescription The description of the room.
-     * @return The created room.
-     */
-    private Room initRoom(final String pName, final String pDescription) {
-        Room vRoom = new Room(pName, pDescription);
-        this.aRandomizer.add(vRoom);
-
-        return vRoom;
     }
 
     /**

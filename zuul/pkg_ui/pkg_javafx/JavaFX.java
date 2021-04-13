@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 /**
  * This class is responsible for initializing the JavaFX thread as well as
- * correctly setting up the main pkg_game window and launching the controller.
+ * correctly setting up the main game window and launching the controller.
  *
  * @author Corentin POUPRY
  * @version 06.04.21

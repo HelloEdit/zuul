@@ -51,6 +51,9 @@ public class Timer {
         this.aDisabled = pDisabled;
     }
 
+    /**
+     *
+     */
     public static class TimerLimitException extends Exception {
         TimerLimitException() {
             super("La limite de mouvement est atteinte, vous avez perdu.");
