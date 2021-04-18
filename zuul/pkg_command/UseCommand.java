@@ -1,6 +1,6 @@
 package zuul.pkg_command;
 
-import zuul.pkg_game.Engine;
+import zuul.pkg_game.GameEngine;
 import zuul.pkg_game.Player;
 import zuul.pkg_item.Item;
 import zuul.pkg_ui.UserInterface;
@@ -19,12 +19,12 @@ public class UseCommand extends Command {
     /**
      * Uses the item specified.
      *
-     * @param pEngine    The game engine.
+     * @param pGameEngine    The game engine.
      * @param pPlayer    The player using the command.
      * @param pInterface The user interface used by the game.
      */
     @Override
-    public void execute(Engine pEngine, Player pPlayer, UserInterface pInterface) {
+    public void execute(GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) {
         if (!this.hasSecondWord()) {
             pInterface.println("Vous devez spécifier l'objet à utiliser.");
             return;
@@ -37,7 +37,7 @@ public class UseCommand extends Command {
         }
 
         try {
-            vItem.use(pEngine, pPlayer, pInterface);
+            vItem.use(pGameEngine, pPlayer, pInterface);
         } catch (Exception pError) {
             pInterface.println("Vous ne pouvez pas utiliser cet objet.");
             pInterface.println(pError.getMessage());

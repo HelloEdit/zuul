@@ -1,6 +1,6 @@
 package zuul.pkg_item;
 
-import zuul.pkg_game.Engine;
+import zuul.pkg_game.GameEngine;
 import zuul.pkg_game.Player;
 import zuul.pkg_ui.UserInterface;
 
@@ -23,13 +23,13 @@ public class Cookie extends Item {
     /**
      * Uses the cookie and modify the maximum weight that the player can carry.
      *
-     * @param pEngine    The game engine.
+     * @param pGameEngine    The game engine.
      * @param pPlayer    The player using the command.
      * @param pInterface The user interface used by the game.
      */
     @Override
-    public void use(final Engine pEngine, Player pPlayer, UserInterface pInterface) {
-        Player vPlayer = pEngine.getPlayer();
+    public void use(final GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) {
+        Player vPlayer = pGameEngine.getPlayer();
 
         int vNewMax = vPlayer.getMaxWeight() + WEIGHT_ADDED;
 

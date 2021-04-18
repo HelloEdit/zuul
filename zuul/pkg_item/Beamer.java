@@ -1,6 +1,6 @@
 package zuul.pkg_item;
 
-import zuul.pkg_game.Engine;
+import zuul.pkg_game.GameEngine;
 import zuul.pkg_game.Player;
 import zuul.pkg_room.Room;
 import zuul.pkg_ui.UserInterface;
@@ -19,20 +19,21 @@ public class Beamer extends Item {
 
     /**
      * Creates the beamer item.
+     * @param pName Name of the beamer.
      */
-    public Beamer() {
-        super("beamer", "pratique pour revenir sur vos pas rapidement !", 50);
+    public Beamer(final String pName) {
+        super(pName, "pratique pour revenir sur vos pas rapidement !", 50);
     }
 
     /**
      * Use the beamer, once to charge it and once to fire it.
      *
-     * @param pEngine    The game engine.
+     * @param pGameEngine    The game engine.
      * @param pPlayer    The player using the command.
      * @param pInterface The user interface used by the game.
      */
     @Override
-    public void use(final Engine pEngine, Player pPlayer, UserInterface pInterface) {
+    public void use(final GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) {
         if (this.aSavedLocation == null) {
             throw new NullPointerException(this.getName() + " n'est pas chargé.");
         }
@@ -44,7 +45,7 @@ public class Beamer extends Item {
         pInterface.printf("%s utilisé !%n", this.getName());
         pInterface.println();
 
-        pEngine.printLocationInfo();
+        pGameEngine.printLocationInfo();
     }
 
     /**

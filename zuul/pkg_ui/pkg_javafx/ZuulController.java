@@ -21,7 +21,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import zuul.Utils;
-import zuul.pkg_game.Engine;
+import zuul.pkg_game.GameEngine;
 import zuul.pkg_game.Player;
 import zuul.pkg_item.Item;
 import zuul.pkg_ui.UserInterface;
@@ -62,7 +62,7 @@ public class ZuulController implements UserInterface {
     /**
      * Game engine of the Zuul project.
      */
-    private Engine engine;
+    private GameEngine gameEngine;
 
     /**
      * Prints a string.
@@ -132,10 +132,10 @@ public class ZuulController implements UserInterface {
      */
     @FXML
     private void initialize() {
-        this.engine = new Engine();
-        this.engine.setInterface(this);
+        this.gameEngine = new GameEngine();
+        this.gameEngine.setInterface(this);
 
-        Player vPlayer = this.engine.getPlayer();
+        Player vPlayer = this.gameEngine.getPlayer();
 
         // bind the current location of the player to the interface
         // update the related properties
@@ -206,7 +206,7 @@ public class ZuulController implements UserInterface {
         if (vInput.isEmpty()) return;
 
         this.println("> " + vInput);
-        this.engine.processCommand(vInput, false);
+        this.gameEngine.processCommand(vInput, false);
     }
 
     /**
@@ -217,7 +217,7 @@ public class ZuulController implements UserInterface {
         Item vItem = inventoryList.getSelectionModel().getSelectedItem();
 
         try {
-            vItem.use(this.engine, this.engine.getPlayer(), this.engine.getInterface());
+            vItem.use(this.gameEngine, this.gameEngine.getPlayer(), this.gameEngine.getInterface());
         } catch (Exception pError) {
             this.println(pError.getMessage());
             this.println();
@@ -231,7 +231,7 @@ public class ZuulController implements UserInterface {
     @FXML
     private void onItemDrop() {
         Item vItem = inventoryList.getSelectionModel().getSelectedItem();
-        Player vPlayer = this.engine.getPlayer();
+        Player vPlayer = this.gameEngine.getPlayer();
 
         try {
             vPlayer.dropItem(vItem.getName());

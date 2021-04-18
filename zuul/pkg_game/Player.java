@@ -38,10 +38,12 @@ public class Player {
      * Inventory weight.
      */
     private final IntegerProperty aWeight;
+
     /**
      * Room where the player is.
      */
     private final ObjectProperty<Room> aCurrentRoom;
+
     /**
      * Remaining movements to the player.
      * negative number if the movements are unlimited.
@@ -58,7 +60,7 @@ public class Player {
         this.aCurrentRoom = new SimpleObjectProperty<>(null);
         this.aMaxWeight = new SimpleIntegerProperty(100);
         this.aWeight = new SimpleIntegerProperty(0);
-        this.aTimer = new Timer();
+        this.aTimer = new Timer(25, false);
     }
 
     /**
@@ -66,10 +68,13 @@ public class Player {
      *
      * @return The previous room.
      * @throws EmptyStackException If there is no previous room.
+     * @throws Timer.TimerLimitException If the timer has expired.
      */
-    public Room toPreviousRoom() throws EmptyStackException {
+    public Room toPreviousRoom() throws EmptyStackException, Timer.TimerLimitException {
         Room vPrevious = this.aPreviousRooms.pop();
         this.aCurrentRoom.set(vPrevious);
+
+        this.aTimer.action();
 
         return vPrevious;
     }
@@ -93,7 +98,6 @@ public class Player {
 
         Room vNext = vCurrent.getExit(pDirection);
         if (vNext == null) throw new Room.RoomNotFoundException("Cette sortie n'existe pas.");
-
 
         this.setCurrentRoom(vNext);
 
@@ -309,5 +313,14 @@ public class Player {
      */
     public IntegerProperty getObservableMaxWeight() {
         return this.aMaxWeight;
+    }
+
+    /**
+     * Returns the timer used by the instance.
+     *
+     * @return The timer.
+     */
+    public Timer getTimer() {
+        return this.aTimer;
     }
 }

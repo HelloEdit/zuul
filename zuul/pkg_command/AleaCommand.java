@@ -1,6 +1,6 @@
 package zuul.pkg_command;
 
-import zuul.pkg_game.Engine;
+import zuul.pkg_game.GameEngine;
 import zuul.pkg_game.Player;
 import zuul.pkg_room.Room;
 import zuul.pkg_room.TransporterRoom;
@@ -20,13 +20,13 @@ public class AleaCommand extends Command {
     /**
      * Forces the exit of the current transporter room.
      *
-     * @param pEngine    The game engine.
+     * @param pGameEngine    The game engine.
      * @param pPlayer    The player using the command.
      * @param pInterface The user interface used by the game.
      * @throws UnsupportedOperationException If player is not using this command in a transporter room.
      */
     @Override
-    public void execute(Engine pEngine, Player pPlayer, UserInterface pInterface) throws UnsupportedOperationException {
+    public void execute(GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) throws UnsupportedOperationException {
         if (!this.hasSecondWord()) {
             pInterface.println("Vous devez spécifier la sortie forcée.");
 

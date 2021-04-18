@@ -3,5 +3,8 @@ go buckingham
 go south
 go south
 go down
-go voiture
+go ???
+go east
+go east
+go airlock
 go esiee

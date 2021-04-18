@@ -1,6 +1,6 @@
 package zuul.pkg_ui.pkg_console;
 
-import zuul.pkg_game.Engine;
+import zuul.pkg_game.GameEngine;
 import zuul.pkg_ui.UserInterface;
 
 import java.util.Scanner;
@@ -14,16 +14,17 @@ import java.util.Scanner;
 public class Console implements UserInterface {
     public static void play() {
         Console vConsole = new Console();
-        Engine vEngine = new Engine();
+        GameEngine vGameEngine = new GameEngine();
 
-        vEngine.setInterface(vConsole);
+        vGameEngine.setInterface(vConsole);
 
         Scanner vScanner = new Scanner(System.in);
 
-        do {
+        //noinspection InfiniteLoopStatement
+        while (true) {
             vConsole.print("> ");
-            vEngine.processCommand(vScanner.nextLine(), false);
-        } while (true);
+            vGameEngine.processCommand(vScanner.nextLine(), false);
+        }
     }
 
     @Override

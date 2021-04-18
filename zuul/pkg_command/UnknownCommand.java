@@ -1,6 +1,6 @@
 package zuul.pkg_command;
 
-import zuul.pkg_game.Engine;
+import zuul.pkg_game.GameEngine;
 import zuul.pkg_game.Player;
 import zuul.pkg_ui.UserInterface;
 
@@ -18,12 +18,12 @@ public class UnknownCommand extends Command {
     /**
      * Handles the behavior when a command entered by the user is not recognized.
      *
-     * @param pEngine    The game engine.
+     * @param pGameEngine    The game engine.
      * @param pPlayer    The player using the command.
      * @param pInterface The user interface used by the game.
      */
     @Override
-    public void execute(Engine pEngine, Player pPlayer, UserInterface pInterface) {
+    public void execute(GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) {
         pInterface.println("Commande inconnue.");
         pInterface.println("Les commandes suivantes sont disponibles:");
         pInterface.println("\t" + Parser.getCommandList());

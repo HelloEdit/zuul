@@ -52,6 +52,7 @@ public class CommandWords {
      * Finds the command object associated with a command name.
      *
      * @param pCommandWord The command name to look up.
+     * @param pTestMode true if testing mode is enabled, false otherwise.
      * @return The command object associated with the comme name or the unknown command
      * if the name is not found in the mapping.
      */

@@ -1,6 +1,6 @@
 package zuul.pkg_command;
 
-import zuul.pkg_game.Engine;
+import zuul.pkg_game.GameEngine;
 import zuul.pkg_game.Player;
 import zuul.pkg_item.Item;
 import zuul.pkg_personage.Personage;
@@ -21,14 +21,14 @@ public class LookCommand extends Command {
     /**
      * Gets specific information about an pkg_item or a pkg_personage.
      *
-     * @param pEngine    The pkg_game engine.
+     * @param pGameEngine    The pkg_game engine.
      * @param pPlayer    The player using the pkg_command.
      * @param pInterface The user interface used by the pkg_game.
      */
     @Override
-    public void execute(Engine pEngine, Player pPlayer, UserInterface pInterface) {
+    public void execute(GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) {
         if (!this.hasSecondWord()) {
-            pEngine.printLocationInfo();
+            pGameEngine.printLocationInfo();
             return;
         }
 

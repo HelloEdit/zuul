@@ -1,6 +1,6 @@
 package zuul.pkg_command;
 
-import zuul.pkg_game.Engine;
+import zuul.pkg_game.GameEngine;
 import zuul.pkg_game.Player;
 import zuul.pkg_game.Timer;
 import zuul.pkg_room.Room;
@@ -20,12 +20,12 @@ public class GoCommand extends Command {
     /**
      * Moves the player in another room by taking an available exit.
      *
-     * @param pEngine    The game engine.
+     * @param pGameEngine    The game engine.
      * @param pPlayer    The player using the command.
      * @param pInterface The user interface used by the game.
      */
     @Override
-    public void execute(Engine pEngine, Player pPlayer, UserInterface pInterface) throws Room.RoomNotFoundException, Timer.TimerLimitException {
+    public void execute(GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) throws Room.RoomNotFoundException, Timer.TimerLimitException {
         if (!this.hasSecondWord()) {
             pInterface.println("Cette direction est inconnue.");
             pInterface.printf("Vous pouvez aller : %s", pPlayer.getExitsDescription());
@@ -35,6 +35,6 @@ public class GoCommand extends Command {
 
         pPlayer.goToExit(this.getSecondWord());
 
-        pEngine.printLocationInfo();
+        pGameEngine.printLocationInfo();
     }
 }

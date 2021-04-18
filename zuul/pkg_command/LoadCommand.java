@@ -1,6 +1,6 @@
 package zuul.pkg_command;
 
-import zuul.pkg_game.Engine;
+import zuul.pkg_game.GameEngine;
 import zuul.pkg_game.Player;
 import zuul.pkg_item.Beamer;
 import zuul.pkg_item.Item;
@@ -15,7 +15,7 @@ public class LoadCommand extends Command {
     }
 
     @Override
-    public void execute(Engine pEngine, Player pPlayer, UserInterface pInterface) {
+    public void execute(GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) {
         if (!this.hasSecondWord()) {
             pInterface.println("Vous devez préciser l'objet à charger.");
             return;

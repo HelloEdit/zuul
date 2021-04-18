@@ -1,6 +1,6 @@
 package zuul.pkg_command;
 
-import zuul.pkg_game.Engine;
+import zuul.pkg_game.GameEngine;
 import zuul.pkg_game.Player;
 import zuul.pkg_item.Item;
 import zuul.pkg_ui.UserInterface;
@@ -19,12 +19,12 @@ public class ItemCommand extends Command {
     /**
      * Shows the description of a specific item, or of the whole inventory.
      *
-     * @param pEngine    The game engine.
+     * @param pGameEngine    The game engine.
      * @param pPlayer    The player using the command.
      * @param pInterface The user interface used by the game.
      */
     @Override
-    public void execute(Engine pEngine, Player pPlayer, UserInterface pInterface) {
+    public void execute(GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) {
         if (!this.hasSecondWord()) {
             Item vItem = pPlayer.getItem(this.getSecondWord());
 

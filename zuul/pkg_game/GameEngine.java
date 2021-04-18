@@ -20,7 +20,7 @@ import zuul.pkg_ui.UserInterface;
  * @author Corentin POUPRY
  * @version 06.04.21
  */
-public class Engine {
+public class GameEngine {
     /**
      * All the rooms created for the game.
      */
@@ -39,7 +39,7 @@ public class Engine {
     /**
      * Creates a new engine for the game.
      */
-    public Engine() {
+    public GameEngine() {
         this.aRandomizer = new RoomRandomizer();
         this.aPlayer = new Player();
 
@@ -79,7 +79,7 @@ public class Engine {
 
         // Star Trek Universe
         Room vStorage = new Room("entrepôt", "une salle dédiée au stockage pour le vaisseau");
-        vStorage.addItem(new Beamer());
+        vStorage.addItem(new Beamer("beamer"));
 
         Room vCorridor = new Room("couloir", "un couloir normal");
         vCorridor.addItem("tournevis", "un tournevis", 10);
@@ -177,6 +177,11 @@ public class Engine {
         } catch (Exception pError) {
             // a non-fatal error occurred.
             this.aInterface.println(pError.getMessage());
+        }
+
+        Timer vTimer = this.aPlayer.getTimer();
+        if (vTimer.isEnabled()) {
+            this.aInterface.println(vTimer.getRemainingDescription());
         }
 
         this.aInterface.println();

@@ -1,13 +1,13 @@
 package zuul.pkg_game;
 
 /**
- * This class represents a movement constraint based on an internal counter.
+ * This class represents a movement constraint based on an internal timer.
  */
 public class Timer {
     /**
-     * The internal counter.
+     * The remaining moves of timer.
      */
-    private int aCounter;
+    private int aRemainingMoves;
 
     /**
      * If the instance is activated or not.
@@ -18,34 +18,73 @@ public class Timer {
      * Creates a new disabled Timer.
      */
     public Timer() {
-        this.aCounter = 0;
-        this.aDisabled = true;
+        this(0, true);
     }
 
     /**
-     * Indicates that a new action has taken place & decrement the internal counter.
+     * Creates a new timer.
+     *
+     * @param pRemainingMoves The remaining moves that can be made.
+     * @param pDisabled If the counter is disabled.
+     */
+    public Timer(final int pRemainingMoves, final boolean pDisabled) {
+        this.aRemainingMoves = pRemainingMoves;
+        this.aDisabled = pDisabled;
+    }
+
+    /**
+     * Indicates that a new action has taken place and decrement the internal timer.
      *
      * @throws TimerLimitException If the timer does not allow any more actions.
      */
     public void action() throws TimerLimitException {
         if (this.aDisabled) return;
 
-        if (this.aCounter <= 0) throw new TimerLimitException();
+        this.aRemainingMoves -= 1;
+
+        if (this.aRemainingMoves < 1) throw new TimerLimitException();
     }
 
     /**
-     * Sets the new internal counter.
+     * Sets the new remaining moves for the timer.
      *
-     * @param pCounter The new counter.
+     * @param pRemainingMoves The new remaining of moves..
      */
-    public void setCounter(final int pCounter) {
-        this.aCounter = pCounter;
+    public void setRemainingMoves(final int pRemainingMoves) {
+        this.aRemainingMoves = pRemainingMoves;
     }
 
     /**
-     * Sets the activation state of the counter.
+     * Gets the remaining moves.
      *
-     * @param pDisabled true if the counter is disabled, false otherwise.
+     * @return The remaining moves
+     */
+    public String getRemainingDescription() {
+        switch (this.aRemainingMoves) {
+            case 0:
+                return "Aucun mouvement restant.";
+
+            case 1:
+                return "Un seul mouvement restant.";
+
+            default:
+                return String.format("Il vous reste %d mouvements.", this.aRemainingMoves);
+        }
+    }
+
+    /**
+     * Gets the state of the timer.
+     *
+     * @return true if the timer is enabled.
+     */
+    public boolean isEnabled() {
+        return !this.aDisabled;
+    }
+
+    /**
+     * Sets the activation state of the timer.
+     *
+     * @param pDisabled true if the timer is disabled, false otherwise.
      */
     public void setDisabled(final boolean pDisabled) {
         this.aDisabled = pDisabled;

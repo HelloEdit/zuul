@@ -1,6 +1,6 @@
 package zuul.pkg_command;
 
-import zuul.pkg_game.Engine;
+import zuul.pkg_game.GameEngine;
 import zuul.pkg_game.Player;
 import zuul.pkg_ui.UserInterface;
 
@@ -82,12 +82,12 @@ public abstract class Command {
     /**
      * Execute the command.
      *
-     * @param pEngine    The game engine.
+     * @param pGameEngine    The game engine.
      * @param pPlayer    The player using the command.
      * @param pInterface The user interface used by the game.
      * @throws Exception If the command execution fail.
      */
-    public abstract void execute(final Engine pEngine, final Player pPlayer, final UserInterface pInterface) throws Exception;
+    public abstract void execute(final GameEngine pGameEngine, final Player pPlayer, final UserInterface pInterface) throws Exception;
 
     /**
      * Gets the command name.
