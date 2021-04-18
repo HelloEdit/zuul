@@ -25,7 +25,7 @@ public class Timer {
      * Creates a new timer.
      *
      * @param pRemainingMoves The remaining moves that can be made.
-     * @param pDisabled If the counter is disabled.
+     * @param pDisabled       If the counter is disabled.
      */
     public Timer(final int pRemainingMoves, final boolean pDisabled) {
         this.aRemainingMoves = pRemainingMoves;

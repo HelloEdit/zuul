@@ -18,9 +18,9 @@ public class QuitCommand extends Command {
     /**
      * Quits the game.
      *
-     * @param pGameEngine    The game engine.
-     * @param pPlayer    The player using the command.
-     * @param pInterface The user interface used by the game.
+     * @param pGameEngine The game engine.
+     * @param pPlayer     The player using the command.
+     * @param pInterface  The user interface used by the game.
      */
     @Override
     public void execute(GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) {

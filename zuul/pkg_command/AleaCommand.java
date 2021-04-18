@@ -20,9 +20,9 @@ public class AleaCommand extends Command {
     /**
      * Forces the exit of the current transporter room.
      *
-     * @param pGameEngine    The game engine.
-     * @param pPlayer    The player using the command.
-     * @param pInterface The user interface used by the game.
+     * @param pGameEngine The game engine.
+     * @param pPlayer     The player using the command.
+     * @param pInterface  The user interface used by the game.
      * @throws UnsupportedOperationException If player is not using this command in a transporter room.
      */
     @Override

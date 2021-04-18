@@ -23,9 +23,9 @@ public class Cookie extends Item {
     /**
      * Uses the cookie and modify the maximum weight that the player can carry.
      *
-     * @param pGameEngine    The game engine.
-     * @param pPlayer    The player using the command.
-     * @param pInterface The user interface used by the game.
+     * @param pGameEngine The game engine.
+     * @param pPlayer     The player using the command.
+     * @param pInterface  The user interface used by the game.
      */
     @Override
     public void use(final GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) {

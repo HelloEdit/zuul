@@ -19,6 +19,7 @@ public class Beamer extends Item {
 
     /**
      * Creates the beamer item.
+     *
      * @param pName Name of the beamer.
      */
     public Beamer(final String pName) {
@@ -28,9 +29,9 @@ public class Beamer extends Item {
     /**
      * Use the beamer, once to charge it and once to fire it.
      *
-     * @param pGameEngine    The game engine.
-     * @param pPlayer    The player using the command.
-     * @param pInterface The user interface used by the game.
+     * @param pGameEngine The game engine.
+     * @param pPlayer     The player using the command.
+     * @param pInterface  The user interface used by the game.
      */
     @Override
     public void use(final GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) {

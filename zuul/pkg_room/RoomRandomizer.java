@@ -44,7 +44,7 @@ public class RoomRandomizer {
      *
      * @param pRooms The rooms to be added
      */
-    public void addAll(final Room ...pRooms) {
+    public void addAll(final Room... pRooms) {
         for (Room room : pRooms) this.add(room);
     }
 

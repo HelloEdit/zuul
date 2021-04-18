@@ -21,9 +21,9 @@ public class LookCommand extends Command {
     /**
      * Gets specific information about an pkg_item or a pkg_personage.
      *
-     * @param pGameEngine    The pkg_game engine.
-     * @param pPlayer    The player using the pkg_command.
-     * @param pInterface The user interface used by the pkg_game.
+     * @param pGameEngine The pkg_game engine.
+     * @param pPlayer     The player using the pkg_command.
+     * @param pInterface  The user interface used by the pkg_game.
      */
     @Override
     public void execute(GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) {

@@ -19,9 +19,9 @@ public class ItemCommand extends Command {
     /**
      * Shows the description of a specific item, or of the whole inventory.
      *
-     * @param pGameEngine    The game engine.
-     * @param pPlayer    The player using the command.
-     * @param pInterface The user interface used by the game.
+     * @param pGameEngine The game engine.
+     * @param pPlayer     The player using the command.
+     * @param pInterface  The user interface used by the game.
      */
     @Override
     public void execute(GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) {

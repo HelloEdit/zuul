@@ -67,7 +67,7 @@ public class Player {
      * Goes back to the previous room.
      *
      * @return The previous room.
-     * @throws EmptyStackException If there is no previous room.
+     * @throws EmptyStackException       If there is no previous room.
      * @throws Timer.TimerLimitException If the timer has expired.
      */
     public Room toPreviousRoom() throws EmptyStackException, Timer.TimerLimitException {
@@ -256,15 +256,6 @@ public class Player {
     }
 
     /**
-     * Sets a new timer.
-     *
-     * @param pTimer The timer to be used.
-     */
-    public void setTimer(final Timer pTimer) {
-        this.aTimer = pTimer;
-    }
-
-    /**
      * Sets the new current room where the player will be.
      *
      * @param pRoom The new current room.
@@ -274,9 +265,6 @@ public class Player {
         this.aCurrentRoom.set(pRoom);
     }
 
-    // Notes: These methods were created to make the JavaFX interface responsive. They are not meant to be
-    // called in any other context. To respect the encapsulation, you must use the usual getters.
-
     /**
      * Gets the observable inventory of the player
      *
@@ -285,6 +273,9 @@ public class Player {
     public ObservableMap<String, Item> getObservableInventory() {
         return this.aInventory.getObservableItems();
     }
+
+    // Notes: These methods were created to make the JavaFX interface responsive. They are not meant to be
+    // called in any other context. To respect the encapsulation, you must use the usual getters.
 
     /**
      * Gets the observable object for the room were the player is.
@@ -322,5 +313,14 @@ public class Player {
      */
     public Timer getTimer() {
         return this.aTimer;
+    }
+
+    /**
+     * Sets a new timer.
+     *
+     * @param pTimer The timer to be used.
+     */
+    public void setTimer(final Timer pTimer) {
+        this.aTimer = pTimer;
     }
 }

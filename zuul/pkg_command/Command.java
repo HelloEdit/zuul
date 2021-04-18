@@ -82,9 +82,9 @@ public abstract class Command {
     /**
      * Execute the command.
      *
-     * @param pGameEngine    The game engine.
-     * @param pPlayer    The player using the command.
-     * @param pInterface The user interface used by the game.
+     * @param pGameEngine The game engine.
+     * @param pPlayer     The player using the command.
+     * @param pInterface  The user interface used by the game.
      * @throws Exception If the command execution fail.
      */
     public abstract void execute(final GameEngine pGameEngine, final Player pPlayer, final UserInterface pInterface) throws Exception;

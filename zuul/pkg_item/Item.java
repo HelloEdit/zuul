@@ -43,9 +43,9 @@ public class Item {
     /**
      * Uses the current item.
      *
-     * @param pGameEngine    The game engine.
-     * @param pPlayer    The player using the command.
-     * @param pInterface The user interface used by the game.
+     * @param pGameEngine The game engine.
+     * @param pPlayer     The player using the command.
+     * @param pInterface  The user interface used by the game.
      */
     public void use(final GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) {
         throw new UnsupportedOperationException("Cet objet ne peut pas être utilisé.");
