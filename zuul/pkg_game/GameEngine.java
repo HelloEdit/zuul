@@ -22,11 +22,6 @@ import zuul.pkg_ui.UserInterface;
  */
 public class GameEngine {
     /**
-     * All the rooms created for the game.
-     */
-    private final RoomRandomizer aRandomizer;
-
-    /**
      * The player playing the game.
      */
     private final Player aPlayer;
@@ -40,7 +35,6 @@ public class GameEngine {
      * Creates a new engine for the game.
      */
     public GameEngine() {
-        this.aRandomizer = new RoomRandomizer();
         this.aPlayer = new Player();
 
         this.createRooms();
@@ -90,8 +84,10 @@ public class GameEngine {
         vMess.addItem("assiette", "une assiette malheureusement vide", 10);
         vMess.addItem("chaise", "une chaise pour se reposer", 40);
 
-        Room vTransporter = new TransporterRoom(this.aRandomizer);
-        this.aRandomizer.addAll(vStorage, vCorridor, vMess, vBridge);
+        RoomRandomizer vRandomizer = new RoomRandomizer();
+        vRandomizer.addAll(vStorage, vCorridor, vMess, vBridge);
+
+        Room vTransporter = new TransporterRoom(vRandomizer);
 
         // ESIEE Universe
         Room vEsiee = new Room("salle de l'ESIEE", "mais... c'est là où vous avez lancé ce jeu");
