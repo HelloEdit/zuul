@@ -27,18 +27,23 @@ public class AleaCommand extends Command {
      */
     @Override
     public void execute(GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) throws UnsupportedOperationException {
+        Room vRoom = pPlayer.getRoom();
+
+        if (!(vRoom instanceof TransporterRoom)) {
+            throw new UnsupportedOperationException("alea ne peut être utilisé uniquement que dans un transporter.");
+        }
+
+        TransporterRoom vTransporter = (TransporterRoom) vRoom;
+
         if (!this.hasSecondWord()) {
-            pInterface.println("Vous devez spécifier la sortie forcée.");
+            vTransporter.setForcedExit(null);
+
+            pInterface.printf("La prochaine sortie de %s sera aléatoire !");
+            pInterface.println();
 
             return;
         }
 
-        Room vRoom = pPlayer.getRoom();
-
-        if (!(vRoom instanceof TransporterRoom))
-            throw new UnsupportedOperationException("alea ne peut être utilisé uniquement que dans un transporter.");
-
-        TransporterRoom vTransporter = (TransporterRoom) vRoom;
         vTransporter.setForcedExit(this.getSecondWord());
 
         pInterface.printf("Sortie de %s mise sur %s.", vRoom.getName(), this.getSecondWord());
