@@ -5,7 +5,6 @@ import zuul.pkg_command.Parser;
 import zuul.pkg_item.Beamer;
 import zuul.pkg_item.Cookie;
 import zuul.pkg_room.Room;
-import zuul.pkg_room.RoomRandomizer;
 import zuul.pkg_room.TransporterRoom;
 import zuul.pkg_ui.UserInterface;
 
@@ -84,10 +83,8 @@ public class GameEngine {
         vMess.addItem("assiette", "une assiette malheureusement vide", 10);
         vMess.addItem("chaise", "une chaise pour se reposer", 40);
 
-        RoomRandomizer vRandomizer = new RoomRandomizer();
-        vRandomizer.addAll(vStorage, vCorridor, vMess, vBridge);
-
-        Room vTransporter = new TransporterRoom(vRandomizer);
+        TransporterRoom vTransporter = new TransporterRoom("Téléporteur", "vous téléporte dans le vaisseau");
+        vTransporter.addAll(vStorage, vCorridor, vMess, vBridge);
 
         // ESIEE Universe
         Room vEsiee = new Room("salle de l'ESIEE", "mais... c'est là où vous avez lancé ce jeu");

@@ -11,6 +11,9 @@ import zuul.pkg_ui.UserInterface;
  * @version 06.04.21
  */
 public class Cookie extends Item {
+    /**
+     * Weight added by the cookie.
+     */
     public final static int WEIGHT_ADDED = 10;
 
     /**

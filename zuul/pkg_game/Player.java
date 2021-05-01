@@ -266,6 +266,24 @@ public class Player {
     }
 
     /**
+     * Returns the timer used by the instance.
+     *
+     * @return The timer.
+     */
+    public Timer getTimer() {
+        return this.aTimer;
+    }
+
+    /**
+     * Sets a new timer.
+     *
+     * @param pTimer The timer to be used.
+     */
+    public void setTimer(final Timer pTimer) {
+        this.aTimer = pTimer;
+    }
+
+    /**
      * Gets the observable inventory of the player
      *
      * @return Observable inventory.
@@ -304,23 +322,5 @@ public class Player {
      */
     public IntegerProperty getObservableMaxWeight() {
         return this.aMaxWeight;
-    }
-
-    /**
-     * Returns the timer used by the instance.
-     *
-     * @return The timer.
-     */
-    public Timer getTimer() {
-        return this.aTimer;
-    }
-
-    /**
-     * Sets a new timer.
-     *
-     * @param pTimer The timer to be used.
-     */
-    public void setTimer(final Timer pTimer) {
-        this.aTimer = pTimer;
     }
 }
