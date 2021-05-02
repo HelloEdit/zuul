@@ -17,6 +17,12 @@ public class TransporterRoom extends Room {
      */
     private String aForcedExit;
 
+    /**
+     * Creates a new transporter room.
+     *
+     * @param pName        Name of the transporter room.
+     * @param pDescription Description of the transporter room.
+     */
     public TransporterRoom(final String pName, final String pDescription) {
         super(pName, pDescription);
 
@@ -37,7 +43,7 @@ public class TransporterRoom extends Room {
      *
      * @param pRooms Rooms to be added as possible destinations.
      */
-    public void addAll(Room ...pRooms) {
+    public void addAll(Room... pRooms) {
         this.aRandomizer.addAll(pRooms);
     }
 

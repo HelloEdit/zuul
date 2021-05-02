@@ -2,6 +2,9 @@ package zuul.pkg_game;
 
 /**
  * This class represents a movement constraint based on an internal timer.
+ *
+ * @author Corentin POUPRY
+ * @version 06.04.21
  */
 public class Timer {
     /**
@@ -33,11 +36,11 @@ public class Timer {
     }
 
     /**
-     * Indicates that a new action has taken place and decrement the internal timer.
+     * Indicates that a new tick has taken place and decrement the internal timer.
      *
      * @throws TimerLimitException If the timer does not allow any more actions.
      */
-    public void action() throws TimerLimitException {
+    public void tick() throws TimerLimitException {
         if (this.aDisabled) return;
 
         this.aRemainingMoves -= 1;

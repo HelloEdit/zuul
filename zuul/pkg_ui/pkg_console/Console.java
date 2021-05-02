@@ -28,6 +28,15 @@ public class Console implements UserInterface {
     }
 
     @Override
+    public String ask(String title, String question) {
+        Scanner vScanner = new Scanner(System.in);
+
+        this.printf("[Zuul] > %s.", question);
+
+        return vScanner.nextLine();
+    }
+
+    @Override
     public void print(String s) {
         System.out.print(s);
     }

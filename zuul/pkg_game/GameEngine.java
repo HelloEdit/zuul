@@ -1,5 +1,6 @@
 package zuul.pkg_game;
 
+import zuul.Utils;
 import zuul.pkg_command.Command;
 import zuul.pkg_command.Parser;
 import zuul.pkg_item.Beamer;
@@ -143,6 +144,13 @@ public class GameEngine {
                 "\t| |    | || (_| || | | ||  __/| |_   \\ V  V / | (_| || |   \\__ \\\n" +
                 "\t\\_|    |_| \\__,_||_| |_| \\___| \\__|   \\_/\\_/   \\__,_||_|   |___/\n\n"
         );
+
+        String vName = this.aInterface.ask("Nom du joueur", "Veuillez vous présenter.");
+        if (!Utils.isCorrectString(vName)) {
+            throw new IllegalArgumentException("Le nom ne peut pas être utilisé.");
+        }
+
+        this.aPlayer.setName(vName);
 
         this.printLocationInfo();
         this.aInterface.println();

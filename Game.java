@@ -13,14 +13,19 @@ import java.util.Scanner;
  *   <li>Console</li>
  *   <li>JavaFX</li>
  * </ul>
- *
+ * <p>
  * And any others interfaces that implements UserInterface.
  *
- * @see zuul.pkg_ui.UserInterface
  * @author Corentin POUPRY
  * @version 06.04.21
+ * @see zuul.pkg_ui.UserInterface
  */
 public class Game {
+    /**
+     * Main entry point of the Zuul game.
+     *
+     * @param args Args of the java program.
+     */
     public static void main(String[] args) {
         System.out.println("Which interface do you want to use?");
         System.out.println("[1] JavaFX");
@@ -70,7 +75,8 @@ public class Game {
         long vStart = System.currentTimeMillis();
 
         //noinspection StatementWithEmptyBody
-        for (int i = 1; i <= 100; i++) {}
+        for (int i = 1; i <= 100; i++) {
+        }
 
         long vEnd = System.currentTimeMillis();
         System.out.printf("From 1 to 100 in %dms.", vEnd - vStart);

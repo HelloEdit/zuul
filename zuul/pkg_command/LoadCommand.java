@@ -8,6 +8,9 @@ import zuul.pkg_ui.UserInterface;
 
 /**
  * Handles the charge command.
+ *
+ * @author Corentin POUPRY
+ * @version 06.04.21
  */
 public class LoadCommand extends Command {
     public LoadCommand() {

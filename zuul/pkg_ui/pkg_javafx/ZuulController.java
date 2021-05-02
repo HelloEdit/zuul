@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.binding.StringBinding;
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
@@ -14,13 +15,14 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import zuul.Utils;
 import zuul.pkg_game.GameEngine;
 import zuul.pkg_game.Player;
 import zuul.pkg_item.Item;
 import zuul.pkg_ui.UserInterface;
+
+import java.util.Optional;
 
 /**
  * This class is the controller of our JavaFX view.
@@ -129,7 +131,6 @@ public class ZuulController implements UserInterface {
     @FXML
     private void initialize() {
         this.gameEngine = new GameEngine();
-        this.gameEngine.setInterface(this);
 
         Player vPlayer = this.gameEngine.getPlayer();
 
@@ -189,6 +190,20 @@ public class ZuulController implements UserInterface {
         };
 
         vItemList.addListener(inventoryListener);
+
+        this.gameEngine.setInterface(this);
+    }
+
+    @Override
+    public String ask(String title, String question) {
+        TextInputDialog dialog = new TextInputDialog();
+
+        dialog.setTitle(title);
+        dialog.setHeaderText(question);
+        dialog.setContentText("Votre réponse :");
+
+        Optional<String> result = dialog.showAndWait();
+        return result.orElse(null);
     }
 
     /**
@@ -244,16 +259,16 @@ public class ZuulController implements UserInterface {
         Stage vStage = new Stage();
         vStage.setTitle("Image");
 
-        Image vImage = this.placeImage.getImage();
-        ImageView vView = new ImageView(vImage);
+        ObjectProperty<Image> vImage = this.placeImage.imageProperty();
+        ImageView vView = new ImageView();
+        vView.imageProperty().bind(vImage);
 
         BorderPane vPane = new BorderPane();
         vPane.setCenter(vView);
 
-        Scene vScene = new Scene(vPane, vImage.getWidth(), vImage.getHeight());
+        Scene vScene = new Scene(vPane);
         vStage.setScene(vScene);
 
-        vStage.initModality(Modality.WINDOW_MODAL);
         vStage.initOwner(this.placeImage.getScene().getWindow());
         vStage.setResizable(false);
 
