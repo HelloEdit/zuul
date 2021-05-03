@@ -12,6 +12,9 @@ import java.util.Scanner;
  * @version 06.04.21
  */
 public class Console implements UserInterface {
+    /**
+     * Launches the Console interface.
+     */
     public static void play() {
         Console vConsole = new Console();
         GameEngine vGameEngine = new GameEngine();
@@ -31,7 +34,8 @@ public class Console implements UserInterface {
     public String ask(String title, String question) {
         Scanner vScanner = new Scanner(System.in);
 
-        this.printf("[Zuul] > %s.", question);
+        this.printf("[Zuul] > %s.%n", question);
+        this.print("> ");
 
         return vScanner.nextLine();
     }
