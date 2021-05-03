@@ -1,5 +1,8 @@
 package zuul.pkg_personage;
 
+import zuul.pkg_game.Player;
+import zuul.pkg_ui.UserInterface;
+
 /**
  * This class is intended to represent a personage of the game.
  *
@@ -26,6 +29,16 @@ public class Personage {
     public Personage(final String aName, final String aDescription) {
         this.aName = aName;
         this.aDescription = aDescription;
+    }
+
+    /**
+     * Allows you to talk with a personage.
+     *
+     * @param pInterface GUI of the game.
+     * @param pPlayer    Player that want to talk with the personage.
+     */
+    public void dialogWith(final UserInterface pInterface, final Player pPlayer) {
+        pInterface.println("Excusez-moi mais je n'ai rien à vous dire...");
     }
 
     /**

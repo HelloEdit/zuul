@@ -36,7 +36,7 @@ public class RoomRandomizer {
      * @param pRoom The room to be added.
      */
     public void add(final Room pRoom) {
-        this.aRooms.put(pRoom.getName(), pRoom);
+        this.aRooms.put(pRoom.getName().toLowerCase(), pRoom);
     }
 
     /**
@@ -73,5 +73,14 @@ public class RoomRandomizer {
                 .skip(this.aRandom.nextInt(vSize))
                 .findFirst()
                 .orElse(null);
+    }
+
+    /**
+     * Gets the number of possible rooms.
+     *
+     * @return The number of possibilities.
+     */
+    public int size() {
+        return this.aRooms.size();
     }
 }

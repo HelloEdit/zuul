@@ -9,6 +9,15 @@ package zuul.pkg_ui;
  */
 public interface UserInterface {
     /**
+     * Asks a question to the user throughout the GUI.
+     *
+     * @param title    The question title.
+     * @param question The question asked.
+     * @return The answer of the user.
+     */
+    String ask(String title, String question);
+
+    /**
      * Prints a string.
      *
      * @param s The String to be printed

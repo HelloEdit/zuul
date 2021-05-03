@@ -1,11 +1,11 @@
 package zuul.pkg_game;
 
+import zuul.Utils;
 import zuul.pkg_command.Command;
 import zuul.pkg_command.Parser;
 import zuul.pkg_item.Beamer;
 import zuul.pkg_item.Cookie;
 import zuul.pkg_room.Room;
-import zuul.pkg_room.RoomRandomizer;
 import zuul.pkg_room.TransporterRoom;
 import zuul.pkg_ui.UserInterface;
 
@@ -84,10 +84,8 @@ public class GameEngine {
         vMess.addItem("assiette", "une assiette malheureusement vide", 10);
         vMess.addItem("chaise", "une chaise pour se reposer", 40);
 
-        RoomRandomizer vRandomizer = new RoomRandomizer();
-        vRandomizer.addAll(vStorage, vCorridor, vMess, vBridge);
-
-        Room vTransporter = new TransporterRoom(vRandomizer);
+        TransporterRoom vTransporter = new TransporterRoom("Téléporteur", "vous téléporte dans le vaisseau");
+        vTransporter.addAll(vStorage, vCorridor, vMess, vBridge);
 
         // ESIEE Universe
         Room vEsiee = new Room("salle de l'ESIEE", "mais... c'est là où vous avez lancé ce jeu");
@@ -146,6 +144,13 @@ public class GameEngine {
                 "\t| |    | || (_| || | | ||  __/| |_   \\ V  V / | (_| || |   \\__ \\\n" +
                 "\t\\_|    |_| \\__,_||_| |_| \\___| \\__|   \\_/\\_/   \\__,_||_|   |___/\n\n"
         );
+
+        String vName = this.aInterface.ask("Nom du joueur", "Veuillez vous présenter.");
+        if (!Utils.isCorrectString(vName)) {
+            throw new IllegalArgumentException("Le nom ne peut pas être utilisé.");
+        }
+
+        this.aPlayer.setName(vName);
 
         this.printLocationInfo();
         this.aInterface.println();

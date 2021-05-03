@@ -6,7 +6,7 @@ go down
 go ???
 go east
 go south
-alea Cantine
+alea cantine
 go random
 go south
 go east

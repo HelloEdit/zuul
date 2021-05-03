@@ -61,4 +61,49 @@ public class Beamer extends Item {
 
         this.aSavedLocation = pRoom;
     }
+
+    /**
+     * Gets the beamer state.
+     *
+     * @return The beamer state.
+     */
+    public BeamerState getState() {
+        return this.aSavedLocation == null
+                ? BeamerState.NOT_LOADED
+                : BeamerState.LOADED;
+    }
+
+    /**
+     * Represents the state of the beamer.
+     */
+    public enum BeamerState {
+        /**
+         * The beamer has a registered destination.
+         */
+        LOADED("chargé"),
+
+        /**
+         * The beamer is not yet loaded with a destination.
+         */
+        NOT_LOADED("déchargé");
+
+        /**
+         * The state description.
+         */
+        final String aState;
+
+        /**
+         * Creates a new state for the beamer.
+         *
+         * @param pState The state description string.
+         */
+        BeamerState(final String pState) {
+            this.aState = pState;
+        }
+
+        @Override
+        public String toString() {
+            return this.aState;
+        }
+    }
 }

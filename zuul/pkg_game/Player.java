@@ -45,6 +45,11 @@ public class Player {
     private final ObjectProperty<Room> aCurrentRoom;
 
     /**
+     * Name of the player.
+     */
+    private String aName;
+
+    /**
      * Remaining movements to the player.
      * negative number if the movements are unlimited.
      */
@@ -74,7 +79,7 @@ public class Player {
         Room vPrevious = this.aPreviousRooms.pop();
         this.aCurrentRoom.set(vPrevious);
 
-        this.aTimer.action();
+        this.aTimer.tick();
 
         return vPrevious;
     }
@@ -101,8 +106,8 @@ public class Player {
 
         this.setCurrentRoom(vNext);
 
-        // tells the timer that the player is doing an action
-        this.aTimer.action();
+        // tells the timer that the player is doing an tick
+        this.aTimer.tick();
 
         // check if the door was a trapdoor
         if (!vNext.hasExit(vCurrent)) {
@@ -153,11 +158,9 @@ public class Player {
         Room vCurrentRoom = this.aCurrentRoom.get();
         if (vCurrentRoom == null) throw new Item.CannotManageItemException("Aucune salle dans laquelle poser l'objet.");
 
-        // remove the item from the player inventory...
         Item vItem = this.deleteItem(pItemName);
         if (vItem == null) throw new Item.CannotManageItemException("Vous ne possédez pas cet item.");
 
-        // ...and add it to the room
         vCurrentRoom.addItem(vItem);
 
         return vItem;
@@ -170,11 +173,9 @@ public class Player {
      * @return The item deleted.
      */
     public Item deleteItem(String pItemName) {
-        // remove the item from the player inventory...
         Item vItem = this.aInventory.removeItem(pItemName);
         if (vItem == null) return null;
 
-        // subtract the item weight to the inventory
         this.aWeight.set(this.aWeight.get() - vItem.getWeight());
 
         return vItem;
@@ -196,7 +197,7 @@ public class Player {
      * @return The description of possibles exits.
      */
     public String getExitsDescription() {
-        return "Vous pouvez aller : " + this.aCurrentRoom.get().getExitString() + ".";
+        return String.format("Vous pouvez aller : %s.", this.aCurrentRoom.get().getExitString());
     }
 
     /**
@@ -266,6 +267,33 @@ public class Player {
     }
 
     /**
+     * Sets the name of the player.
+     *
+     * @param vName The name.
+     */
+    public void setName(String vName) {
+        this.aName = vName;
+    }
+
+    /**
+     * Returns the timer used by the instance.
+     *
+     * @return The timer.
+     */
+    public Timer getTimer() {
+        return this.aTimer;
+    }
+
+    /**
+     * Sets a new timer.
+     *
+     * @param pTimer The timer to be used.
+     */
+    public void setTimer(final Timer pTimer) {
+        this.aTimer = pTimer;
+    }
+
+    /**
      * Gets the observable inventory of the player
      *
      * @return Observable inventory.
@@ -304,23 +332,5 @@ public class Player {
      */
     public IntegerProperty getObservableMaxWeight() {
         return this.aMaxWeight;
-    }
-
-    /**
-     * Returns the timer used by the instance.
-     *
-     * @return The timer.
-     */
-    public Timer getTimer() {
-        return this.aTimer;
-    }
-
-    /**
-     * Sets a new timer.
-     *
-     * @param pTimer The timer to be used.
-     */
-    public void setTimer(final Timer pTimer) {
-        this.aTimer = pTimer;
     }
 }

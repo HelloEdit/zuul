@@ -6,12 +6,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.net.URL;
+import java.util.Objects;
+
 /**
  * This class is responsible for initializing the JavaFX thread as well as
  * correctly setting up the main game window and launching the controller.
  *
  * @author Corentin POUPRY
  * @version 06.04.21
+ * @see zuul.pkg_ui.UserInterface
  */
 public class JavaFX extends Application {
     public static void play() {
@@ -28,7 +32,10 @@ public class JavaFX extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(JavaFX.class.getResource("zuul.fxml"));
+        URL vRessource = JavaFX.class.getResource("zuul.fxml");
+        Objects.requireNonNull(vRessource, "zuul.fxml is not found");
+
+        Parent root = FXMLLoader.load(vRessource);
         primaryStage.setScene(new Scene(root, 1050, 500));
 
         primaryStage.setMinHeight(500);

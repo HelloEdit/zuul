@@ -21,6 +21,11 @@ import java.util.Scanner;
  * @see zuul.pkg_ui.UserInterface
  */
 public class Game {
+    /**
+     * Main entry point of the Zuul game.
+     *
+     * @param args Args of the java program.
+     */
     public static void main(String[] args) {
         System.out.println("Which interface do you want to use?");
         System.out.println("[1] JavaFX");
