@@ -5,6 +5,8 @@ import zuul.pkg_command.Command;
 import zuul.pkg_command.Parser;
 import zuul.pkg_item.Beamer;
 import zuul.pkg_item.Cookie;
+import zuul.pkg_personage.MovingPersonage;
+import zuul.pkg_personage.TechnicianPersonage;
 import zuul.pkg_room.Room;
 import zuul.pkg_room.TransporterRoom;
 import zuul.pkg_ui.UserInterface;
@@ -84,8 +86,13 @@ public class GameEngine {
         vMess.addItem("assiette", "une assiette malheureusement vide", 10);
         vMess.addItem("chaise", "une chaise pour se reposer", 40);
 
-        TransporterRoom vTransporter = new TransporterRoom("Téléporteur", "vous téléporte dans le vaisseau");
+        TransporterRoom vTransporter = new TransporterRoom("téléporteur", "vous téléporte dans le vaisseau");
         vTransporter.addAll(vStorage, vCorridor, vMess, vBridge);
+
+        MovingPersonage vTechnician = new TechnicianPersonage();
+        vTechnician.addRooms(vTransporter, vMess, vCorridor, vStorage);
+
+        vStorage.addPersonage(vTechnician);
 
         // ESIEE Universe
         Room vEsiee = new Room("salle de l'ESIEE", "mais... c'est là où vous avez lancé ce jeu");
@@ -93,43 +100,44 @@ public class GameEngine {
 
         // Setting up the "paths" between rooms
 
-        vEsiee.setExit("east", vCar);
+        vEsiee.addExit("east", vCar);
 
-        vOffice.setExit("east", vCar);
+        vOffice.addExit("east", vCar);
+        vOffice.addPersonage("test", "un simple test");
 
-        vCar.setExit("bureau", vOffice);
-        vCar.setExit("esiee", vEsiee);
-        vCar.setExit("buckingham", vGreatStair);
+        vCar.addExit("bureau", vOffice);
+        vCar.addExit("esiee", vEsiee);
+        vCar.addExit("buckingham", vGreatStair);
 
-        vGreatStair.setExit("east", vTerrace);
-        vGreatStair.setExit("south", vReception);
+        vGreatStair.addExit("east", vTerrace);
+        vGreatStair.addExit("south", vReception);
         vGreatStair.addPersonage("garde", "un garde royal en poste.");
 
-        vTerrace.setExit("west", vGreatStair);
+        vTerrace.addExit("west", vGreatStair);
 
-        vReception.setExit("north", vGreatStair);
-        vReception.setExit("top", vAppartements);
-        vReception.setExit("south", vKitchen);
+        vReception.addExit("north", vGreatStair);
+        vReception.addExit("top", vAppartements);
+        vReception.addExit("south", vKitchen);
 
-        vAppartements.setExit("down", vReception);
+        vAppartements.addExit("down", vReception);
 
-        vKitchen.setExit("north", vReception);
-        vKitchen.setExit("down", vCave);
+        vKitchen.addExit("north", vReception);
+        vKitchen.addExit("down", vCave);
 
-        vCave.setExit("???", vStorage);
+        vCave.addExit("???", vStorage);
 
-        vStorage.setExit("east", vCorridor);
+        vStorage.addExit("east", vCorridor);
 
-        vCorridor.setExit("west", vStorage);
-        vCorridor.setExit("north", vMess);
-        vCorridor.setExit("south", vTransporter);
-        vCorridor.setExit("east", vBridge);
+        vCorridor.addExit("west", vStorage);
+        vCorridor.addExit("north", vMess);
+        vCorridor.addExit("south", vTransporter);
+        vCorridor.addExit("east", vBridge);
 
-        vMess.setExit("south", vCorridor);
+        vMess.addExit("south", vCorridor);
         vMess.addPersonage("officier", "un officier mangeant au mess.");
 
-        vBridge.setExit("west", vCorridor);
-        vBridge.setExit("airlock", vCar);
+        vBridge.addExit("west", vCorridor);
+        vBridge.addExit("airlock", vCar);
 
         // sets the first room where the game begins
         this.aPlayer.setCurrentRoom(vOffice);

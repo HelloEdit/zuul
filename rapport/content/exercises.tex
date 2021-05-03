@@ -1633,7 +1633,7 @@ public class GoCommand extends Command {
 }
 \end{minted}
 
-Maintenant, on doit modifier notre \code{CommandWord} pour prendre en comptre notre modification de comment s'organise les classes. On va utiliser ces enums pour relier les noms de commandes aux objets commandes.
+Maintenant, on doit modifier notre \code{CommandWord} pour prendre en compte notre modification de comment s'organise les classes. On va utiliser ces enums pour relier les noms de commandes aux objets commandes.
 
 \begin{minted}{java}
 /**
@@ -1694,16 +1694,188 @@ public enum CommandWord {
 
 \begin{exercise}[subtitle=Character]
 
+\textbf{Note :} A la place de nommer mes classes \code{Character}, j'ai préféré utiliser \code{Personage} en raison du conflit potentiel avec la classe java gérant les \code{char}.
 
+On définit une class \code{Personage} très simpliste qui permet des opérations basiques avec les PNJ de notre jeux. On peut par exemple voir que le joueur pourra interagir avec et vice-versa via \code{dialog()}.
+
+\begin{minted}{java}
+public class Personage {
+    /**
+     * Name of the personage.
+     */
+    private final String aName;
+
+    /**
+     * Description of the personage.
+     */
+    private final String aDescription;
+
+    /**
+     * Creates a new personage.
+     *
+     * @param aName        Name of the personage.
+     * @param aDescription Description of the personage.
+     */
+    public Personage(final String aName, final String aDescription) {
+        this.aName = aName;
+        this.aDescription = aDescription;
+    }
+
+    /**
+     * Allows you to talk with a personage.
+     *
+     * @param pInterface GUI of the game.
+     * @param pPlayer    Player that want to talk with the personage.
+     */
+    public void dialog(final UserInterface pInterface, final Player pPlayer) {
+        pInterface.printf("[%s] Excusez-moi mais je n'ai rien à vous dire...", this.aName);
+        pInterface.println();
+    }
+
+    /**
+     * Gets a long description about the personage.
+     *
+     * @return A description of the personage.
+     */
+    public String getLongDescription() {
+        return String.format("%s est %s.", this.aName, this.aDescription);
+    }
+
+    /**
+     * Gets the personage's name.
+     *
+     * @return The personage's name.
+     */
+    public String getName() {
+        return this.aName;
+    }
+}
+\end{minted}
 
 \end{exercise}
 
 \begin{exercise}[subtitle=Moving character]
 
+Un \code{MovingPersonage} est bien évidemment une sorte de \code{Personage} qui a la capacité de se mouvoir. J'ai fait le choix de la simplicité et j'ai choisis une stratégie de déplacement où le PNJ va se téléporter dans des salles prédéfinis et ce, aléatoirement. J'ai pris cette décision afin que je puisse avoir un contrôle total sur les salles atteignables par le PNJ. De plus, cela me permet de réutiliser \code{RandomizerRoom} car son API est suffisamment abstraite pour être utilisée dans ce contexte.
 
+L'algorithme de déplacement sera implémenté dans \code{move} et ce dernier est facilement remplacable pour, par exemple, implémenté un algorithme basé sur le déplacement dans des salles adjacentes etc.
+
+\begin{minted}{java}
+public class MovingPersonage extends Personage {
+    /**
+     * Possible rooms for the movement of the personage.
+     */
+    private final RoomRandomizer aRandomizer;
+
+    /**
+     * Current room where the personage is.
+     */
+    private Room aCurrent;
+
+    /**
+     * Creates a new personage.
+     *
+     * @param aName        Name of the personage.
+     * @param aDescription Description of the personage.
+     */
+    public MovingPersonage(String aName, String aDescription) {
+        super(aName, aDescription);
+
+        this.aRandomizer = new RoomRandomizer();
+    }
+
+    /**
+     * Adds rooms to the travel possibilities.
+     * @param pRooms Rooms to be added.
+     */
+    public void addRooms(final Room... pRooms) {
+        this.aRandomizer.addAll(pRooms);
+    }
+
+    /**
+     * Moves the personage in a random room.
+     */
+    public void move() {
+        if (this.aRandomizer.size() <= 1) {
+            throw new IllegalStateException(this.getName() + " doit avoir plus d'une pièce dans laquelle se déplacer.");
+        }
+
+        this.aCurrent.removePersonage(this.getName());
+        Room vNextRoom = this.aRandomizer.getRandomRoom();
+        vNextRoom.addPersonage(this);
+
+        this.setCurrentRoom(vNextRoom);
+    }
+
+    /**
+     * Sets the current room of the personage.
+     * @param pRoom
+     */
+    public void setCurrentRoom(final Room pRoom) {
+        this.aCurrent = pRoom;
+        System.out.println(pRoom.getName());
+    }
+}
+\end{minted}
+
+J'en profiter pour définir un \code{addPersonage} sur \code{Room} pour pouvoir ajouter un \code{Personage} convenablement.
+
+\begin{minted}{java}
+/**
+ * Adds a personage to the room.
+ *
+ * @param pPersonage personage to be added.
+ */
+public void addPersonage(final Personage pPersonage) {
+    this.aPersonages.put(pPersonage.getName(), pPersonage);
+
+    if (pPersonage instanceof MovingPersonage)
+        ((MovingPersonage) pPersonage).setCurrentRoom(this);
+}
+\end{minted}
+
+J'aurais pu rendre le code plus simple en définissant l'attribut \code{aCurrent} sur \code{Personage} directement plutôt que \code{MovingPersonage} mais j'ai préféré ne pas le faire car un PNJ statique n'a pas besoin de cette donnée.
+
+Vient maintenant un point qui m'a fait réféchir assez longtemps. Comment déplacer tous les \code{MovingPersonage} à chaque fois que le joueur bouge ? L'idée que j'ai retenu qui me semble la plus élégante est de créer une liste \code{AllMovingPersonage} comme attribut statique de \code{MovingPersonage} et à chaque déplacement, une itération sera faite sur cette liste et chaque \code{move()} sera invoqué. Le rajout de \code{MovingPersonage} se fera dans le constructeur.
+
+\begin{minted}{java}
+public class MovingPersonage extends Personage {
+    /**
+     * All instances of moving non-player.
+     */
+    private static final List<MovingPersonage> AllMovingPersonages = new ArrayList<>();
+
+    // code omitted for brevity
+
+    /**
+     * Creates a new personage.
+     *
+     * @param aName        Name of the personage.
+     * @param aDescription Description of the personage.
+     */
+    public MovingPersonage(String aName, String aDescription) {
+        super(aName, aDescription);
+
+        this.aRandomizer = new RoomRandomizer();
+
+        AllMovingPersonages.add(this);
+    }
+
+    // code omitted for brevity
+
+    /**
+     * Moves all the non-player that can move.
+     */
+    public static void moveAll() {
+        for (MovingPersonage vPerso : AllMovingPersonages)
+            vPerso.move();
+    }
+}
+\end{minted}
+
+Il ne reste plus qu'a appeler la méthode statique \code{moveAll} aux endroits voulus (dans mon cas, lors d'un déplacement quelconque du joueur).
 
 \end{exercise}
-
 
 \begin{exercise}[subtitle=maximum]
 

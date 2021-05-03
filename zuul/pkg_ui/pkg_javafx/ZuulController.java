@@ -176,11 +176,11 @@ public class ZuulController implements UserInterface {
         });
 
         // bind inventory to the ListView
-        ObservableMap<String, Item> vItemList = vPlayer.getObservableInventory();
+        ObservableMap<String, Item> vItemList = vPlayer.getInventory();
         ObservableList<Item> vItems = FXCollections.observableArrayList();
 
         // load items already present in the inventory in the list
-        vItems.addAll(vPlayer.getInventory().getObservableItems().values());
+        vItems.addAll(vItemList.values());
         this.inventoryList.setItems(vItems);
 
         // listen Map inventory changes

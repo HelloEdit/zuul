@@ -14,6 +14,7 @@ public enum CommandWord {
     QUIT(new QuitCommand()),
     TEST(new TestCommand()),
     TAKE(new TakeCommand()),
+    TALK(new TalkCommand()),
     DROP(new DropCommand()),
     USE(new UseCommand()),
     LOOK(new LookCommand()),

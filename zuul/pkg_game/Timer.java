@@ -36,7 +36,7 @@ public class Timer {
     }
 
     /**
-     * Indicates that a new tick has taken place and decrement the internal timer.
+     * Indicates that a new action has taken place and decrement the internal timer.
      *
      * @throws TimerLimitException If the timer does not allow any more actions.
      */

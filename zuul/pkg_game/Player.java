@@ -4,9 +4,8 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.ObservableMap;
 import zuul.pkg_item.Item;
-import zuul.pkg_item.ItemList;
+import zuul.pkg_personage.MovingPersonage;
 import zuul.pkg_room.Room;
 
 import java.util.EmptyStackException;
@@ -22,7 +21,7 @@ public class Player {
     /**
      * Player inventory.
      */
-    private final ItemList aInventory;
+    private final ThingList<Item> aInventory;
 
     /**
      * History of the rooms were the player was.
@@ -60,7 +59,7 @@ public class Player {
      */
     public Player() {
         this.aPreviousRooms = new Stack<>();
-        this.aInventory = new ItemList();
+        this.aInventory = new ThingList<>();
 
         this.aCurrentRoom = new SimpleObjectProperty<>(null);
         this.aMaxWeight = new SimpleIntegerProperty(100);
@@ -80,6 +79,7 @@ public class Player {
         this.aCurrentRoom.set(vPrevious);
 
         this.aTimer.tick();
+        MovingPersonage.moveAll();
 
         return vPrevious;
     }
@@ -108,6 +108,9 @@ public class Player {
 
         // tells the timer that the player is doing an tick
         this.aTimer.tick();
+
+        // moves all the non-player that can move
+        MovingPersonage.moveAll();
 
         // check if the door was a trapdoor
         if (!vNext.hasExit(vCurrent)) {
@@ -142,7 +145,7 @@ public class Player {
         vCurrentRoom.removeItem(vItem.getName());
 
         // ...and add it to the player's inventory
-        this.aInventory.addItem(vItem);
+        this.aInventory.put(vItem.getName(), vItem);
 
         return vItem;
     }
@@ -173,7 +176,7 @@ public class Player {
      * @return The item deleted.
      */
     public Item deleteItem(String pItemName) {
-        Item vItem = this.aInventory.removeItem(pItemName);
+        Item vItem = this.aInventory.remove(pItemName);
         if (vItem == null) return null;
 
         this.aWeight.set(this.aWeight.get() - vItem.getWeight());
@@ -188,7 +191,7 @@ public class Player {
      * @return The item retrieved.
      */
     public Item getItem(final String pItemName) {
-        return this.aInventory.getItem(pItemName);
+        return this.aInventory.get(pItemName);
     }
 
     /**
@@ -208,7 +211,7 @@ public class Player {
     public String getInventoryDescription() {
         if (this.aInventory.isEmpty()) return "L'inventaire est vide !";
 
-        return String.format("Inventaire : %s (poids %d)", this.aInventory.getItemsNames(), this.aWeight.get());
+        return String.format("Inventaire : %s (poids %d)", this.aInventory.getKeysString(), this.aWeight.get());
     }
 
     /**
@@ -252,7 +255,7 @@ public class Player {
      *
      * @return Item inventory.
      */
-    public ItemList getInventory() {
+    public ThingList<Item> getInventory() {
         return this.aInventory;
     }
 
@@ -291,15 +294,6 @@ public class Player {
      */
     public void setTimer(final Timer pTimer) {
         this.aTimer = pTimer;
-    }
-
-    /**
-     * Gets the observable inventory of the player
-     *
-     * @return Observable inventory.
-     */
-    public ObservableMap<String, Item> getObservableInventory() {
-        return this.aInventory.getObservableItems();
     }
 
     // Notes: These methods were created to make the JavaFX interface responsive. They are not meant to be

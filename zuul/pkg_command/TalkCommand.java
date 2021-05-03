@@ -31,15 +31,12 @@ public class TalkCommand extends Command {
 
         if (!this.hasSecondWord()) {
             pInterface.println("Vous devez spécifier à qui parler.");
-            pInterface.printf("Les personnages en présences sont : %s.", vRoom.getPersonagesNames());
-
+            pInterface.println(vRoom.getPersonagesDescription());
             return;
         }
 
-        Personage vPerso = pPlayer.getPersonage(this.getSecondWord());
-        if (vPerso == null)
-            throw new NullPointerException("Ce personnage n'existe pas.");
-
-        vPerso.dialog(pInterface, pPlayer);
+        Personage vPerso = vRoom.getPersonage(this.getSecondWord());
+        if (vPerso == null) pInterface.println("Ce personnage n'est pas là.");
+        else vPerso.dialog(pInterface, pPlayer);
     }
 }

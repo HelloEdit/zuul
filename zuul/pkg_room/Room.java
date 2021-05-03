@@ -1,8 +1,9 @@
 package zuul.pkg_room;
 
 import zuul.Utils;
+import zuul.pkg_game.ThingList;
 import zuul.pkg_item.Item;
-import zuul.pkg_item.ItemList;
+import zuul.pkg_personage.MovingPersonage;
 import zuul.pkg_personage.Personage;
 
 import java.io.File;
@@ -34,12 +35,12 @@ public class Room {
     /**
      * All the characters in the room.
      */
-    private final HashMap<String, Personage> aPersonages;
+    private final ThingList<Personage> aPersonages;
 
     /**
      * The items in this room.
      */
-    private final ItemList aItems;
+    private final ThingList<Item> aItems;
 
     /**
      * The image path attached to the room.
@@ -57,20 +58,21 @@ public class Room {
         this.aName = pName;
         this.aDescription = pDescription;
         this.aExits = new HashMap<>();
-        this.aPersonages = new HashMap<>();
-        this.aItems = new ItemList();
+
+        this.aPersonages = new ThingList<>();
+        this.aItems = new ThingList<>();
 
         this.aImage = pName.toLowerCase().replaceAll(" ", "_") + ".png";
     }
 
     /**
-     * Retrieves the Room associated with the exit in the requested direction.
+     * Set an exit of the room.
      *
      * @param pDirection Direction of the exit.
-     * @return The room associated with the exit.
+     * @param pExit      Room to which the exit leads.
      */
-    public Room getExit(String pDirection) {
-        return this.aExits.get(pDirection);
+    public void addExit(final String pDirection, final Room pExit) {
+        this.aExits.put(pDirection, pExit);
     }
 
     /**
@@ -84,43 +86,13 @@ public class Room {
     }
 
     /**
-     * Set an exit of the room.
+     * Retrieves the Room associated with the exit in the requested direction.
      *
      * @param pDirection Direction of the exit.
-     * @param pExit      Room to which the exit leads.
+     * @return The room associated with the exit.
      */
-    public void setExit(final String pDirection, final Room pExit) {
-        this.aExits.put(pDirection, pExit);
-    }
-
-    /**
-     * Creates and adds a new item in the room.
-     *
-     * @param pName        Name of the item.
-     * @param pDescription Description of the item.
-     * @param pWeight      Weight of the item.
-     */
-    public void addItem(final String pName, final String pDescription, final int pWeight) {
-        this.aItems.addItem(pName, pDescription, pWeight);
-    }
-
-    /**
-     * Creates and adds a new item in the room.
-     *
-     * @param pName        Name of the item.
-     * @param pDescription Description of the item.
-     */
-    public void addItem(final String pName, final String pDescription) {
-        this.addItem(pName, pDescription, 1);
-    }
-
-    /**
-     * Adds a new item in the room.
-     *
-     * @param pItem Item to be added.
-     */
-    public void addItem(final Item pItem) {
-        this.aItems.addItem(pItem);
+    public Room getExit(String pDirection) {
+        return this.aExits.get(pDirection);
     }
 
     /**
@@ -140,26 +112,9 @@ public class Room {
      */
     public void addPersonage(final Personage pPersonage) {
         this.aPersonages.put(pPersonage.getName(), pPersonage);
-    }
 
-    /**
-     * Removes an item from the room.
-     *
-     * @param pName Name of the item.
-     * @return The item removed.
-     */
-    public Item removeItem(final String pName) {
-        return this.aItems.removeItem(pName);
-    }
-
-    /**
-     * Gets a specific item of the room.
-     *
-     * @param pSearch The item name.
-     * @return The item asked.
-     */
-    public Item getItem(final String pSearch) {
-        return this.aItems.getItem(pSearch);
+        if (pPersonage instanceof MovingPersonage)
+            ((MovingPersonage) pPersonage).setCurrentRoom(this);
     }
 
     /**
@@ -173,24 +128,84 @@ public class Room {
     }
 
     /**
+     * Removes an item from the room.
+     *
+     * @param pName Name of the item.
+     * @return The personage removed.
+     */
+    public Personage removePersonage(final String pName) {
+        return this.aPersonages.remove(pName);
+    }
+
+    /**
+     * Gets a description of the personages in the room.
+     *
+     * @return The description.
+     */
+    public String getPersonagesDescription() {
+        if (this.aPersonages.isEmpty())
+            return "Aucun personnage dans la pièce.";
+
+        return "Les personnages en présence sont : " + this.aPersonages.getKeysString();
+    }
+
+    /**
+     * Creates and adds a new item in the room.
+     *
+     * @param pName        Name of the item.
+     * @param pDescription Description of the item.
+     * @param pWeight      Weight of the item.
+     */
+    public void addItem(final String pName, final String pDescription, final int pWeight) {
+        this.aItems.put(pName, new Item(pName, pDescription, pWeight));
+    }
+
+    /**
+     * Creates and adds a new item in the room.
+     *
+     * @param pName        Name of the item.
+     * @param pDescription Description of the item.
+     */
+    public void addItem(final String pName, final String pDescription) {
+        this.addItem(pName, pDescription, 1);
+    }
+
+    /**
+     * Adds a new item in the room.
+     *
+     * @param pItem Item to be added.
+     */
+    public void addItem(final Item pItem) {
+        this.aItems.put(pItem.getName(), pItem);
+    }
+
+    /**
+     * Gets a specific item of the room.
+     *
+     * @param pSearch The item name.
+     * @return The item asked.
+     */
+    public Item getItem(final String pSearch) {
+        return this.aItems.get(pSearch);
+    }
+
+    /**
+     * Removes an item from the room.
+     *
+     * @param pName Name of the item.
+     * @return The item removed.
+     */
+    public Item removeItem(final String pName) {
+        return this.aItems.remove(pName);
+    }
+
+    /**
      * Gets the room's description.
      *
      * @return The Room description.
      */
     public String getDescription() {
         return Utils.capitalize(this.aDescription);
-    }
-
-    /**
-     * Gets the names of the personage in the room.
-     *
-     * @return The names.
-     */
-    public String getPersonagesNames() {
-        if (this.aPersonages.isEmpty())
-            return "Aucun personnages";
-
-        return String.join(", ", this.aPersonages.keySet());
     }
 
     /**
@@ -202,19 +217,18 @@ public class Room {
         String vTemplate = "Vous êtes dans \"%s\".%n" + // name
                 "%s.%n" + // description
                 "%s.%n" + // exits
-                "%s."; // items lookup
+                "%s.%n" + // items lookup
+                "%s."; // personages lookup
 
         String vItems = this.aItems.isEmpty()
                 ? "Il n'y a pas d'objets"
-                : "Vous voyez dans cette pièce : " + this.aItems.getItemsNames();
-
-        String vPersonages = this.aItems.isEmpty()
-                ? "Il n'y a pas de personnages"
-                : "Il semble y avoir des gens : " + this.getPersonagesNames();
+                : "Vous voyez dans cette pièce : " + this.aItems.getKeysString();
 
         String vExits = "Vous pouvez sortir par : " + this.getExitString();
 
-        return String.format(vTemplate, this.aName, this.aDescription, vExits, vItems);
+        String vPersonages = this.getPersonagesDescription();
+
+        return String.format(vTemplate, this.aName, this.aDescription, vExits, vItems, vPersonages);
     }
 
     /**

@@ -8,6 +8,8 @@ import javafx.collections.ObservableMap;
  *
  * @author Corentin POUPRY
  * @version 06.04.21
+ * @deprecated use ThingList instead.
+ * @see zuul.pkg_game.ThingList
  */
 public class ItemList {
     /**

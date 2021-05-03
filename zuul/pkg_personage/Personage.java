@@ -4,7 +4,7 @@ import zuul.pkg_game.Player;
 import zuul.pkg_ui.UserInterface;
 
 /**
- * This class is intended to represent a personage of the game.
+ * Represents a non-player character.
  *
  * @author Corentin POUPRY
  * @version 06.04.21
@@ -38,7 +38,8 @@ public class Personage {
      * @param pPlayer    Player that want to talk with the personage.
      */
     public void dialog(final UserInterface pInterface, final Player pPlayer) {
-        pInterface.println("Excusez-moi mais je n'ai rien à vous dire...");
+        pInterface.printf("[%s] Excusez-moi mais je n'ai rien à vous dire...", this.aName);
+        pInterface.println();
     }
 
     /**

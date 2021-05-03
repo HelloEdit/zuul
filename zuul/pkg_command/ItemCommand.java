@@ -26,15 +26,13 @@ public class ItemCommand extends Command {
     @Override
     public void execute(GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) {
         if (!this.hasSecondWord()) {
-            Item vItem = pPlayer.getItem(this.getSecondWord());
-
-            if (vItem == null) pInterface.println("Vous ne possédez pas cet item.");
-            else pInterface.println(vItem.getLongDescription());
-
+            pInterface.println(pPlayer.getInventoryDescription());
             return;
         }
 
-        pInterface.println("Vous ne possédez pas cet objet.");
-        pInterface.println(pPlayer.getInventoryDescription());
+        Item vItem = pPlayer.getItem(this.getSecondWord());
+
+        if (vItem == null) pInterface.println("Vous ne possédez pas cet item.");
+        else pInterface.println(vItem.getLongDescription());
     }
 }

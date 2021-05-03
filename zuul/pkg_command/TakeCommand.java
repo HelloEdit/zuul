@@ -26,7 +26,7 @@ public class TakeCommand extends Command {
     @Override
     public void execute(GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) throws Item.CannotManageItemException {
         if (!this.hasSecondWord()) {
-            pInterface.println("Vous devez spécifier l'pkg_item à prendre.");
+            pInterface.println("Vous devez spécifier l'objet à prendre.");
             return;
         }
 
