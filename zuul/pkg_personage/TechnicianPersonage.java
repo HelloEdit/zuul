@@ -1,5 +1,6 @@
 package zuul.pkg_personage;
 
+import zuul.pkg_game.GameEngine;
 import zuul.pkg_game.Player;
 import zuul.pkg_ui.UserInterface;
 
@@ -21,7 +22,7 @@ public class TechnicianPersonage extends MovingPersonage {
     }
 
     @Override
-    public void dialog(UserInterface pInterface, Player pPlayer) {
+    public void dialog(GameEngine pEngine, UserInterface pInterface, Player pPlayer) {
         int index = new Random().nextInt(DIALOGS.length);
         pInterface.println("[Technicien] " + DIALOGS[index]);
     }

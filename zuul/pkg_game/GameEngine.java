@@ -5,6 +5,7 @@ import zuul.pkg_command.Command;
 import zuul.pkg_command.Parser;
 import zuul.pkg_item.Beamer;
 import zuul.pkg_item.Cookie;
+import zuul.pkg_personage.CompilateurPersonage;
 import zuul.pkg_personage.MovingPersonage;
 import zuul.pkg_personage.TechnicianPersonage;
 import zuul.pkg_room.Room;
@@ -97,6 +98,7 @@ public class GameEngine {
         // ESIEE Universe
         Room vEsiee = new Room("salle de l'ESIEE", "mais... c'est là où vous avez lancé ce jeu");
         vEsiee.addItem("livre", "un livre intitulé \"Objects First with Java\"");
+        vEsiee.addPersonage(new CompilateurPersonage());
 
         // Setting up the "paths" between rooms
 
@@ -234,5 +236,13 @@ public class GameEngine {
         this.aInterface = pInterface;
 
         this.welcome();
+    }
+
+    /**
+     * Wins the game!
+     */
+    public void win() {
+        this.aInterface.println("Vous avez gagné le jeu ! Merci d'avoir joué.");
+        this.aInterface.disable();
     }
 }
