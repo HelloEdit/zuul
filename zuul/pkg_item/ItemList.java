@@ -58,11 +58,11 @@ public class ItemList {
      * Removes an item from the list.
      * This method removes from the list the item with the name given in parameter.
      *
-     * @param pName Name of the item to be removed.
+     * @param pKey Name of the item to be removed.
      * @return The item removed.
      */
-    public Item removeItem(final String pName) {
-        return this.aItems.remove(pName);
+    public Item removeItem(final String pKey) {
+        return this.aItems.remove(pKey);
     }
 
     /**

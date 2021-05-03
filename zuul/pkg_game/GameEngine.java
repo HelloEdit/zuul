@@ -103,6 +103,7 @@ public class GameEngine {
 
         vGreatStair.setExit("east", vTerrace);
         vGreatStair.setExit("south", vReception);
+        vGreatStair.addPersonage("garde", "un garde royal en poste.");
 
         vTerrace.setExit("west", vGreatStair);
 
@@ -125,6 +126,7 @@ public class GameEngine {
         vCorridor.setExit("east", vBridge);
 
         vMess.setExit("south", vCorridor);
+        vMess.addPersonage("officier", "un officier mangeant au mess.");
 
         vBridge.setExit("west", vCorridor);
         vBridge.setExit("airlock", vCar);

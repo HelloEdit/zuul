@@ -37,7 +37,7 @@ public class Personage {
      * @param pInterface GUI of the game.
      * @param pPlayer    Player that want to talk with the personage.
      */
-    public void dialogWith(final UserInterface pInterface, final Player pPlayer) {
+    public void dialog(final UserInterface pInterface, final Player pPlayer) {
         pInterface.println("Excusez-moi mais je n'ai rien à vous dire...");
     }
 
@@ -48,5 +48,14 @@ public class Personage {
      */
     public String getLongDescription() {
         return String.format("%s est %s.", this.aName, this.aDescription);
+    }
+
+    /**
+     * Gets the personage's name.
+     *
+     * @return The personage's name.
+     */
+    public String getName() {
+        return this.aName;
     }
 }

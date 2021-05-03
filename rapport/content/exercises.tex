@@ -1157,14 +1157,11 @@ Déjà, il faut que ce système soit activable et désactivable à souhait. Je f
 Aussi, j'ai fait le choix de baser la logique du limiteur de temps en utilisant des exceptions.
 
 \begin{minted}{java}
-/**
- * This class represents a movement constraint based on an internal counter.
- */
 public class Timer {
     /**
-     * The internal counter.
+     * The remaining moves of timer.
      */
-    private int aCounter;
+    private int aRemainingMoves;
 
     /**
      * If the instance is activated or not.
@@ -1175,36 +1172,81 @@ public class Timer {
      * Creates a new disabled Timer.
      */
     public Timer() {
-        this.aCounter = 0;
-        this.aDisabled = true;
+        this(0, true);
     }
 
     /**
-     * Indicates that a new action has taken place & decrement the internal counter.
+     * Creates a new timer.
+     *
+     * @param pRemainingMoves The remaining moves that can be made.
+     * @param pDisabled       If the counter is disabled.
+     */
+    public Timer(final int pRemainingMoves, final boolean pDisabled) {
+        this.aRemainingMoves = pRemainingMoves;
+        this.aDisabled = pDisabled;
+    }
+
+    /**
+     * Indicates that a new tick has taken place and decrement the internal timer.
+     *
      * @throws TimerLimitException If the timer does not allow any more actions.
      */
-    public void action() throws TimerLimitException {
+    public void tick() throws TimerLimitException {
         if (this.aDisabled) return;
 
-        if (this.aCounter <= 0) throw new TimerLimitException();
+        this.aRemainingMoves -= 1;
+
+        if (this.aRemainingMoves < 1) throw new TimerLimitException();
     }
 
     /**
-     * Sets the new internal counter.
-     * @param pCounter The new counter.
+     * Sets the new remaining moves for the timer.
+     *
+     * @param pRemainingMoves The new remaining of moves..
      */
-    public void setCounter(final int pCounter) {
-        this.aCounter = pCounter;
+    public void setRemainingMoves(final int pRemainingMoves) {
+        this.aRemainingMoves = pRemainingMoves;
     }
 
     /**
-     * Sets the activation state of the counter.
-     * @param pDisabled true if the counter is disabled, false otherwise.
+     * Gets the remaining moves.
+     *
+     * @return The remaining moves.
+     */
+    public String getRemainingDescription() {
+        switch (this.aRemainingMoves) {
+            case 0:
+                return "Aucun mouvement restant.";
+
+            case 1:
+                return "Un seul mouvement restant.";
+
+            default:
+                return String.format("Il vous reste %d mouvements.", this.aRemainingMoves);
+        }
+    }
+
+    /**
+     * Gets the state of the timer.
+     *
+     * @return true if the timer is enabled.
+     */
+    public boolean isEnabled() {
+        return !this.aDisabled;
+    }
+
+    /**
+     * Sets the activation state of the timer.
+     *
+     * @param pDisabled true if the timer should be disabled, false otherwise.
      */
     public void setDisabled(final boolean pDisabled) {
         this.aDisabled = pDisabled;
     }
 
+    /**
+     * Indicates that the timer has completed its countdown.
+     */
     public static class TimerLimitException extends Exception {
         TimerLimitException() {
             super("La limite de mouvement est atteinte, vous avez perdu.");
@@ -1684,13 +1726,13 @@ Les méthodes \code{max} de \code{Math} ne s'appuient que sur ses deux paramètr
 
 Pour tester le comptage de 1 à 100 par une boucle, on récupère le temps écoulé entre le début et la fin.
 
-\textbf{Note :} Dans pratiquement tous les programmes, les perfomances sont limités par l'IO\footnote{\textit{Input Output}, les entrées et sorties.} notamment \code{System.out.*} qui effectue des opérations d'écriture. Pour ne pas biaiser le test, on ne va pas logger le comptage fait par le boucle.
+\textbf{Note :} Dans pratiquement tous les programmes, les perfomances sont limités par l'IO\footnote{\textit{Input Output}, les entrées et sorties.} notamment \code{System.out.println} qui effectue des opérations d'écriture. Pour ne pas biaiser le test, on ne va pas afficher le comptage fait par la boucle.
 
 \begin{minted}{java}
 public static void countFrom0to100() {
     long vStart = System.currentTimeMillis();
 
-    for (int i = 1; i <= 100; i++) { }
+    for (int i = 1; i <= 100; i++) {} // noop
 
     long vEnd = System.currentTimeMillis();
     System.out.printf("From 1 to 100 in %dms.", vEnd - vStart);
@@ -1702,7 +1744,8 @@ Le résultat est le suivant:
 
 \code{From 1 to 100 in 0ms.}
 
-Ce qui n'est absolument pas étonnant étant donné la simplicité de l'opération demandée.
+Ce qui n'est absolument pas étonnant étant donné la simplicité de l'opération demandée et l'absence d'I/O qui serait le goulot d'étranglement des perfomances du programme.
+
 \end{exercise}
 
 \begin{exercise}[subtitle=Main]
@@ -1718,4 +1761,89 @@ public class Main {
     }
 }
 \end{minted}
+\end{exercise}
+
+\setcounter{exercise}{55}
+
+\begin{exercise}[subtitle=test static]
+
+\textit{Pouvez-vous appeler une méthode statique à partir d'une méthode d'instance ?}
+
+Il est évidemment possible d'appeler une méthode statique depuis un méthode d'instance, c'est notamment ce que je fais dans mon jeu quand je veux utiliser une méthode de la classe \code{Utils}.
+
+\begin{minted}{java}
+private void welcome() {
+    // code omitted for brevity
+
+    String vName = this.aInterface.ask("Nom du joueur", "Veuillez donner votre nom.");
+    if (!Utils.isCorrectString(vName)) { // isCorrectString est une méthode statique
+        throw new IllegalArgumentException("Le nom ne peut pas être utilisé.");
+    }
+
+    // code omitted for brevity
+}
+\end{minted}
+
+\textit{Pouvez-vous appeler une méthode d'instance à partir d'une méthode statique ?}
+
+Non, il n'est pas possible de faire ceci car, dans le contexte d'une méthode statique, \code{this} n'est pas défini.
+
+\begin{minted}{java}
+class MyProgram {
+    public static void main(String[] args) {
+        this.test();
+    }
+
+    public void test() {
+        System.out.println("it's working !");
+    }
+}
+\end{minted}
+
+Ce code ne compile évidemment pas et donne le message d'erreur
+
+\begin{figure}[h]
+  \centering
+  error: non-static variable this cannot be referenced from a static context
+\end{figure}
+
+\textit{Pouvez-vous appeler une méthode statique à partir d'une méthode statique ?}
+
+Il est tout à fait possible de faire ceci, imaginons une méthode calculant une factorielle par récursion.
+
+\begin{minted}{java}
+class MyProgram {
+    public static int factorial(final int n) {
+        if (n == 1) return 1;
+
+        return n * factorial(n - 1);
+    }
+}
+\end{minted}
+
+On voit bien qu'une méthode statique peut donc appeler une méthode statique.
+
+\end{exercise}
+
+\begin{exercise}[subtitle=Nombre d'instances]
+
+\textit{Une classe peut-elle compter le nombre d'instances qui ont été créées à partir d'elle ? Quels sont les éléments nécessaires pour cela ?}
+
+Il est tout à fait possible qu'une classe puisse faire ça, il suffit simplement que le constructeur incrémente un attribut statique qui tiendra le compte des instances crées.
+
+\begin{minted}{java}
+public class MyProgram
+{
+    private static int instances = 0;
+
+    public MyProgram() {
+        instances += 1;
+    }
+
+    public static int numberOfInstances() {
+        return instances;
+    }
+}
+\end{minted}
+
 \end{exercise}

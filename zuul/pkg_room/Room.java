@@ -34,7 +34,7 @@ public class Room {
     /**
      * All the characters in the room.
      */
-    private final HashMap<String, Personage> aPersonage;
+    private final HashMap<String, Personage> aPersonages;
 
     /**
      * The items in this room.
@@ -57,8 +57,9 @@ public class Room {
         this.aName = pName;
         this.aDescription = pDescription;
         this.aExits = new HashMap<>();
-        this.aPersonage = new HashMap<>();
+        this.aPersonages = new HashMap<>();
         this.aItems = new ItemList();
+
         this.aImage = pName.toLowerCase().replaceAll(" ", "_") + ".png";
     }
 
@@ -123,6 +124,25 @@ public class Room {
     }
 
     /**
+     * Creates and adds a new personage in the room.
+     *
+     * @param pName Name of the personage
+     * @param pDescription Description of the personage.
+     */
+    public void addPersonage(final String pName, final String pDescription) {
+        this.aPersonages.put(pName, new Personage(pName, pDescription));
+    }
+
+    /**
+     * Adds a personage to the room.
+     *
+     * @param pPersonage personage to be added.
+     */
+    public void addPersonage(final Personage pPersonage) {
+        this.aPersonages.put(pPersonage.getName(), pPersonage);
+    }
+
+    /**
      * Removes an item from the room.
      *
      * @param pName Name of the item.
@@ -149,7 +169,7 @@ public class Room {
      * @return The personage asked.
      */
     public Personage getPersonage(String pSearch) {
-        return this.aPersonage.get(pSearch);
+        return this.aPersonages.get(pSearch);
     }
 
     /**
@@ -159,6 +179,18 @@ public class Room {
      */
     public String getDescription() {
         return Utils.capitalize(this.aDescription);
+    }
+
+    /**
+     * Gets the names of the personage in the room.
+     *
+     * @return The names.
+     */
+    public String getPersonagesNames() {
+        if (this.aPersonages.isEmpty())
+            return "Aucun personnages";
+
+        return String.join(", ", this.aPersonages.keySet());
     }
 
     /**
@@ -175,6 +207,10 @@ public class Room {
         String vItems = this.aItems.isEmpty()
                 ? "Il n'y a pas d'objets"
                 : "Vous voyez dans cette pièce : " + this.aItems.getItemsNames();
+
+        String vPersonages = this.aItems.isEmpty()
+                ? "Il n'y a pas de personnages"
+                : "Il semble y avoir des gens : " + this.getPersonagesNames();
 
         String vExits = "Vous pouvez sortir par : " + this.getExitString();
 

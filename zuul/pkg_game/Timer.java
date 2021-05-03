@@ -51,7 +51,7 @@ public class Timer {
     /**
      * Sets the new remaining moves for the timer.
      *
-     * @param pRemainingMoves The new remaining of moves..
+     * @param pRemainingMoves The new remaining of moves.
      */
     public void setRemainingMoves(final int pRemainingMoves) {
         this.aRemainingMoves = pRemainingMoves;
@@ -60,7 +60,7 @@ public class Timer {
     /**
      * Gets the remaining moves.
      *
-     * @return The remaining moves
+     * @return The remaining moves description.
      */
     public String getRemainingDescription() {
         switch (this.aRemainingMoves) {
@@ -94,7 +94,7 @@ public class Timer {
     }
 
     /**
-     *
+     * Indicates that the timer has completed its countdown.
      */
     public static class TimerLimitException extends Exception {
         TimerLimitException() {
