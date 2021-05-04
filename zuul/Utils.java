@@ -1,5 +1,7 @@
 package zuul;
 
+import java.util.Random;
+
 /**
  * This class is meant to provide simple utilities functions for the Zuul game.
  *
@@ -25,5 +27,16 @@ public class Utils {
      */
     public static boolean isCorrectString(final String pInput) {
         return pInput != null && !pInput.isEmpty() && !pInput.isBlank();
+    }
+
+    /**
+     * Returns a random element from the array.
+     * @param pArray The array from which an element will be chosen randomly.
+     * @param <T> The type of the elements of the array.
+     * @return The random element chosen.
+     */
+    public static <T> T randomElement(final T[] pArray) {
+        int index = new Random().nextInt(pArray.length);
+        return pArray[index];
     }
 }

@@ -148,7 +148,7 @@ public class ZuulController implements UserInterface {
         );
 
         ObjectBinding<Image> vImage = Bindings.createObjectBinding(
-                () -> new Image("/assets/" + vPlayer.getRoom().getImage()),
+                () -> new Image("/assets/" + vPlayer.getRoom().getImagePath()),
                 vPlayer.getObservableRoom()
         );
 

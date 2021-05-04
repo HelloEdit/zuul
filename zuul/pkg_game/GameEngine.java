@@ -68,7 +68,7 @@ public class GameEngine {
         vAppartements.addItem("bijoux", "des boucles d'oreilles en or, évidemment");
 
         Room vKitchen = new Room("cuisine", "les cuisine du palais");
-        vKitchen.addItem(new Cookie());
+        vKitchen.addItem(new Cookie("cookie", "un cookie qui semble divin"));
 
         Room vCave = new Room("cave", "une cave de stockage bien caché");
         vCave.addItem("caisses", "une caisse scellé");
@@ -157,7 +157,7 @@ public class GameEngine {
                 "\t\\_|    |_| \\__,_||_| |_| \\___| \\__|   \\_/\\_/   \\__,_||_|   |___/\n\n"
         );
 
-        String vName = this.aInterface.ask("Nom du joueur", "Veuillez vous présenter.");
+        String vName = this.aInterface.ask("Nom du joueur", "Veuillez vous présenter");
         if (!Utils.isCorrectString(vName)) {
             throw new IllegalArgumentException("Le nom ne peut pas être utilisé.");
         }

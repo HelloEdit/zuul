@@ -139,13 +139,11 @@ public class Player {
             throw new Item.CannotManageItemException("Vous ne pouvez pas prendre cet objet, votre inventaire est trop chargé !");
         }
 
-        this.aWeight.set(this.aWeight.get() + vItem.getWeight());
-
-        // then we definitely remove it from the room
+        // then we can definitely remove it from the room
         vCurrentRoom.removeItem(vItem.getName());
 
         // ...and add it to the player's inventory
-        this.aInventory.put(vItem.getName(), vItem);
+        this.addItem(vItem);
 
         return vItem;
     }
@@ -167,6 +165,17 @@ public class Player {
         vCurrentRoom.addItem(vItem);
 
         return vItem;
+    }
+
+    /**
+     * Adds an item to the player inventory.
+     *
+     * @param pItem The item to be added.
+     */
+    public void addItem(Item pItem) {
+        this.aInventory.put(pItem.getName(), pItem);
+
+        this.aWeight.set(this.aWeight.get() + pItem.getWeight());
     }
 
     /**

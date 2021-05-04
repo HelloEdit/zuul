@@ -19,7 +19,7 @@ public class CommandWords {
     /**
      * A mapping between a command word and the CommandWord associated to it.
      */
-    public static final Map<String, Command> VALID_COMMANDS;
+    private static final Map<String, Command> VALID_COMMANDS;
 
     /**
      * A string containing the available commands for help purpose.
@@ -39,7 +39,7 @@ public class CommandWords {
             vMap.put(command.toString(), command.getCommand());
 
             // exclude the command that cannot be executed in normal mode from the help string
-            if (!command.isExecutable(false)) continue;
+            if (!command.isExecutableWhen(false)) continue;
 
             joiner.add(command.toString());
         }
@@ -62,8 +62,10 @@ public class CommandWords {
                 CommandWord.UNKNOWN.getCommand()
         );
 
-        return vCommand.isExecutable(pTestMode)
+        return vCommand.isExecutableWhen(pTestMode)
                 ? vCommand
                 : CommandWord.UNKNOWN.getCommand();
+
+        // TODO: is it possible to write a better code?
     }
 }

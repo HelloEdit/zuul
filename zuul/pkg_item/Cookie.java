@@ -19,8 +19,8 @@ public class Cookie extends Item {
     /**
      * Creates the cookie.
      */
-    public Cookie() {
-        super("cookie", "Un cookie qui semble... particulier.", 2);
+    public Cookie(final String pName, final String pDescription) {
+        super(pName, pDescription, 2);
     }
 
     /**

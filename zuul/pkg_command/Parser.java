@@ -12,10 +12,6 @@ import static zuul.pkg_command.CommandWords.COMMANDS_STRING;
  * command. Every time it is called it reads a line from the terminal and
  * tries to interpret the line as a two word command. It returns the command
  * as an object of class Command.
- * <p>
- * The parser has a set of known command words. It checks user input against
- * the known commands, and if the input is not one of the known commands, it
- * returns a command object that is marked as an unknown command.
  *
  * @author Corentin POUPRY
  * @version 06.04.21

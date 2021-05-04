@@ -69,9 +69,9 @@ public class RoomRandomizer {
         int vSize = this.aRooms.size();
 
         return this.aRooms.values()
-                .stream()
-                .skip(this.aRandom.nextInt(vSize))
-                .findFirst()
+                .stream() // create a stream
+                .skip(this.aRandom.nextInt(vSize)) // skip a random number of Rooms (vSize is exclusive)
+                .findFirst() // find the first room non-skipped
                 .orElse(null);
     }
 

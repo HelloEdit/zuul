@@ -131,10 +131,9 @@ public class Room {
      * Removes an item from the room.
      *
      * @param pName Name of the item.
-     * @return The personage removed.
      */
-    public Personage removePersonage(final String pName) {
-        return this.aPersonages.remove(pName);
+    public void removePersonage(final String pName) {
+        this.aPersonages.remove(pName);
     }
 
     /**
@@ -251,11 +250,11 @@ public class Room {
     }
 
     /**
-     * Gets the room's image file name.
+     * Gets the room's image path.
      *
-     * @return The room's image name.
+     * @return The room's path.
      */
-    public String getImage() {
+    public String getImagePath() {
         File vFile = new File("./assets/" + this.aImage);
 
         return vFile.exists()

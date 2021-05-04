@@ -104,7 +104,7 @@ public abstract class Command {
      * @param pTestMode true if the test environment is enabled, false otherwise.
      * @return true if the command can be used, false otherwise.
      */
-    public boolean isExecutable(boolean pTestMode) {
+    public boolean isExecutableWhen(boolean pTestMode) {
         // the truth table is the following
         //
         // | isTestCommand | testMode | can be executed |

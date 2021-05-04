@@ -37,6 +37,6 @@ public class TalkCommand extends Command {
 
         Personage vPerso = vRoom.getPersonage(this.getSecondWord());
         if (vPerso == null) pInterface.println("Ce personnage n'est pas là.");
-        else vPerso.dialog(, pInterface, pPlayer);
+        else vPerso.dialog(pGameEngine, pInterface, pPlayer);
     }
 }

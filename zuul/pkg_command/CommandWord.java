@@ -60,8 +60,8 @@ public enum CommandWord {
      * @param pTestMode true if the test environment is enabled, false otherwise.
      * @return true if the command can be used, false otherwise.
      */
-    public boolean isExecutable(final boolean pTestMode) {
-        return this.aCommand.isExecutable(pTestMode);
+    public boolean isExecutableWhen(final boolean pTestMode) {
+        return this.aCommand.isExecutableWhen(pTestMode);
     }
 
     @Override

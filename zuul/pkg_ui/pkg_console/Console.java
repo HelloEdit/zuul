@@ -34,8 +34,7 @@ public class Console implements UserInterface {
     public String ask(String title, String question) {
         Scanner vScanner = new Scanner(System.in);
 
-        this.printf("[Zuul] > %s.%n", question);
-        this.print("> ");
+        this.printf("%s > ", question);
 
         return vScanner.nextLine();
     }
