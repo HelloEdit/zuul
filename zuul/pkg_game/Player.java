@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import zuul.pkg_item.Item;
 import zuul.pkg_personage.MovingPersonage;
+import zuul.pkg_room.LockedRoom;
 import zuul.pkg_room.Room;
 
 import java.util.EmptyStackException;
@@ -95,14 +96,21 @@ public class Player {
      * Takes an exit and move the player to the new room.
      *
      * @param pDirection Exit to be taken.
-     * @throws Room.RoomNotFoundException If no room is found for the direction given.
-     * @throws Timer.TimerLimitException  If the player cannot makes any movement because of the timer.
+     * @throws Room.CannotAccessRoomException If no room is found for the direction given.
+     * @throws Timer.TimerLimitException      If the player cannot makes any movement because of the timer.
      */
-    public void goToExit(final String pDirection) throws Room.RoomNotFoundException, Timer.TimerLimitException {
+    public void goToExit(final String pDirection) throws Room.CannotAccessRoomException, Timer.TimerLimitException {
         Room vCurrent = this.aCurrentRoom.get();
 
         Room vNext = vCurrent.getExit(pDirection);
-        if (vNext == null) throw new Room.RoomNotFoundException("Cette sortie n'existe pas.");
+        if (vNext == null) throw new Room.CannotAccessRoomException("Cette sortie n'existe pas.");
+
+        if (vNext instanceof LockedRoom) {
+            boolean vCanAccess = ((LockedRoom) vNext).check(this);
+
+            if (!vCanAccess)
+                throw new Room.CannotAccessRoomException("Vous ne pouvez accéder à cette salle pour l'instant.");
+        }
 
         this.setCurrentRoom(vNext);
 
@@ -276,6 +284,15 @@ public class Player {
     public void setCurrentRoom(final Room pRoom) {
         if (this.aCurrentRoom.get() != null) this.aPreviousRooms.push(this.aCurrentRoom.get());
         this.aCurrentRoom.set(pRoom);
+    }
+
+    /**
+     * Gets the player's name.
+     *
+     * @return The player's name.
+     */
+    public String getName() {
+        return this.aName;
     }
 
     /**

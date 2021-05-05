@@ -7,17 +7,10 @@ import zuul.pkg_item.Cookie;
 import zuul.pkg_item.Item;
 import zuul.pkg_ui.UserInterface;
 
-import java.util.Random;
-
 /**
  * Represents a technician in the game.
  */
 public class TechnicianPersonage extends MovingPersonage {
-    /**
-     * Indicates if the technician has found his screwdriver
-     */
-    private boolean aFoundScrewdriver;
-
     /**
      * Dialogues for the technician looking for his screwdriver.
      */
@@ -26,7 +19,6 @@ public class TechnicianPersonage extends MovingPersonage {
             "Vous n'auriez pas vu un tournevis ? Mais attendez, vous devriez être à votre poste vous non ?",
             "Mais vous êtes qui ? Où est votre uniforme ? Et plus important, où est mon tournevis !",
     };
-
     /**
      * Dialogs after the technician found his screwdriver.
      */
@@ -34,6 +26,10 @@ public class TechnicianPersonage extends MovingPersonage {
             "Encore merci mais mai tenant déguerpissez, j'ai du travail. Beaucoup.",
             "Bon, maintenant je dois me remettre au travail"
     };
+    /**
+     * Indicates if the technician has found his screwdriver
+     */
+    private boolean aFoundScrewdriver;
 
     /**
      * Creates a new technician personage.

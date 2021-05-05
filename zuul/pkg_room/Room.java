@@ -62,7 +62,7 @@ public class Room {
         this.aPersonages = new ThingList<>();
         this.aItems = new ThingList<>();
 
-        this.aImage = pName.toLowerCase().replaceAll(" ", "_") + ".png";
+        this.aImage = pName.toLowerCase().replaceAll(" ", "_").replaceAll("'", "_") + ".png";
     }
 
     /**
@@ -98,7 +98,7 @@ public class Room {
     /**
      * Creates and adds a new personage in the room.
      *
-     * @param pName Name of the personage
+     * @param pName        Name of the personage
      * @param pDescription Description of the personage.
      */
     public void addPersonage(final String pName, final String pDescription) {
@@ -143,7 +143,7 @@ public class Room {
      */
     public String getPersonagesDescription() {
         if (this.aPersonages.isEmpty())
-            return "Aucun personnage dans la pièce.";
+            return "Aucun personnage dans la pièce";
 
         return "Les personnages en présence sont : " + this.aPersonages.getKeysString();
     }
@@ -155,8 +155,11 @@ public class Room {
      * @param pDescription Description of the item.
      * @param pWeight      Weight of the item.
      */
-    public void addItem(final String pName, final String pDescription, final int pWeight) {
-        this.aItems.put(pName, new Item(pName, pDescription, pWeight));
+    public Item addItem(final String pName, final String pDescription, final int pWeight) {
+        Item vItem = new Item(pName, pDescription, pWeight);
+        this.aItems.put(pName, vItem);
+
+        return vItem;
     }
 
     /**
@@ -165,8 +168,8 @@ public class Room {
      * @param pName        Name of the item.
      * @param pDescription Description of the item.
      */
-    public void addItem(final String pName, final String pDescription) {
-        this.addItem(pName, pDescription, 1);
+    public Item addItem(final String pName, final String pDescription) {
+        return this.addItem(pName, pDescription, 1);
     }
 
     /**
@@ -265,12 +268,12 @@ public class Room {
     /**
      * If a room is not found.
      */
-    public static class RoomNotFoundException extends Exception {
-        public RoomNotFoundException() {
+    public static class CannotAccessRoomException extends Exception {
+        public CannotAccessRoomException() {
             super("Impossible de trouver la salle.");
         }
 
-        public RoomNotFoundException(final String pMsg) {
+        public CannotAccessRoomException(final String pMsg) {
             super(pMsg);
         }
     }

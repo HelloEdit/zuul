@@ -25,7 +25,7 @@ public class GoCommand extends Command {
      * @param pInterface  The user interface used by the game.
      */
     @Override
-    public void execute(GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) throws Room.RoomNotFoundException, Timer.TimerLimitException {
+    public void execute(GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) throws Room.CannotAccessRoomException, Timer.TimerLimitException {
         if (!this.hasSecondWord()) {
             pInterface.println("Cette direction est inconnue.");
             pInterface.printf("Vous pouvez aller : %s", pPlayer.getExitsDescription());

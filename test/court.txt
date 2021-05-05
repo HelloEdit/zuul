@@ -6,5 +6,7 @@ go down
 go ???
 go east
 go east
+take clé
 go airlock
 go esiee
+talk Compilateur

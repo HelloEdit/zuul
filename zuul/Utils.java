@@ -31,8 +31,9 @@ public class Utils {
 
     /**
      * Returns a random element from the array.
+     *
      * @param pArray The array from which an element will be chosen randomly.
-     * @param <T> The type of the elements of the array.
+     * @param <T>    The type of the elements of the array.
      * @return The random element chosen.
      */
     public static <T> T randomElement(final T[] pArray) {

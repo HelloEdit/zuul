@@ -10,5 +10,7 @@ alea cantine
 go random
 go south
 go east
+take clé
 go airlock
 go esiee
+talk Compilateur

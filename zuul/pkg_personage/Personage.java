@@ -1,5 +1,6 @@
 package zuul.pkg_personage;
 
+import zuul.Utils;
 import zuul.pkg_game.GameEngine;
 import zuul.pkg_game.Player;
 import zuul.pkg_ui.UserInterface;
@@ -22,6 +23,17 @@ public class Personage {
     private final String aDescription;
 
     /**
+     * Basics dialogs
+     */
+    private final static String[] dialogs = {
+            "Je n'ai rien à vous dire...",
+            "Pardon vous-disiez ?",
+            "Bonjour!",
+            "Qu'est ce que vous dites ?",
+            "J'ai du travail laissez moi."
+    };
+
+    /**
      * Creates a new personage.
      *
      * @param aName        Name of the personage.
@@ -35,12 +47,12 @@ public class Personage {
     /**
      * Allows you to talk with a personage.
      *
-     * @param pEngine Game engine.
+     * @param pEngine    Game engine.
      * @param pInterface GUI of the game.
      * @param pPlayer    Player that want to talk with the personage.
      */
     public void dialog(GameEngine pEngine, final UserInterface pInterface, final Player pPlayer) {
-        pInterface.printf("[%s] Excusez-moi mais je n'ai rien à vous dire...", this.aName);
+        pInterface.printf("[%s] %s", this.aName, Utils.randomElement(dialogs));
         pInterface.println();
     }
 

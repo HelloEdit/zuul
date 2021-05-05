@@ -17,14 +17,13 @@ import java.util.StringJoiner;
  */
 public class CommandWords {
     /**
-     * A mapping between a command word and the CommandWord associated to it.
-     */
-    private static final Map<String, Command> VALID_COMMANDS;
-
-    /**
      * A string containing the available commands for help purpose.
      */
     public static final String COMMANDS_STRING;
+    /**
+     * A mapping between a command word and the CommandWord associated to it.
+     */
+    private static final Map<String, Command> VALID_COMMANDS;
 
     static {
         // this map will contain all the commands without exception

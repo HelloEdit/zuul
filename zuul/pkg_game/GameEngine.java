@@ -5,9 +5,11 @@ import zuul.pkg_command.Command;
 import zuul.pkg_command.Parser;
 import zuul.pkg_item.Beamer;
 import zuul.pkg_item.Cookie;
+import zuul.pkg_item.Item;
 import zuul.pkg_personage.CompilateurPersonage;
 import zuul.pkg_personage.MovingPersonage;
 import zuul.pkg_personage.TechnicianPersonage;
+import zuul.pkg_room.LockedRoom;
 import zuul.pkg_room.Room;
 import zuul.pkg_room.TransporterRoom;
 import zuul.pkg_ui.UserInterface;
@@ -52,7 +54,6 @@ public class GameEngine {
         vOffice.addItem("loupe", "une simple loupe");
 
         Room vCar = new Room("voiture", "C'est la voiture de Murphy Law. Pratique pour vous déplacer");
-        vCar.addItem("clé", "d'une utilité assez évidente");
 
         // Buckingham Palace Universe
         Room vGreatStair = new Room("grand escalier", "L'escalier principal de Buckingham Palace");
@@ -82,6 +83,7 @@ public class GameEngine {
         vCorridor.addItem("tournevis", "un tournevis", 10);
 
         Room vBridge = new Room("pont", "c'est la passerelle du vaisseau");
+        Item vKey = vBridge.addItem("clé", "un objet certainement TRES important");
 
         Room vMess = new Room("cantine", "là où mange les membres de l'équipage");
         vMess.addItem("assiette", "une assiette malheureusement vide", 10);
@@ -96,16 +98,16 @@ public class GameEngine {
         vStorage.addPersonage(vTechnician);
 
         // ESIEE Universe
-        Room vEsiee = new Room("salle de l'ESIEE", "mais... c'est là où vous avez lancé ce jeu");
+        LockedRoom vEsiee = new LockedRoom("salle de l'ESIEE", "mais... c'est là où vous avez lancé ce jeu");
         vEsiee.addItem("livre", "un livre intitulé \"Objects First with Java\"");
         vEsiee.addPersonage(new CompilateurPersonage());
+        vEsiee.setKeyItem(vKey);
 
         // Setting up the "paths" between rooms
 
         vEsiee.addExit("east", vCar);
 
         vOffice.addExit("east", vCar);
-        vOffice.addPersonage("test", "un simple test");
 
         vCar.addExit("bureau", vOffice);
         vCar.addExit("esiee", vEsiee);
@@ -116,6 +118,7 @@ public class GameEngine {
         vGreatStair.addPersonage("garde", "un garde royal en poste.");
 
         vTerrace.addExit("west", vGreatStair);
+        vTerrace.addPersonage("garde", "un officier chargé de la sécurité de la reine");
 
         vReception.addExit("north", vGreatStair);
         vReception.addExit("top", vAppartements);
@@ -124,6 +127,7 @@ public class GameEngine {
         vAppartements.addExit("down", vReception);
 
         vKitchen.addExit("north", vReception);
+        vKitchen.addPersonage("cuisinier", "chargé de préparer les repas du palais.");
         vKitchen.addExit("down", vCave);
 
         vCave.addExit("???", vStorage);
@@ -242,7 +246,8 @@ public class GameEngine {
      * Wins the game!
      */
     public void win() {
-        this.aInterface.println("Vous avez gagné le jeu ! Merci d'avoir joué.");
+        this.aInterface.printf("Vous avez gagné le jeu %s ! Merci d'avoir joué.", this.aPlayer.getName());
+        this.aInterface.println();
         this.aInterface.disable();
     }
 }

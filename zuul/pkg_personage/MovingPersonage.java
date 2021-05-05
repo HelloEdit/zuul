@@ -43,7 +43,16 @@ public class MovingPersonage extends Personage {
     }
 
     /**
+     * Moves all the non-player that can move.
+     */
+    public static void moveAll() {
+        for (MovingPersonage vPerso : AllMovingPersonages)
+            vPerso.move();
+    }
+
+    /**
      * Adds rooms to the travel possibilities.
+     *
      * @param pRooms Rooms to be added.
      */
     public void addRooms(final Room... pRooms) {
@@ -67,17 +76,10 @@ public class MovingPersonage extends Personage {
 
     /**
      * Sets the current room of the personage.
+     *
      * @param pRoom
      */
     public void setCurrentRoom(final Room pRoom) {
         this.aCurrent = pRoom;
-    }
-
-    /**
-     * Moves all the non-player that can move.
-     */
-    public static void moveAll() {
-        for (MovingPersonage vPerso : AllMovingPersonages)
-            vPerso.move();
     }
 }

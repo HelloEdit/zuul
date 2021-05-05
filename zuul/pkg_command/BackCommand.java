@@ -27,7 +27,7 @@ public class BackCommand extends Command {
      * @param pInterface  The user interface used by the game.
      */
     @Override
-    public void execute(GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) throws Room.RoomNotFoundException, Timer.TimerLimitException {
+    public void execute(GameEngine pGameEngine, Player pPlayer, UserInterface pInterface) throws Room.CannotAccessRoomException, Timer.TimerLimitException {
         if (this.hasSecondWord()) {
             pInterface.println("Aucun second mot attendu.");
             return;
@@ -37,7 +37,7 @@ public class BackCommand extends Command {
         try {
             vPrevious = pPlayer.toPreviousRoom();
         } catch (EmptyStackException pError) {
-            throw new Room.RoomNotFoundException();
+            throw new Room.CannotAccessRoomException();
         }
 
         pInterface.printf("Vous êtes de retour dans %s", vPrevious.getName());
