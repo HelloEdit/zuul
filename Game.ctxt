@@ -1,7 +1,10 @@
 #BlueJ class context
 comment0.target=Game
-comment0.text=\n\ This\ class\ is\ the\ main\ class\ of\ the\ "World\ of\ Zuul"\ application.\n\ "World\ of\ Zuul"\ is\ a\ very\ simple,\ text\ based\ adventure\ game.\ \ Users\n\ can\ walk\ around\ some\ scenery.\ That's\ all.\ It\ should\ really\ be\ extended\n\ to\ make\ it\ more\ interesting\!\n\ <p>\n\ To\ play\ this\ game,\ create\ an\ instance\ of\ this\ class.\n\ <p>\n\ This\ main\ class\ creates\ the\ necessary\ implementation\ objects\ and\ starts\ the\ game\ off.\n\n\ @author\ Michael\ Kolling\ and\ David\ J.\ Barnes\n\ @version\ 2.0\ (Jan\ 2003)\ DB\ edited\ (2019)\n
-comment1.params=
-comment1.target=Game()
-comment1.text=\n\ Create\ the\ game\ and\ initialise\ its\ internal\ map.\n\ Create\ the\ interface\ and\ link\ to\ it.\n
-numComments=2
+comment0.text=\n\ This\ is\ the\ entry\ point\ for\ this\ Zuul\ project.\n\ <p>\n\ The\ purpose\ of\ this\ class\ is\ to\ correctly\ initialize\ the\ Zuul\ project\n\ according\ to\ the\ GUI\ to\ be\ used.\ For\ the\ moment,\ 2\ different\ interfaces\n\ can\ be\ used\ to\ play\ the\ pkg_game\:\n\ <ul>\n\ \ \ <li>Console</li>\n\ \ \ <li>JavaFX</li>\n\ </ul>\n\ <p>\n\ And\ any\ others\ interfaces\ that\ implements\ UserInterface.\n\n\ @author\ Corentin\ POUPRY\n\ @version\ 06.04.21\n\ @see\ zuul.pkg_ui.UserInterface\n
+comment1.params=args
+comment1.target=void\ main(java.lang.String[])
+comment1.text=\n\ Main\ entry\ point\ of\ the\ Zuul\ game.\n\n\ @param\ args\ Args\ of\ the\ java\ program.\n
+comment2.params=
+comment2.target=void\ countFrom0to100()
+comment2.text=\n\ Counts\ from\ 1\ to\ 100\ and\ records\ system\ performance.\n\n\ @hidden\n
+numComments=3
