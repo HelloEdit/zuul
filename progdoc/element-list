@@ -1,0 +1,10 @@
+unnamed package
+zuul
+zuul.pkg_command
+zuul.pkg_game
+zuul.pkg_item
+zuul.pkg_personage
+zuul.pkg_room
+zuul.pkg_ui
+zuul.pkg_ui.pkg_console
+zuul.pkg_ui.pkg_javafx

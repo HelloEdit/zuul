@@ -77,7 +77,7 @@ public class MovingPersonage extends Personage {
     /**
      * Sets the current room of the personage.
      *
-     * @param pRoom
+     * @param pRoom The current room of the personage.
      */
     public void setCurrentRoom(final Room pRoom) {
         this.aCurrent = pRoom;

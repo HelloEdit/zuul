@@ -154,6 +154,7 @@ public class Room {
      * @param pName        Name of the item.
      * @param pDescription Description of the item.
      * @param pWeight      Weight of the item.
+     * @return The item added.
      */
     public Item addItem(final String pName, final String pDescription, final int pWeight) {
         Item vItem = new Item(pName, pDescription, pWeight);
@@ -167,6 +168,7 @@ public class Room {
      *
      * @param pName        Name of the item.
      * @param pDescription Description of the item.
+     * @return The item added.
      */
     public Item addItem(final String pName, final String pDescription) {
         return this.addItem(pName, pDescription, 1);

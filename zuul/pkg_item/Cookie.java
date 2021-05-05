@@ -17,7 +17,9 @@ public class Cookie extends Item {
     public final static int WEIGHT_ADDED = 10;
 
     /**
-     * Creates the cookie.
+     * Create a magic cookie item.
+     * @param pName Name of the magic cookie.
+     * @param pDescription Description of the magic cookie.
      */
     public Cookie(final String pName, final String pDescription) {
         super(pName, pDescription, 2);
@@ -39,6 +41,6 @@ public class Cookie extends Item {
         vPlayer.setMaxWeight(vNewMax);
         vPlayer.deleteItem(this.getName());
 
-        pInterface.println("Le cookie était délicieux ! Il vous a donné de la force.");
+        pInterface.println("C'était délicieux ! Ca vous a donné de la force !");
     }
 }

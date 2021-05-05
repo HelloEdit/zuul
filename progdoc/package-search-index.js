@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"zuul"},{"l":"zuul.pkg_command"},{"l":"zuul.pkg_game"},{"l":"zuul.pkg_item"},{"l":"zuul.pkg_personage"},{"l":"zuul.pkg_room"},{"l":"zuul.pkg_ui"},{"l":"zuul.pkg_ui.pkg_console"},{"l":"zuul.pkg_ui.pkg_javafx"}]
